@@ -1,4 +1,4 @@
-package com.crusoe.fo.com.crusoe.fo;
+package com.crusoe.fo.starter.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
