@@ -1,8 +1,13 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  database: MYSQL
   datasource:
-    url: jdbc:mysql://localhost:3306/flowable-spring-boot?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/flowable-spring-boot?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=true
     username: root
     password: tomtom1982
+    driver-class-name: com.mysql.jdbc.Driver
 flowable:
 #关闭定时任务JOB
   async-executor-activate: false
