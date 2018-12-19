@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8099
 eureka:
   client:
     service-url:
@@ -10,4 +10,4 @@ eureka:
  
 spring:
   application:
-    name: eureka-producer
+    name: eureka-consumer-ribbon
