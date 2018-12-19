@@ -6,10 +6,6 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 import com.netflix.eureka.EurekaBootStrap;
 
-/**
- * Hello world!
- *
- */
 
 @EnableEurekaServer
 @SpringBootApplication 
