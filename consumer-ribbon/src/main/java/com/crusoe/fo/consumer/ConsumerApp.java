@@ -1,4 +1,4 @@
-package com.crusoe.fo.consumer.ribbon;
+package com.crusoe.fo.consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,9 +12,9 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @EnableEurekaClient
 @EnableDiscoveryClient
-public class App {
+public class ConsumerApp {
 	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
+		SpringApplication.run(ConsumerApp.class, args);
 	}
 
 	@Bean

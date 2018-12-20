@@ -10,10 +10,10 @@ import com.netflix.eureka.EurekaBootStrap;
 
 @EnableEurekaServer
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class App 
+public class RegisterCenterApp 
 {
     public static void main( String[] args )
     {
-    	SpringApplication.run(App.class, args);
+    	SpringApplication.run(RegisterCenterApp.class, args);
     }
 }
