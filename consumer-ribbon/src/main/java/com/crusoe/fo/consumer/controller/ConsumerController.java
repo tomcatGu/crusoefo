@@ -15,7 +15,7 @@ public class ConsumerController {
 	
 	@GetMapping("/say/{name}")
 	public String index(@PathVariable String name) {
-		//System.out.println("say...");
+
 
 		return service.sayHello(name);
 	}

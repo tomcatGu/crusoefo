@@ -15,12 +15,12 @@ import org.springframework.http.codec.support.DefaultServerCodecConfigurer;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class App {
+public class GatewayApp {
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
+		SpringApplication.run(GatewayApp.class, args);
 	}
 
 
