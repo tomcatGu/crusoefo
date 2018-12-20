@@ -8,11 +8,10 @@
 		<groupId>com.crusoe.fo</groupId>
 		<artifactId>com.crusoe.fo</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+
 	</parent>
-
-	<artifactId>consumer-feign</artifactId>
-
-	<name>consumer-feign</name>
+	<artifactId>gateway-service</artifactId>
+	<name>gateway-service</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,18 +20,18 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
 		</dependency>
 
 	</dependencies>
+
 </project>
