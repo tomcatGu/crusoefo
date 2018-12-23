@@ -18,3 +18,8 @@ spring:
         uri: http://www.baidu.com
         predicates:
         - Path=/baidu
+      - auth-service:
+        uri: lb/oauth2-service
+        predicates:
+        - path=/auth/**
+ 
