@@ -6,7 +6,7 @@
 
 	<groupId>com.crusoe.fo</groupId>
 	<artifactId>com.crusoe.fo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 
 	<name>com.crusoe.fo</name>
@@ -91,17 +91,22 @@
 					<artifactId>docker-maven-plugin</artifactId>
 					<version>0.4.13</version>
 					<configuration>
-					<imageName>itmuch/${project.artifactId}:${project.version}</imageName>  
-            <dockerDirectory>src/main/docker</dockerDirectory>  
-            <dockerHost>http://10.132.23.119:2375</dockerHost>  
-            <resources>  
-                <resource>  
-                    <targetPath>/</targetPath>  
-                    <directory>${project.build.directory}</directory>  
-                    <include>${project.build.finalName}.jar</include>  
-                </resource>  
-            </resources>  
-        </configuration>  
+						<imageName>${project.artifactId}:${project.version}</imageName>
+						<dockerHost>http://10.132.23.119:2375</dockerHost>
+						<dockerDirectory>src/main/docker</dockerDirectory>
+						<baseImage>java</baseImage>
+						<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+						<!-- copy the service's jar file from target into the root directory 
+							of the image -->
+						<resources>
+							<resource>
+								<targetPath>/</targetPath>
+								<directory>${project.build.directory}</directory>
+								<include>${project.build.finalName}.jar</include>
+							</resource>
+						</resources>
+					</configuration>
+
 
 				</plugin>
 			</plugins>
@@ -117,10 +122,10 @@
 
 	<modules>
 		<module>starter</module>
-		<module>eurekaServer</module>
-		<module>eurekaClient</module>
+		<module>eurekaserver</module>
+		<module>eurekaclient</module>
 		<module>consumer-ribbon</module>
-		<module>RabbitCenter</module>
+		<module>rabbitcenter</module>
 		<module>consumer-feign</module>
 		<module>gateway-service</module>
 		<module>oauth</module>
