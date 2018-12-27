@@ -74,6 +74,18 @@
 			<artifactId>spring-cloud-stream-test-support</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--契约测试服务提供端依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!--契约测试服务提供端依赖 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -103,12 +115,13 @@
 								<targetPath>/</targetPath>
 								<directory>${project.build.directory}</directory>
 								<include>${project.build.finalName}.jar</include>
+
 							</resource>
 						</resources>
 					</configuration>
-
-
 				</plugin>
+
+
 			</plugins>
 		</pluginManagement>
 	</build>

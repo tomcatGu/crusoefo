@@ -9,17 +9,13 @@
 		<artifactId>com.crusoe.fo</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	
+
 	<artifactId>eurekaclient</artifactId>
 	<name>eurekaclient</name>
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -31,7 +27,20 @@
 
 	</dependencies>
 
-
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+					<extensions>true</extensions>
+					<configuration>
+						<packageWithBaseClasses>com.crusoe.fo.test.eurekaClient.ProducerApp</packageWithBaseClasses>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 
 </project>
