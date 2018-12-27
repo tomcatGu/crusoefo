@@ -3,7 +3,7 @@ import org.springframework.cloud.contract.spec.Contract
 Contract.make {
     request {
         method 'GET'
-        url('/hello') {
+        url('/hello2') {
             queryParameters {
                 parameter("name", "zhangsan")
             }
@@ -15,7 +15,7 @@ Contract.make {
         body("""
   {
     "code": "000000",
-    "mesg": "处理成功"
+    "mesg": "abc"
   }
   """)
         headers {
