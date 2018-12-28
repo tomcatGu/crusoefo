@@ -28,19 +28,28 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.springframework.cloud</groupId>
 					<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+					<version>1.2.5.RELEASE</version>
 					<extensions>true</extensions>
 					<configuration>
 						<generatedTestSourcesDir>src/test/java</generatedTestSourcesDir>
 						<baseClassForTests>com.crusoe.fo.test.eurekaClient.MvcSpec</baseClassForTests>
 					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>convert</goal>
+								<goal>generateStubs</goal>
+								<goal>generateTests</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
-		</pluginManagement>
+
 	</build>
 
 
