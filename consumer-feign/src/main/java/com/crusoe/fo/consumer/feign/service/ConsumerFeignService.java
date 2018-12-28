@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.crusoe.fo.consumer.feign.service.fallback.FeignServiceHystrix;
 
-@FeignClient(value = "eureka-producer",fallback=FeignServiceHystrix.class)
+@FeignClient(value = "eurekaclient",fallback=FeignServiceHystrix.class)
 public interface ConsumerFeignService {
 
-	@GetMapping("hello")
+	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name") String name);
 }

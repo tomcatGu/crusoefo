@@ -10,4 +10,4 @@ eureka:
  
 spring:
   application:
-    name: eureka-producer
+    name: eurekaclient

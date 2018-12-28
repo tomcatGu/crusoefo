@@ -10,7 +10,7 @@ public class RibbonServiceImpl {
 	RestTemplate restTemplate;
 	
 	public String sayHello(String name){
-		return restTemplate.getForObject("http://eureka-producer/hello?name="+name,String.class);
+		return restTemplate.getForObject("http://eurekaclient/hello?name="+name,String.class);
 
 		
 	}

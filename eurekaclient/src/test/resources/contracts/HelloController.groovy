@@ -1,6 +1,7 @@
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
+	name 'hello2'
     request {
         method 'GET'
         url('/hello2') {
@@ -23,3 +24,4 @@ Contract.make {
         }
     }
 }
+

@@ -13,7 +13,7 @@ public class ConsumerFeignController {
 	@Resource
 	private ConsumerFeignService service;
 
-	@GetMapping("/hello/{name}")
+	@GetMapping("/hellohello/{name}")
 	public String index(@PathVariable("name") String name) {
 		return service.hello(name);
 	}

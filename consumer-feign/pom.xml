@@ -33,6 +33,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.crusoe.fo</groupId>
+			<artifactId>eurekaclient</artifactId>
+			<classifier>stubs</classifier>
+			<version>0.0.1</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 </project>

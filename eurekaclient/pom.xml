@@ -35,7 +35,8 @@
 					<artifactId>spring-cloud-contract-maven-plugin</artifactId>
 					<extensions>true</extensions>
 					<configuration>
-						<packageWithBaseClasses>com.crusoe.fo.test.eurekaClient.ProducerApp</packageWithBaseClasses>
+						<generatedTestSourcesDir>src/test/java</generatedTestSourcesDir>
+						<baseClassForTests>com.crusoe.fo.test.eurekaClient.MvcSpec</baseClassForTests>
 					</configuration>
 				</plugin>
 			</plugins>
