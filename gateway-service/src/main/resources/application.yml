@@ -15,11 +15,25 @@ spring:
     gateway:
       routes:
       - id: baidu
-        uri: http://www.baidu.com
+        uri: http://www.baidu.com/
         predicates:
-        - Path=/baidu
+        - Path=/baidu/**
+        filters:
+        - JwtCheck
       - auth-service:
-        uri: lb/oauth2-service
+        uri: lb://oauth2-service:9000
         predicates:
-        - path=/auth/**
- 
+        - Path=/auth/**
+  feign:
+    hystrix:
+      enabled: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+
+
+
+
