@@ -33,6 +33,7 @@ public class HelloControllerTest {
 	    public void testMethod() throws Exception {
 	        mvc.perform(MockMvcRequestBuilders.get("/hellohello/zhangsan"))
 	                .andExpect(MockMvcResultMatchers.status().isOk())
-	                .andExpect(MockMvcResultMatchers.jsonPath("code", Is.is("000000")));
+	                .andExpect(MockMvcResultMatchers.jsonPath("code", Is.is("000000")))
+	        .andExpect(MockMvcResultMatchers.jsonPath("mesg", Is.is("处理成功")));
 	    }
 }

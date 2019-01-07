@@ -20,10 +20,17 @@ spring:
         - Path=/baidu/**
         filters:
         - JwtCheck
-      - auth-service:
-        uri: lb://oauth2-service:9000
+      - id: auth-service
+        uri: lb://oauth2-service/oauth/
         predicates:
-        - Path=/auth/**
+        - Path=/oauth/**
+  security:
+    oauth2:
+      client:
+        provider:
+          okta:
+            authorization-uri: lb://oauth2-service/oauth/authorize
+            token-uri: lb://oauth2-service/oauth/token
   feign:
     hystrix:
       enabled: true
