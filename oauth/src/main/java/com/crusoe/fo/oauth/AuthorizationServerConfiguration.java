@@ -106,7 +106,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
 				.authorizedGrantTypes("client_credentials", "refresh_token").scopes("select").authorities("oauth2")
 				.secret(finalPassword).and().withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("password","authorization_code", "refresh_token").scopes("server").authorities("oauth2")
+				.authorizedGrantTypes("implicit","refresh_token").scopes("server").authorities("oauth2")
 				.secret(finalPassword);
 		// 初始化 Client 数据到 DB
 		// clients.jdbc(dataSource)

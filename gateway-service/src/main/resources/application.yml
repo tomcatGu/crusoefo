@@ -27,10 +27,9 @@ spring:
   security:
     oauth2:
       client:
-        provider:
-          okta:
-            authorization-uri: lb://oauth2-service/oauth/authorize
-            token-uri: lb://oauth2-service/oauth/token
+        authorization-uri: lb://oauth2-service/oauth/authorize
+        token-uri: lb://oauth2-service/oauth/token
+        client-id: webapp
   feign:
     hystrix:
       enabled: true
