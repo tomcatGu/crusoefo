@@ -1,7 +1,9 @@
 package com.crusoe.fo.oauth;
 
 import java.io.IOException;
+import java.security.KeyPair;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -14,6 +16,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import io.micrometer.core.instrument.util.IOUtils;
+import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
 @Configuration
 
@@ -21,12 +24,14 @@ import io.micrometer.core.instrument.util.IOUtils;
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 	private static final String DEMO_RESOURCE_ID = "order";
+	@Autowired
+	JwtAccessTokenConverter jwtAccessTokenConverter;
 
 	@Override
 
 	public void configure(ResourceServerSecurityConfigurer resources) {
 
-		resources.resourceId(DEMO_RESOURCE_ID).stateless(true).tokenStore(new JwtTokenStore(accessTokenConverter()));
+		resources.resourceId(DEMO_RESOURCE_ID).stateless(true).tokenStore(new JwtTokenStore(jwtAccessTokenConverter));
 
 	}
 
@@ -38,17 +43,5 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	}
 
-	//@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
-		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		Resource resource = new ClassPathResource("crusoe.cer");
-		String publicKey = null;
-		try {
-			publicKey = IOUtils.toString(resource.getInputStream());
-		} catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-		converter.setVerifierKey(publicKey);
-		return converter;
-	}
+
 }

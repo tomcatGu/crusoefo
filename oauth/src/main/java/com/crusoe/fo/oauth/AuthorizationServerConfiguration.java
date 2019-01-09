@@ -29,37 +29,11 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
 @Configuration
+@EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	private static final String DEMO_RESOURCE_ID = "order";
 
-	@Configuration
-
-	@EnableResourceServer
-
-	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
-		@Override
-
-		public void configure(ResourceServerSecurityConfigurer resources) {
-
-			resources.resourceId(DEMO_RESOURCE_ID).stateless(true);
-
-		}
-
-		@Override
-
-		public void configure(HttpSecurity http) throws Exception {
-
-			http
-
-					.authorizeRequests()
-
-					.antMatchers("/order/**").authenticated();// 配置order访问控制，必须认证过后才可以访问
-
-		}
-
-	}
 
 	@Autowired
 
@@ -104,11 +78,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 		clients.inMemory()
 				.withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("client_credentials", "refresh_token").scopes("select").authorities("oauth2")
+				.authorizedGrantTypes("client_credentials","authorization_code", "refresh_token").scopes("web").authorities("oauth2")
 				.secret(finalPassword)
 				.and()
 				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("implicit", "refresh_token").scopes("server").authorities("oauth2")
+				.authorizedGrantTypes("password", "refresh_token").scopes("server").authorities("oauth2")
 				.secret(finalPassword);
 		// 初始化 Client 数据到 DB
 		// clients.jdbc(dataSource)
@@ -172,8 +146,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
 
 		// 允许表单认证
+		oauthServer.allowFormAuthenticationForClients();
 
-		oauthServer.tokenKeyAccess("permitAll()").allowFormAuthenticationForClients();
+		oauthServer.tokenKeyAccess("permitAll()");
 
 	}
 
@@ -188,6 +163,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("crusoe.jks"), "tomtom1982".toCharArray())
 				.getKeyPair("crusoe");
 		converter.setKeyPair(keyPair);
+		//converter.setSigningKey(keyPair.getPublic().toString());
+		//converter.setVerifierKey(keyPair.getPrivate().toString());
+
 		return converter;
 	}
 
