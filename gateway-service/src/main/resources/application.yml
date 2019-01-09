@@ -27,10 +27,18 @@ spring:
   security:
     oauth2:
       client:
-        authorization-uri: lb://oauth2-service/oauth/authorize
-        token-uri: lb://oauth2-service/oauth/token
-        client-id: webapp
-        client-secret: 123456
+        registration:
+          crusoe:
+            client-id: webapp
+            client-secret: 123456
+            authorizationGrantType: implicit
+            redirectUri: localhost:6601/
+            provider: as
+        provider:
+          as:          
+            authorization-uri: http://localhost:8080/oauth/authorize
+            token-uri: http://localhost:8080/oauth/token
+
         
 
 logging:
