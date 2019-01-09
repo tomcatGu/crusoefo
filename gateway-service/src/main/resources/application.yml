@@ -30,16 +30,24 @@ spring:
         authorization-uri: lb://oauth2-service/oauth/authorize
         token-uri: lb://oauth2-service/oauth/token
         client-id: webapp
-  feign:
-    hystrix:
-      enabled: true
+        client-secret: 123456
+        
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.http.server.reactive: DEBUG
     org.springframework.web.reactive: DEBUG
     reactor.ipc.netty: DEBUG
+    
 
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 
 

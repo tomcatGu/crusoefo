@@ -11,8 +11,11 @@ eureka:
 spring:
   application:
     name: oauth2-resourceserver
-  #security:
-  #  oauth2:
-  #    resourceserver:
-  #      jwt:
-  #        jwk-set-uri: lb://oauth2-service/token_key
+
+
+logging:
+  level:
+    org.springframework.cloud: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG

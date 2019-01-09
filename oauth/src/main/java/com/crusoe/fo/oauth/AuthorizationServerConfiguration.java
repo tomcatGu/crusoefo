@@ -29,7 +29,6 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
 @Configuration
-@EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	private static final String DEMO_RESOURCE_ID = "order";
@@ -103,37 +102,38 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// 配置两个客户端,一个用于password认证一个用于client认证
 		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
-		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
+		clients.inMemory()
+				.withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
 				.authorizedGrantTypes("client_credentials", "refresh_token").scopes("select").authorities("oauth2")
-				.secret(finalPassword).and().withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("implicit","refresh_token").scopes("server").authorities("oauth2")
+				.secret(finalPassword)
+				.and()
+				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
+				.authorizedGrantTypes("implicit", "refresh_token").scopes("server").authorities("oauth2")
 				.secret(finalPassword);
 		// 初始化 Client 数据到 DB
 		// clients.jdbc(dataSource)
 		/*
 		 * clients.inMemory().withClient("client").authorizedGrantTypes(
 		 * "client_credentials") .scopes("all", "read",
-		 * "write").authorities("client_credentials").accessTokenValiditySeconds
-		 * (7200) .secret(passwordEncoder.encode("123456"))
+		 * "write").authorities("client_credentials").accessTokenValiditySeconds (7200)
+		 * .secret(passwordEncoder.encode("123456"))
 		 * 
 		 * .and().withClient("client_2").authorizedGrantTypes("password",
 		 * "refresh_token") .scopes("all", "read",
-		 * "write").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds
-		 * (10000)
+		 * "write").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds (10000)
 		 * .authorities("password").secret(passwordEncoder.encode("123456"))
 		 * 
 		 * .and().withClient("client_3").authorities("authorization_code",
 		 * "refresh_token")
 		 * .secret(passwordEncoder.encode("123456")).authorizedGrantTypes(
 		 * "authorization_code") .scopes("all", "read",
-		 * "write").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds
-		 * (10000) .redirectUris("http://localhost:8080/callback",
+		 * "write").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds (10000)
+		 * .redirectUris("http://localhost:8080/callback",
 		 * "http://localhost:8080/signin")
 		 * 
-		 * .and().withClient("client_test").secret(passwordEncoder.encode(
-		 * "123456")) .authorizedGrantTypes("all flow")
-		 * .authorizedGrantTypes("authorization_code", "client_credentials",
-		 * "refresh_token", "password", "implicit")
+		 * .and().withClient("client_test").secret(passwordEncoder.encode( "123456"))
+		 * .authorizedGrantTypes("all flow") .authorizedGrantTypes("authorization_code",
+		 * "client_credentials", "refresh_token", "password", "implicit")
 		 * .redirectUris("http://localhost:8080/callback",
 		 * "http://localhost:8080/signin") .scopes("all", "read",
 		 * "write").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds
@@ -151,8 +151,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				// .tokenStore(new RedisTokenStore(redisConnectionFactory))
 				.tokenStore(new InMemoryTokenStore())
 
-				.authenticationManager(authenticationManager)
-				.accessTokenConverter(jwtAccessTokenConverter())
+				.authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter())
 
 				.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 		/*
@@ -162,8 +161,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		 * endpoints.authenticationManager(authenticationManager).
 		 * accessTokenConverter(converter) // 配置 JwtAccessToken 转换器 //
 		 * .accessTokenConverter(jwtAccessTokenConverter()) // refresh_token 需要
-		 * UserDetailsService is required //
-		 * .userDetailsService(userDetailsService)
+		 * UserDetailsService is required // .userDetailsService(userDetailsService)
 		 * .allowedTokenEndpointRequestMethods(HttpMethod.GET,
 		 * HttpMethod.POST).tokenStore(tokenStore());
 		 */
@@ -175,11 +173,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 		// 允许表单认证
 
-		oauthServer.allowFormAuthenticationForClients();
+		oauthServer.tokenKeyAccess("permitAll()").allowFormAuthenticationForClients();
 
 	}
-	
-	
+
 	/**
 	 * 使用非对称加密算法来对Token进行签名
 	 * 
