@@ -163,7 +163,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			if (accessToken instanceof DefaultOAuth2AccessToken) {
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
-				additionalInformation.put("username", authentication.getDetails());
+				additionalInformation.put("username", authentication.getPrincipal());
 				// additionalInformation.put("data",new Test("123",123.456));
 				token.setAdditionalInformation(additionalInformation);
 
