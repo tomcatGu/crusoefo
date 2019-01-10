@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -18,9 +19,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import io.micrometer.core.instrument.util.IOUtils;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-@Configuration
+//@Configuration
 
-@EnableResourceServer
+//@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 	private static final String DEMO_RESOURCE_ID = "order";
@@ -39,9 +40,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	public void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers("/order/**").authenticated();// 配置order访问控制，必须认证过后才可以访问
+		http.formLogin().and()
+				// .successHandler(appLoginInSuccessHandler))//如果有必要，在这里可以自定义成功处理器
+				// .failureHandler(appLoginFailureHandler)//如果有必要，在这里可以自定义错误处理器
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().authorizeRequests()
+				.antMatchers("/open/**").permitAll()// 开放的资源不用授权
+				.anyRequest().authenticated();// 其他任何请求都需要授权
 
 	}
-
 
 }
