@@ -59,4 +59,4 @@ management:
     health:
       show-details: ALWAYS
 
-
+#https://github.com/artemMartynenko/spring-cloud-gateway-oauth2-sso-sample-application
