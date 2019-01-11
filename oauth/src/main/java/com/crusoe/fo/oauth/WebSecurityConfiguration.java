@@ -31,9 +31,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@Bean
+	//@Bean
 
-	@Override
+	//@Override
 
 	protected UserDetailsService userDetailsService() {
 
@@ -84,7 +84,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// http.csrf().disable();
 		// 不拦截 oauth 开放的资源
 		// http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
-		http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
+		http.formLogin().and().requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
 
 	}
 

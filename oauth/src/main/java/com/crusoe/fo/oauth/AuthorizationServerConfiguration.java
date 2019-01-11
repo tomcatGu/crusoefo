@@ -101,9 +101,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
 				.authorizedGrantTypes("client_credentials", "authorization_code","password", "refresh_token").scopes("web")
-				.authorities("oauth2").secret(finalPassword).redirectUris("http://www.baidu.com").and()
-				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("implicit", "refresh_token")
-				.redirectUris("http://localhost:6601/baidu")
+				.authorities("oauth2").secret(finalPassword).and()
+				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
+				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe")
 				.scopes("server").authorities("oauth2").secret(finalPassword);
 	}
 
@@ -163,7 +163,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			if (accessToken instanceof DefaultOAuth2AccessToken) {
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
-				additionalInformation.put("username", authentication.getPrincipal());
+				additionalInformation.put("username", authentication.getDetails());
 				// additionalInformation.put("data",new Test("123",123.456));
 				token.setAdditionalInformation(additionalInformation);
 

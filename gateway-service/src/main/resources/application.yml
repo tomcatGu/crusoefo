@@ -19,7 +19,8 @@ spring:
         predicates:
         - Path=/baidu/**
         filters:
-        - JwtCheck
+        #- JwtCheck
+        - PreOauth2SSOGatewayFilter
       - id: auth-service
         uri: lb://oauth2-service/oauth/
         predicates:
@@ -29,17 +30,17 @@ spring:
       client:
         registration:
           crusoe:
-            clientId: webapp
-            clientSecret: 123456
-            authorizationGrantType: implicit
-            redirectUri: http://localhost:6601/baidu
-            provider: as
+            client-id: webapp
+            client-secret: 123456
+            authorization-grant-type: authorization_code
+            redirect-uri-template: http://localhost:6601/login/oauth2/code/crusoe
         provider:
-          as:          
+          crusoe:
             authorization-uri: http://localhost:9000/oauth/authorize
             token-uri: http://localhost:9000/oauth/token
-          resource:
-            userInfoUri: http://localhost:9000/user
+            jwt-key-uri: http://localhost:9000/oauth/token_key
+          #resource:
+            user-info-uri: http://localhost:9000/user
 
 
 logging:
