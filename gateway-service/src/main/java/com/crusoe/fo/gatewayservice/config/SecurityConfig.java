@@ -1,4 +1,4 @@
-package com.crusoe.fo.gatewayservice.filter;
+package com.crusoe.fo.gatewayservice.config;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -6,6 +6,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
 
+import com.crusoe.fo.gatewayservice.filter.JwtCheckGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
