@@ -51,7 +51,7 @@ public class AuthorizeController {
             return map;
         }
         Map<String, String> a = new LinkedHashMap<>();
-        a.put("name", "crusoe");
+        a.put("user_name", "crusoe");
         return a;
     }
 }
