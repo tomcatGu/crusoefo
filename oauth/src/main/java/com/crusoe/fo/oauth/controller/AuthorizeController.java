@@ -40,6 +40,7 @@ public class AuthorizeController {
      */
     @GetMapping("/user")
     public Map<String,String> user(Principal principal) {
+        System.out.println(principal);
         if (principal != null) {
             OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
             Authentication authentication = oAuth2Authentication.getUserAuthentication();
@@ -47,11 +48,9 @@ public class AuthorizeController {
             details = (Map<String, String>) authentication.getDetails();
             //logger.info("details = " + details);  // id, email, name, link etc.
             Map<String, String> map = new LinkedHashMap<>();
-            map.put("name", details.get("username"));
+            map.put("user_name", oAuth2Authentication.getPrincipal().toString());
             return map;
         }
-        Map<String, String> a = new LinkedHashMap<>();
-        a.put("user_name", "crusoe");
-        return a;
+        return null;
     }
 }

@@ -19,34 +19,34 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import io.micrometer.core.instrument.util.IOUtils;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-//@Configuration
+@Configuration
 
-//@EnableResourceServer
+@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-	private static final String DEMO_RESOURCE_ID = "order";
-	@Autowired
-	JwtAccessTokenConverter jwtAccessTokenConverter;
+    private static final String DEMO_RESOURCE_ID = "order";
+    @Autowired
+    JwtAccessTokenConverter jwtAccessTokenConverter;
 
-	@Override
+    @Override
 
-	public void configure(ResourceServerSecurityConfigurer resources) {
+    public void configure(ResourceServerSecurityConfigurer resources) {
 
-		resources.resourceId(DEMO_RESOURCE_ID).stateless(true).tokenStore(new JwtTokenStore(jwtAccessTokenConverter));
+        resources.resourceId(DEMO_RESOURCE_ID).stateless(true).tokenStore(new JwtTokenStore(jwtAccessTokenConverter));
 
-	}
+    }
 
-	@Override
+    @Override
 
-	public void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
 
-		http.formLogin().and()
-				// .successHandler(appLoginInSuccessHandler))//如果有必要，在这里可以自定义成功处理器
-				// .failureHandler(appLoginFailureHandler)//如果有必要，在这里可以自定义错误处理器
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().authorizeRequests()
-				.antMatchers("/open/**").permitAll()// 开放的资源不用授权
-				.anyRequest().authenticated();// 其他任何请求都需要授权
+        http.formLogin().and()
+                // .successHandler(appLoginInSuccessHandler))//如果有必要，在这里可以自定义成功处理器
+                // .failureHandler(appLoginFailureHandler)//如果有必要，在这里可以自定义错误处理器
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and().authorizeRequests()
+                .antMatchers("/open/**","/login**").permitAll()// 开放的资源不用授权
+                .anyRequest().authenticated();// 其他任何请求都需要授权
 
-	}
+    }
 
 }
