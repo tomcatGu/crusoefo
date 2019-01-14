@@ -22,7 +22,7 @@ spring:
         #- JwtCheck
         - PreOauth2SSOGatewayFilter
       - id: auth-service
-        uri: lb://oauth2-service/oauth/
+        uri: lb://oauth2-service/oauth
         predicates:
         - Path=/oauth/**
   security:
@@ -40,6 +40,7 @@ spring:
             token-uri: http://localhost:9000/oauth/token
             jwt-key-uri: http://localhost:9000/oauth/token_key
             user-info-uri: http://localhost:9000/user
+            #prefer-token-info: false
             userNameAttribute: user_name
 
 
