@@ -103,7 +103,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				.authorizedGrantTypes("client_credentials", "authorization_code","password", "refresh_token").scopes("web")
 				.authorities("oauth2").secret(finalPassword).and()
 				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
-				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe")
+				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe","http://10.0.0.21:6601/login/oauth2/code/crusoe")
 				.scopes("server").authorities("oauth2").secret(finalPassword);
 	}
 

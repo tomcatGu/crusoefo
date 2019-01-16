@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @Component("Oauth2SSOGatewayFilterFactory")
 public class PreOauth2SSOGatewayFilter extends AbstractGatewayFilterFactory<PreOauth2SSOGatewayFilter.Config> {
-    @Bean
+    //@Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter() {
             @Override

@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 @EnableEurekaClient
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 public class ConsumerApp {
 	public static void main(String[] args) {
 		SpringApplication.run(ConsumerApp.class, args);

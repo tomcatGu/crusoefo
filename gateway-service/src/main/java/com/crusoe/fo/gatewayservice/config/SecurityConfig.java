@@ -1,11 +1,5 @@
 package com.crusoe.fo.gatewayservice.config;
 
-import java.io.IOException;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.security.interfaces.RSAPublicKey;
-
 import com.crusoe.fo.gatewayservice.filter.JwtCheckGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,24 +7,27 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
+import java.io.IOException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPublicKey;
 
 @Configuration
 @EnableWebFluxSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 	@Bean
 	public JwtCheckGatewayFilterFactory jwtCheckGatewayFilterFactory() {
 		return new JwtCheckGatewayFilterFactory();
 	}
 
-	// @Bean
-	public MapReactiveUserDetailsService userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build();
-		return new MapReactiveUserDetailsService(user);
-	}
+//	 @Bean
+//	public MapReactiveUserDetailsService userDetailsService() {
+//		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("user").roles("USER").build();
+//		return new MapReactiveUserDetailsService(user);
+//	}
 
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {

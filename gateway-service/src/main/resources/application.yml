@@ -5,6 +5,7 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/
   instance:
+    prefer-ip-address: true
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
  
@@ -25,23 +26,23 @@ spring:
         uri: lb://oauth2-service/oauth
         predicates:
         - Path=/oauth/**
-  security:
-    oauth2:
-      client:
-        registration:
-          crusoe:
-            client-id: webapp
-            client-secret: 123456
-            authorization-grant-type: authorization_code
-            redirect-uri-template: http://localhost:6601/login/oauth2/code/crusoe
-        provider:
-          crusoe:
-            authorization-uri: http://localhost:9000/oauth/authorize
-            token-uri: http://localhost:9000/oauth/token
-            jwt-key-uri: http://localhost:9000/oauth/token_key
-            user-info-uri: http://localhost:9000/user
-            #prefer-token-info: false
-            userNameAttribute: user_name
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          crusoe:
+#            client-id: webapp
+#            client-secret: 123456
+#            authorization-grant-type: authorization_code
+#            redirect-uri-template: http://localhost:6601/login/oauth2/code/crusoe
+#        provider:
+#          crusoe:
+#            authorization-uri: http://localhost:9000/oauth/authorize
+#            token-uri: http://localhost:9000/oauth/token
+#            jwt-key-uri: http://localhost:9000/oauth/token_key
+#            user-info-uri: http://localhost:9000/user
+#            #prefer-token-info: false
+#            userNameAttribute: user_name
 
 
 logging:
