@@ -42,8 +42,8 @@ public class WebClientConfig {
         System.out.println(serviceInstance.getPort());
         String host=serviceInstance.getHost();
         int port=serviceInstance.getPort();
-        //String URI="http://localhost"+":"+String.valueOf(port);
-        String URI="http://"+host+":"+String.valueOf(port);
+        String URI="http://OAUTH2-SERVICE";
+        //String URI="http://"+host+":"+String.valueOf(port);
         return ClientRegistration.withRegistrationId("crusoe")
                 .clientId("webapp")
                 .clientSecret("123456")

@@ -132,5 +132,7 @@
         <module>consumer-feign</module>
         <module>gateway-service</module>
         <module>oauth</module>
+        <module>crusoe-ui</module>
+        <module>crusoeui</module>
     </modules>
 </project>
