@@ -69,7 +69,7 @@
     <div class="uk-text-center" uk-grid>
         <div class="uk-width-auto@m">
             <div class="uk-card uk-card-default uk-card-body">
-                <div >
+                <div>
                     <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                         <li class="uk-active"><a href="#">Active</a></li>
                         <li class="uk-parent">
@@ -99,55 +99,79 @@
         <div class="uk-width-expand@m">
             <div class="uk-card uk-card-default uk-card-body">
                 <div class="uk-overflow-auto">
-                    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-                        <thead>
-                        <tr>
-                            <th class="uk-table-shrink"></th>
-                            <th class="uk-table-shrink">Preserve</th>
-                            <th class="uk-table-expand">Expand + Link</th>
-                            <th class="uk-width-small">Truncate</th>
-                            <th class="uk-table-shrink uk-text-nowrap">Shrink + Nowrap</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input class="uk-checkbox" type="checkbox"></td>
-                            <td><img class="uk-preserve-width uk-border-circle" src="images/avatar.jpg" width="40" alt=""></td>
-                            <td class="uk-table-link">
-                                <a class="uk-link-reset" href="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
-                            </td>
-                            <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</td>
-                            <td class="uk-text-nowrap">Lorem ipsum dolor</td>
-                        </tr>
-                        <tr>
-                            <td><input class="uk-checkbox" type="checkbox"></td>
-                            <td><img class="uk-preserve-width uk-border-circle" src="images/avatar.jpg" width="40" alt=""></td>
-                            <td class="uk-table-link">
-                                <a class="uk-link-reset" href="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
-                            </td>
-                            <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</td>
-                            <td class="uk-text-nowrap">Lorem ipsum dolor</td>
-                        </tr>
-                        <tr>
-                            <td><input class="uk-checkbox" type="checkbox"></td>
-                            <td><img class="uk-preserve-width uk-border-circle" src="images/avatar.jpg" width="40" alt=""></td>
-                            <td class="uk-table-link">
-                                <a class="uk-link-reset" href="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
-                            </td>
-                            <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</td>
-                            <td class="uk-text-nowrap">Lorem ipsum dolor</td>
-                        </tr>
-                        <tr>
-                            <td><input class="uk-checkbox" type="checkbox"></td>
-                            <td><img class="uk-preserve-width uk-border-circle" src="images/avatar.jpg" width="40" alt=""></td>
-                            <td class="uk-table-link">
-                                <a class="uk-link-reset" href="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</a>
-                            </td>
-                            <td class="uk-text-truncate">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</td>
-                            <td class="uk-text-nowrap">Lorem ipsum dolor</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="js-upload uk-placeholder uk-text-center">
+                        <span uk-icon="icon: cloud-upload"></span>
+                        <span class="uk-text-middle">Attach binaries by dropping them here or</span>
+                        <div uk-form-custom>
+                            <input type="file" name="file" multiple>
+                            <span class="uk-link">selecting one</span>
+                        </div>
+                    </div>
+
+                    <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+
+                    <script>
+
+    var bar = document.getElementById('js-progressbar');
+
+    UIkit.upload('.js-upload', {
+
+        url: './deployment',
+        multiple: true,
+        name: 'file',
+
+        beforeSend: function () {
+            console.log('beforeSend', arguments);
+        },
+        beforeAll: function () {
+            console.log('beforeAll', arguments);
+        },
+        load: function () {
+            console.log('load', arguments);
+        },
+        error: function () {
+            console.log('error', arguments);
+        },
+        complete: function () {
+            console.log('complete', arguments);
+        },
+
+        loadStart: function (e) {
+            console.log('loadStart', arguments);
+
+            bar.removeAttribute('hidden');
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        progress: function (e) {
+            console.log('progress', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        loadEnd: function (e) {
+            console.log('loadEnd', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        completeAll: function () {
+            console.log('completeAll', arguments);
+
+            setTimeout(function () {
+                bar.setAttribute('hidden', 'hidden');
+            }, 1000);
+
+            alert('Upload Completed');
+        }
+
+    });
+
+
+                    </script>
                 </div>
             </div>
         </div>
