@@ -3,6 +3,7 @@ server:
 eureka:
   instance:
     hostname: localhost
+    nonSecurePort: 8761
     #lease-expiration-duration-in-seconds: 10
     #lease-renewal-interval-in-seconds: 5
   client:
@@ -24,4 +25,5 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
     
