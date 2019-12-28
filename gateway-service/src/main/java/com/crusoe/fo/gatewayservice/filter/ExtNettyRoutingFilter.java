@@ -82,7 +82,7 @@ public class ExtNettyRoutingFilter extends NettyRoutingFilter {
 
         boolean preserveHost = exchange.getAttributeOrDefault(PRESERVE_HOST_HEADER_ATTRIBUTE, false);
 
-        HttpClient client = this.httpClient.chunkedTransfer(chunkedTransfer);
+        HttpClient client = this.httpClient;
 
 
 
@@ -98,7 +98,7 @@ public class ExtNettyRoutingFilter extends NettyRoutingFilter {
                     }
 
                     return nettyOutbound
-                            .options(NettyPipeline.SendOptions::flushOnEach)
+                            //.options(NettyPipeline.SendOptions::flushOnEach)
                             .send(request.getBody().map(dataBuffer ->
                                     ((NettyDataBuffer) dataBuffer).getNativeBuffer()));
                 }).responseConnection((res, connection) -> {

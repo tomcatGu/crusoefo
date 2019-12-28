@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.crusoe.fo</groupId>
-		<artifactId>com.crusoe.fo</artifactId>
+		<artifactId>crusoe-flowable</artifactId>
 		<version>0.0.1</version>
 	</parent>
 
@@ -34,9 +34,10 @@
 			<plugin>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
-				<version>1.2.5.RELEASE</version>
+				
 				<extensions>true</extensions>
 				<configuration>
+					<targetPath>/home/user/.m2/repository/com/crusoe/fo/</targetPath>
 					<generatedTestSourcesDir>src/test/java</generatedTestSourcesDir>
 					<baseClassForTests>com.crusoe.fo.test.eurekaClient.MvcSpec</baseClassForTests>
 				</configuration>
