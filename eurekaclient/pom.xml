@@ -34,7 +34,6 @@
 			<plugin>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
-				
 				<extensions>true</extensions>
 				<configuration>
 					<targetPath>/home/user/.m2/repository/com/crusoe/fo/</targetPath>

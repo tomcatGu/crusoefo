@@ -20,6 +20,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.RC1</spring-cloud.version>
+        <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
+        <docker.registry.name.prefix>localhost:5000</docker.registry.name.prefix>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -93,23 +95,33 @@
             <!--添加利用maven插件构建docker镜像的插件依赖 -->
             <plugin>
                 <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.1.0</version>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile.maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <imageName>${project.artifactId}:${project.version}</imageName>
-                    <dockerHost>http://10.132.23.119:2375</dockerHost>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
-                    <baseImage>java</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    <!-- copy the service's jar file from target into the root directory
-                        of the image -->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
+                    <repository>${docker.registry.name.prefix}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <user>duser</user>
+                    <password>123456</password>
+                    <contextDirectory>src/main/docker/</contextDirectory>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
                 </configuration>
             </plugin>
         </plugins>
@@ -132,6 +144,8 @@
         <module>consumer-feign</module>
         <module>gateway-service</module>
         <module>oauth</module>
+        <module>oauth2resourceserver-webflux</module>
         <module>crusoeui</module>
+        <module>eurekasidecar</module>
     </modules>
 </project>
