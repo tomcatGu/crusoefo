@@ -101,10 +101,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
 				.authorizedGrantTypes("client_credentials", "authorization_code","password", "refresh_token").scopes("web")
-				.authorities("oauth2").secret(finalPassword).and()
+				.authorities("res1").secret(finalPassword).redirectUris("https://www.baidu.com").and()
 				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
 				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe","http://10.0.0.21:6601/login/oauth2/code/crusoe")
-				.scopes("server").authorities("oauth2").secret(finalPassword);
+				.scopes("server").authorities("USER").secret(finalPassword);
 	}
 
 	@Override
