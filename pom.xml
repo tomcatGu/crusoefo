@@ -145,6 +145,6 @@
         <module>oauth2resourceserver-webflux</module>
         <module>crusoeui</module>
         <module>eurekasidecar</module>
-        <module>flowable</module>
+        <module>flowable-modeler</module>
     </modules>
 </project>

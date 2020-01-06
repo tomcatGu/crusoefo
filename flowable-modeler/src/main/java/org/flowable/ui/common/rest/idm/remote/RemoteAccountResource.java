@@ -70,11 +70,7 @@ public class RemoteAccountResource {
         pris.add(DefaultPrivileges.ACCESS_REST_API);
         userRepresentation.setPrivileges(pris);
 
-        if (userRepresentation != null) {
-            return userRepresentation;
-        } else {
-            throw new NotFoundException();
-        }
+        return userRepresentation;
     }
 
 }

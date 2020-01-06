@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Import;
 	AppDispatcherServletConfiguration.class
 })
 @SpringBootApplication
-public class DemoApplication {
+public class FlowableModelerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(FlowableModelerApplication.class, args);
 	}
 
 }
