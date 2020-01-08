@@ -1,6 +1,14 @@
 server:
   port: 8989
-
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+  instance:
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
+    
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -46,3 +54,4 @@ flowable:
 
   async-executor-activate: false #关闭定时任务JOB
   database-schema-update: false
+  history-level: full

@@ -100,10 +100,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		// 配置两个客户端,一个用于password认证一个用于client认证
 		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
 		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("client_credentials", "authorization_code","password", "refresh_token").scopes("web")
-				.authorities("res1").secret(finalPassword).redirectUris("https://www.baidu.com").and()
-				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
-				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe","http://10.0.0.21:6601/login/oauth2/code/crusoe")
+				.authorizedGrantTypes("client_credentials", "authorization_code", "password", "refresh_token")
+				.scopes("web").authorities("res1").secret(finalPassword).redirectUris("https://www.baidu.com").and()
+				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
+				.authorizedGrantTypes("authorization_code", "refresh_token")
+				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe",
+						"http://10.0.0.21:6601/login/oauth2/code/crusoe")
 				.scopes("server").authorities("USER").secret(finalPassword);
 	}
 
@@ -133,7 +135,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		// 允许表单认证
 		oauthServer.allowFormAuthenticationForClients();
 
-		oauthServer.tokenKeyAccess("permitAll()");
+		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
 
 	}
 

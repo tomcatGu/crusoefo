@@ -112,13 +112,14 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>${docker.registry.name.prefix}/${project.artifactId}</repository>
+                    <repository>${project.groupId}/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <user>duser</user>
                     <password>123456</password>
-                    <contextDirectory>src/main/docker/</contextDirectory>
+
                     <buildArgs>
-                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                 </configuration>
             </plugin>
