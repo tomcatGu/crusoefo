@@ -1,4 +1,4 @@
-package com.crusoe.fo;
+package com.crusoe.fo.config;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -7,6 +7,7 @@ import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -15,16 +16,19 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 //import org.springframework.web.reactive.config.EnableWebFlux;
 
 import lombok.extern.slf4j.Slf4j;
-
-//@EnableWebFluxSecurity
-//@EnableWebFlux
+@Configuration
+@EnableWebFluxSecurity
 @Slf4j
 public class SecurityConfig {
 
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
-		http.authorizeExchange().pathMatchers("/message/**").hasAuthority("oauth2").anyExchange().authenticated().and()
-				.oauth2ResourceServer().jwt().publicKey(getRSAPublicKey("crusoe.cer"));
+		http.authorizeExchange()
+		.pathMatchers("/*").permitAll()
+		
+		.anyExchange().authenticated()
+		.and()
+		.oauth2ResourceServer().jwt().publicKey(getRSAPublicKey("crusoe.cer"));
 		//
 		return http.build();
 	}

@@ -11,8 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
-@Configuration
-@EnableResourceServer
+//@Configuration
+//@EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public static final String RESOURCE_ID = "order";
 
@@ -21,18 +21,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         resources.resourceId(RESOURCE_ID).tokenServices(tokenService()).stateless(false);
     }
-    @Override
-    public void configure(HttpSecurity http) throws Exception{
 
-        http.
-        authorizeRequests().antMatchers("/message").access("#oauth2.hasScope('web')")
-        .and().csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+
+        http.authorizeRequests().antMatchers("/message").access("#oauth2.hasScope('web')").and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-@Bean
+
+    // @Bean
     public ResourceServerTokenServices tokenService() {
         String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
-        RemoteTokenServices service=new RemoteTokenServices();
+        RemoteTokenServices service = new RemoteTokenServices();
         service.setCheckTokenEndpointUrl("http://localhost:9000/oauth/check_token");
         service.setClientId("c1");
         service.setClientSecret(finalPassword);
