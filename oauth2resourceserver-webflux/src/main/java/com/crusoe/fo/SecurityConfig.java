@@ -12,12 +12,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.web.reactive.config.EnableWebFlux;
+//import org.springframework.web.reactive.config.EnableWebFlux;
 
 import lombok.extern.slf4j.Slf4j;
 
-@EnableWebFluxSecurity
-@EnableWebFlux
+//@EnableWebFluxSecurity
+//@EnableWebFlux
 @Slf4j
 public class SecurityConfig {
 
