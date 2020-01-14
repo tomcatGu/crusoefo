@@ -24,13 +24,5 @@ public class GatewayApp {
 		SpringApplication.run(GatewayApp.class, args);
 	}
 
-	@Bean
-	SecurityWebFilterChain configure(ServerHttpSecurity http) throws Exception {
-		http.authorizeExchange().pathMatchers("/", "/public/**").permitAll().anyExchange().authenticated().and()
-				.oauth2Login().and().oauth2Client();
-		return http.build();
-	}
-
-
 
 }

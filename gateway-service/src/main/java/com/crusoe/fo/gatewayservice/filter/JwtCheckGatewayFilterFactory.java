@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 
 import reactor.core.publisher.Mono;
 
@@ -19,6 +20,7 @@ public class JwtCheckGatewayFilterFactory extends AbstractGatewayFilterFactory<O
 			if (jwtToken != null) {
 				// 合法
 				// 将用户id作为参数传递下去
+				//ReactiveSecurityContextHolder.getContext().filter()
 				System.out.println(jwtToken);
 				return chain.filter(exchange);
 			}

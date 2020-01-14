@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -98,12 +99,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// 配置两个客户端,一个用于password认证一个用于client认证
-		String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
+		String finalPassword = new BCryptPasswordEncoder().encode("123456");
 		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
 				.authorizedGrantTypes("client_credentials", "authorization_code", "password", "refresh_token")
-				.scopes("web").authorities("res1").secret(finalPassword).and()
-				.withClient("webapp").resourceIds(DEMO_RESOURCE_ID)
-				.authorizedGrantTypes("authorization_code", "refresh_token")
+				.scopes("web").authorities("res1").secret(finalPassword).and().withClient("webapp")
+				.resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
 				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe",
 						"http://10.0.0.21:6601/login/oauth2/code/crusoe")
 				.scopes("server").authorities("USER").secret(finalPassword);
@@ -121,10 +121,20 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				// .tokenStore(new RedisTokenStore(redisConnectionFactory))
 				// .tokenStore(new InMemoryTokenStore())
 				// .tokenServices(tokenServices())
-				.userDetailsService(userDetailsService).authenticationManager(authenticationManager)
-				.tokenEnhancer(tokenEnhancerChain)
+				.tokenStore(tokenStore()).userDetailsService(userDetailsService)
+				.authenticationManager(authenticationManager).tokenEnhancer(tokenEnhancerChain)
+				// .tokenEnhancer(tokenEnhancerChain)
 
 				.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+
+		// 配置tokenServices参数
+		DefaultTokenServices tokenServices = new DefaultTokenServices();
+		tokenServices.setTokenStore(endpoints.getTokenStore());
+		tokenServices.setSupportRefreshToken(false);
+		tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+		tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+		tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30));
+		endpoints.tokenServices(tokenServices);
 
 	}
 
@@ -153,7 +163,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		return converter;
 	}
 
-	// @Bean
+	@Bean
 	public TokenEnhancer tokenEnhancer() {
 		/*
 		 * { "access_token": "f067da15-91f9-4fda-bbe4-6344ae3aefa7", "token_type":
@@ -165,7 +175,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			if (accessToken instanceof DefaultOAuth2AccessToken) {
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
-				additionalInformation.put("username", authentication.getDetails());
+				additionalInformation.put("username", authentication.getPrincipal());
 				// additionalInformation.put("data",new Test("123",123.456));
 				token.setAdditionalInformation(additionalInformation);
 
