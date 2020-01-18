@@ -19,9 +19,9 @@ spring:
         uri: http://www.baidu.com/
         predicates:
         - Path=/baidu/**
-        filters:
-        #- JwtCheck
-        - PreOauth2SSOGatewayFilter
+        #filters:
+        #- JwtCheckGatewayFilterFactory
+        #- PreOauth2SSOGatewayFilter
       - id: auth-service
         uri: lb://oauth2-service/oauth
         predicates:

@@ -32,7 +32,10 @@ public class SecurityConfig{
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 		http.authorizeExchange().pathMatchers("/message/**").hasAuthority("SCOPE_message:read").anyExchange()
-				.authenticated().and().oauth2Login().and().oauth2Client().and().oauth2ResourceServer()
+				.authenticated()
+				//.and().oauth2Login()
+				//.and().oauth2Client()
+				.and().oauth2ResourceServer()
 				.jwt().publicKey(getRSAPublicKey("crusoe.cer"));
 		return http.build();
 	}
