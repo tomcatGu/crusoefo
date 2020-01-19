@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebFluxSecurity
 @Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig {
 
 	@Bean

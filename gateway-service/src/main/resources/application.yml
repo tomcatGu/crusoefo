@@ -26,6 +26,10 @@ spring:
         uri: lb://oauth2-service/oauth
         predicates:
         - Path=/oauth/**
+      - id: order-service
+        uri: lb://order-service/
+        predicates:
+        - Path=/order/**
 #  security:
 #    oauth2:
 #      client:

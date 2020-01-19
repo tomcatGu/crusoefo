@@ -30,8 +30,8 @@ import java.util.List;
 import static org.springframework.cloud.gateway.filter.headers.HttpHeadersFilter.filterRequest;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.*;
 
-@Primary
-@Component
+//@Primary
+//@Component
 public class ExtNettyRoutingFilter extends NettyRoutingFilter {
 
     private final HttpClient httpClient;

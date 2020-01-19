@@ -10,7 +10,7 @@ eureka:
  
 spring:
   application:
-    name: oauth2-resourceserver
+    name: order-service
 
 
 logging:

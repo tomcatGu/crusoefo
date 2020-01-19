@@ -57,6 +57,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// 不拦截 oauth 开放的资源
 		// http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
 		http.formLogin().and().requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
+		http.csrf().disable();
 
 	}
 

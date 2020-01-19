@@ -19,7 +19,7 @@ public class OAuth2ResourceServerController {
 	}
 
 	@GetMapping("/message")
-	@PreAuthorize("hasAnyAuthority('res1')")
+	@PreAuthorize("hasAnyAuthority('res123')")
 	public String message() {
 		return "secret message";
 	}
