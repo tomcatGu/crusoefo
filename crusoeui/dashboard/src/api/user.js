@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/user/login',
+    url: 'http://localhost:7000/oauth/token?grant_type=password&client_id=client_1&client_secret=123456&scope=web&state=xyz'+"&username="+data.username+"&password="+data.password,
     method: 'post',
     data
   })

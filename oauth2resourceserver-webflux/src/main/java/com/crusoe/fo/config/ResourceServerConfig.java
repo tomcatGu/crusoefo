@@ -34,7 +34,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         String finalPassword = "{bcrypt}" + new BCryptPasswordEncoder().encode("123456");
         RemoteTokenServices service = new RemoteTokenServices();
         service.setCheckTokenEndpointUrl("http://localhost:9000/oauth/check_token");
-        service.setClientId("c1");
+        service.setClientId("client_1");
         service.setClientSecret(finalPassword);
 
         return service;

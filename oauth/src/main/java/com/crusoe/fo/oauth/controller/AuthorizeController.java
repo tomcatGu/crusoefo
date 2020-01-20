@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
@@ -48,10 +49,10 @@ public class AuthorizeController {
     public Map<String,String> user(Principal principal) {
         System.out.println(principal);
         if (principal != null) {
-            OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) principal;
-            Authentication authentication = oAuth2Authentication.getUserAuthentication();
+            UsernamePasswordAuthenticationToken oAuth2Authentication = (UsernamePasswordAuthenticationToken) principal;
+            
             Map<String, String> details = new LinkedHashMap<>();
-            details = (Map<String, String>) authentication.getDetails();
+            details = (Map<String, String>) oAuth2Authentication.getDetails();
             //logger.info("details = " + details);  // id, email, name, link etc.
             Map<String, String> map = new LinkedHashMap<>();
             map.put("user_name", oAuth2Authentication.getPrincipal().toString());

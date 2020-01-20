@@ -2,20 +2,20 @@ package com.crusoe.fo.oauth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	// @Bean
 	// public UserDetailsService userDetailsService() {
@@ -56,8 +56,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// http.csrf().disable();
 		// 不拦截 oauth 开放的资源
 		// http.requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
-		http.formLogin().and().requestMatchers().anyRequest().and().authorizeRequests().antMatchers("/oauth/**").permitAll();
-		http.csrf().disable();
+		http.formLogin().and()
+		
+		.cors().disable()
+		.cors()
+		.and()
+		.authorizeRequests()
+		.requestMatchers(CorsUtils::isPreFlightRequest)
+		.permitAll()
+		.and()
+		.requestMatchers().anyRequest()
+		.and().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll().antMatchers("/oauth/**").permitAll();
+		//.antMatchers(HttpMethod.OPTIONS, "/oauth/**").permitAll()
+		//.and().cors().and().csrf().disable();
+		
 
 	}
 
@@ -66,5 +78,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
+
+
 
 }

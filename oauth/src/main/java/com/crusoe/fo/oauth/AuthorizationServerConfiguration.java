@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -175,7 +176,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			if (accessToken instanceof DefaultOAuth2AccessToken) {
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
-				additionalInformation.put("username", authentication.getPrincipal());
+				additionalInformation.put("username", authentication.getDetails());
+				additionalInformation.put("authorities",authentication.getAuthorities());
+				additionalInformation.put("code",20000);
 				// additionalInformation.put("data",new Test("123",123.456));
 				token.setAdditionalInformation(additionalInformation);
 

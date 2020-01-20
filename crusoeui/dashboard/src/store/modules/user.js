@@ -26,9 +26,9 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        const  data  = response
+        commit('SET_TOKEN', data.access_token)
+        setToken(data.access_token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -38,9 +38,18 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
+    
     return new Promise((resolve, reject) => {
+   //const { name, avatar } = data
+   const  data ={name:"admin",avatar:"https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"}
+   console.log(data)
+   commit('SET_NAME', data.name)
+   commit('SET_AVATAR', data.avatar)
+   resolve(data)
+/*
       getInfo(state.token).then(response => {
         const { data } = response
+
 
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -54,26 +63,35 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+        */
     })
+  
   },
 
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+/*       logout(state.token).then(() => {
+        console.log("logout")
         commit('SET_TOKEN', '')
         removeToken()
         resetRouter()
         resolve()
       }).catch(error => {
         reject(error)
-      })
+      }) */
+      commit('SET_TOKEN', '')
+      removeToken()
+      resetRouter()
+      resolve()
+
     })
   },
 
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
+      console.log("resettoken")
       commit('SET_TOKEN', '')
       removeToken()
       resolve()
