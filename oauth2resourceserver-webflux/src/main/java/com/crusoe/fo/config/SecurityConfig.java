@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -20,14 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebFluxSecurity
 @Slf4j
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+
 
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 		http.authorizeExchange()
-		.pathMatchers("/*").permitAll()
 		
+		//.pathMatchers("/order/message").hasAuthority("res1")
+		.pathMatchers("/**").permitAll()
 		.anyExchange().authenticated()
 		.and()
 		.oauth2ResourceServer().jwt().publicKey(getRSAPublicKey("crusoe.cer"));

@@ -1,8 +1,10 @@
 package com.crusoe.fo.oauth;
 
 import java.security.KeyPair;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +17,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -101,13 +104,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// 配置两个客户端,一个用于password认证一个用于client认证
 		String finalPassword = new BCryptPasswordEncoder().encode("123456");
-		clients.inMemory().withClient("client_1").resourceIds(DEMO_RESOURCE_ID)
+		clients.inMemory().withClient("client_1")
 				.authorizedGrantTypes("client_credentials", "authorization_code", "password", "refresh_token")
-				.scopes("web").authorities("res1").secret(finalPassword).and().withClient("webapp")
-				.resourceIds(DEMO_RESOURCE_ID).authorizedGrantTypes("authorization_code", "refresh_token")
-				.redirectUris("http://localhost:6601/login/oauth2/code/crusoe",
-						"http://10.0.0.21:6601/login/oauth2/code/crusoe")
-				.scopes("server").authorities("USER").secret(finalPassword);
+				.scopes("web").authorities("res1").secret(finalPassword).and().withClient("webapp");
 	}
 
 	@Override
@@ -177,8 +176,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 				additionalInformation.put("username", authentication.getDetails());
-				additionalInformation.put("authorities",authentication.getAuthorities());
-				additionalInformation.put("code",20000);
+				List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
+				List<String> authorityList = new ArrayList<String>();
+				for (GrantedAuthority grantedAuthority : authorities) {
+					authorityList.add(grantedAuthority.getAuthority());
+				}
+
+				additionalInformation.put("authorities", authorityList);
+
+				additionalInformation.put("code", 20000);
 				// additionalInformation.put("data",new Test("123",123.456));
 				token.setAdditionalInformation(additionalInformation);
 

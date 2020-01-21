@@ -16,13 +16,13 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public static final String RESOURCE_ID = "order";
 
-    @Override
+    //@Override
     public void configure(ResourceServerSecurityConfigurer resources) {
 
         resources.resourceId(RESOURCE_ID).tokenServices(tokenService()).stateless(false);
     }
 
-    @Override
+    //@Override
     public void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests().antMatchers("/message").access("#oauth2.hasScope('web')").and().csrf().disable()

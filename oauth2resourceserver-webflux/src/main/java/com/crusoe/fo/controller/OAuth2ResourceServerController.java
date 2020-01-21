@@ -20,7 +20,7 @@ public class OAuth2ResourceServerController {
 
 	@GetMapping("/message")
 	@PreAuthorize("hasAnyAuthority('res1')")
-	public String message() {
-		return "secret message";
+	public  Mono<String> message(@AuthenticationPrincipal Jwt jwt) {
+		return Mono.just("secret message");
 	}
 }
