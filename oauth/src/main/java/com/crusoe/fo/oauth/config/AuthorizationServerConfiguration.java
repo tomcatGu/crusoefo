@@ -1,4 +1,4 @@
-package com.crusoe.fo.oauth;
+package com.crusoe.fo.oauth.config;
 
 import java.security.KeyPair;
 import java.util.ArrayList;

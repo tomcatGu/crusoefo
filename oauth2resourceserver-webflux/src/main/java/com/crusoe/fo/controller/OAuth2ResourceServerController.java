@@ -1,5 +1,8 @@
 package com.crusoe.fo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +26,10 @@ public class OAuth2ResourceServerController {
 
 	@GetMapping("/message")
 	//@PreAuthorize("hasAnyAuthority('res12','res2','res3')")
-	public Mono<String> message() {
-		return Mono.just("secret message");
+	public Mono<Map<String, Object>> message() {
+		Map<String, Object> map = new HashMap<>(8); 
+		map.put("code", 20000);
+		map.put("message","secret message");
+		return Mono.just(map);
 	}
 }
