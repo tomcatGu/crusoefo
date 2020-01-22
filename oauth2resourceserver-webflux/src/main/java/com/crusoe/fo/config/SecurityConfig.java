@@ -5,39 +5,67 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 //import org.springframework.web.reactive.config.EnableWebFlux;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
+
 @Configuration
 @EnableWebFluxSecurity
 @Slf4j
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableReactiveMethodSecurity
 public class SecurityConfig {
-
-
 
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 		http.authorizeExchange()
-		
-		//.pathMatchers("/order/message").hasAuthority("res1")
-		.pathMatchers("/**").permitAll()
-		.anyExchange().authenticated()
-		.and()
-		.oauth2ResourceServer().jwt().publicKey(getRSAPublicKey("crusoe.cer"));
+
+				// .pathMatchers("/order/message").hasAuthority("res1")
+				.pathMatchers("/**").permitAll().anyExchange().authenticated().and().oauth2ResourceServer().jwt()
+				.publicKey(getRSAPublicKey("crusoe.cer")).jwtAuthenticationConverter(grantedAuthoritiesExtractor());;
 		//
 		return http.build();
 	}
+
+	Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
+		JwtAuthenticationConverter jwtAuthenticationConverter =
+				new JwtAuthenticationConverter();
+		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter
+				(new GrantedAuthoritiesExtractor());
+		return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
+	}
+
+	static class GrantedAuthoritiesExtractor
+        implements Converter<Jwt, Collection<GrantedAuthority>> {
+
+    public Collection<GrantedAuthority> convert(Jwt jwt) {
+        Collection<String> authorities = (Collection<String>)
+                jwt.getClaims().get("authorities");
+
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+}
 
 	// 将byte数组变成RSAPublicKey
 	public RSAPublicKey getRSAPublicKey(String keyFile) {

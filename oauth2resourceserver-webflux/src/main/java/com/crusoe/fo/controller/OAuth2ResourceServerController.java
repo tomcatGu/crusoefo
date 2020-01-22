@@ -1,7 +1,10 @@
 package com.crusoe.fo.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping(value="/order")
+@RequestMapping(value = "/order")
 public class OAuth2ResourceServerController {
 	@GetMapping("/")
 	public Mono<String> index(@AuthenticationPrincipal Jwt jwt) {
-		//return String.format("Hello, %s!", jwt.getExpiresAt());
+		// return String.format("Hello, %s!", jwt.getExpiresAt());
 		return Mono.just("hello world");
 	}
 
 	@GetMapping("/message")
-	@PreAuthorize("hasAnyAuthority('res1')")
-	public  Mono<String> message(@AuthenticationPrincipal Jwt jwt) {
+	@PreAuthorize("hasAnyAuthority('res12','res2','res3')")
+	public Mono<String> message() {
 		return Mono.just("secret message");
 	}
 }
