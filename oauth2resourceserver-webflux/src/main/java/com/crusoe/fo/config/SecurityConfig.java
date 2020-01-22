@@ -39,7 +39,7 @@ public class SecurityConfig {
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 		http.authorizeExchange()
 
-				// .pathMatchers("/order/message").hasAuthority("res1")
+				 .pathMatchers("/order/message").hasAuthority("res1")
 				.pathMatchers("/**").permitAll().anyExchange().authenticated().and().oauth2ResourceServer().jwt()
 				.publicKey(getRSAPublicKey("crusoe.cer")).jwtAuthenticationConverter(grantedAuthoritiesExtractor());;
 		//

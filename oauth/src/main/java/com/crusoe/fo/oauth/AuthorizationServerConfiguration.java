@@ -42,8 +42,6 @@ import com.crusoe.fo.oauth.service.UserDetailsServiceImpl;
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private static final String DEMO_RESOURCE_ID = "order";
-
 	@Autowired
 
 	AuthenticationManager authenticationManager;

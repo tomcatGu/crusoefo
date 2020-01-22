@@ -158,16 +158,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: 'order-link',
-    component: Layout,
-    children: [
-      {
-        path: 'http://localhost:9001/order/message',
-        meta: { title: 'Order Link', icon: 'link' }
-      }
-    ]
-  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

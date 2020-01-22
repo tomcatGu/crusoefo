@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getOrder } from '@/api/user'
 
 export default {
   name: 'Dashboard',
@@ -13,7 +14,22 @@ export default {
     ...mapGetters([
       'name'
     ])
-  }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        //this.redirect = route.query && route.query.redirect
+        new Promise((resolve, reject) => {
+
+          getOrder().then(response=>{
+
+            console.log(response)
+          })
+        })
+      },
+      immediate: true
+    }
+  },
 }
 </script>
 

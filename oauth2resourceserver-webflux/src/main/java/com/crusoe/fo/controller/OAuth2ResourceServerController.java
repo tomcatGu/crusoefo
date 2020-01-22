@@ -22,7 +22,7 @@ public class OAuth2ResourceServerController {
 	}
 
 	@GetMapping("/message")
-	@PreAuthorize("hasAnyAuthority('res12','res2','res3')")
+	//@PreAuthorize("hasAnyAuthority('res12','res2','res3')")
 	public Mono<String> message() {
 		return Mono.just("secret message");
 	}
