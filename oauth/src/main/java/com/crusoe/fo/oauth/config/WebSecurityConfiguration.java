@@ -1,4 +1,4 @@
-package com.crusoe.fo.oauth;
+package com.crusoe.fo.oauth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
