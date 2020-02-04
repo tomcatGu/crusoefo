@@ -10,6 +10,8 @@ import org.davidmoten.rx.jdbc.pool.Pools;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import reactor.core.publisher.Mono;
+
 @Component
 public class UserRepository {
 
@@ -18,11 +20,19 @@ public class UserRepository {
     public UserRepository(@Value("${spring.datasource.url}") String url,
             @Value("${spring.datasource.username}") String username,
             @Value("${spring.datasource.password}") String password) throws Exception {
-        //Connection connection = DriverManager.getConnection(url, username, password);
+        // Connection connection = DriverManager.getConnection(url, username, password);
         NonBlockingConnectionPool pool = Pools.nonBlocking().maxPoolSize(Runtime.getRuntime().availableProcessors() * 5)
-                .connectionProvider(ConnectionProvider.from(url)).build();
+                .connectionProvider(ConnectionProvider.from(url,username,password)).build();
 
         this.db = Database.from(pool);
+    }
+
+    public Mono<String> testFindId() {
+
+        db.select("select author from act_co_databasechangelog")
+        .getAs(String.class)
+        .blockingForEach(System.out::println);
+        return Mono.just("data");
     }
 
 }
