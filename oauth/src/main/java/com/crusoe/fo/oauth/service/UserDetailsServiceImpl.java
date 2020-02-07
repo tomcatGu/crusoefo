@@ -3,6 +3,9 @@ package com.crusoe.fo.oauth.service;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.crusoe.fo.oauth.entity.Role;
+import com.crusoe.fo.oauth.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -13,9 +16,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	@Autowired
+	UserRepository userRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -34,16 +40,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 这里为了方便演示，创建了两个用户，一个admin，拥有res1,res2和res3
 		// 一个user,只拥有res1和res2
 		// 一个guest,只拥有res1
+		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
 		User user = null;
-		if ("admin".equalsIgnoreCase(s)) {
-			user = mockAdmin();
-		}
-		if ("user".equalsIgnoreCase(s)) {
-			user = mockUser();
-		}
-		if ("guest".equalsIgnoreCase(s)) {
-			user = mockGuest();
-		}
+		Collection<GrantedAuthority> authorities = new HashSet<>();
+		
+		 for (Role role : userEntity.) {
+
+		 }
+		/*
+		 * if ("admin".equalsIgnoreCase(s)) { user = mockAdmin(); } if
+		 * ("user".equalsIgnoreCase(s)) { user = mockUser(); } if
+		 * ("guest".equalsIgnoreCase(s)) { user = mockGuest(); }
+		 */
 		return user;
 	}
 
