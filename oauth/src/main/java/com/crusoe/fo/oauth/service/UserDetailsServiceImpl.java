@@ -43,10 +43,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
 		User user = null;
 		Collection<GrantedAuthority> authorities = new HashSet<>();
-		
-		 for (Role role : userEntity.) {
 
-		 }
+		for (Role role : userEntity.getRoleList()) {
+			authorities.add(new SimpleGrantedAuthority(role.getRolename()));
+
+		}
+		user = new User(userEntity.getUsername(), userEntity.getPassword(), authorities);
 		/*
 		 * if ("admin".equalsIgnoreCase(s)) { user = mockAdmin(); } if
 		 * ("user".equalsIgnoreCase(s)) { user = mockUser(); } if
