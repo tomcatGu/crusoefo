@@ -19,7 +19,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.RC1</spring-cloud.version>
         <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
-        <docker.registry.name.prefix>10.132.23.119:5000</docker.registry.name.prefix>
+        <docker.registry.name.prefix>localhost:5000</docker.registry.name.prefix>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -112,13 +112,15 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>${project.groupId}/${project.artifactId}</repository>
+                    <repository>${docker.registry.name.prefix}/${project.artifactId}</repository>
+                    
                     <tag>${project.version}</tag>
-                    <user>duser</user>
+                    <username>duser</username>
                     <password>123456</password>
-
-                    <buildArgs>
-
+<!-- 					<pushImage>true</pushImage>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+ -->                    <buildArgs>
+                        <finalName>${project.build.finalName}</finalName>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                 </configuration>

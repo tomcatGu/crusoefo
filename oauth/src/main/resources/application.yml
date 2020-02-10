@@ -18,9 +18,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://10.132.23.119:5432/oauth
+    url: jdbc:postgresql://localhost:5432/oauth
     username: postgres
-    password: 123456
+    password: postgres1982
   jpa:
     hibernate:
       ddl-auto: update
