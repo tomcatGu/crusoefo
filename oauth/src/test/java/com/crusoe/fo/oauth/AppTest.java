@@ -1,38 +1,48 @@
 package com.crusoe.fo.oauth;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import com.crusoe.fo.oauth.entity.Role;
+import com.crusoe.fo.oauth.entity.User;
+import com.crusoe.fo.oauth.repository.UserRepository;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class AppTest {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+    @Autowired
+    UserRepository userRepository;
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    @Transactional
+    public void testUserRepository() {
+        List<User> users=userRepository.findAll();
+        assertEquals(1, users.size());
+
+        Role role=new Role();
+        role.setRolename("res1");
+        User user=new User();
+        user.setUsername("admin");
+        user.setPassword("123456");
+        user.getRoleList().add(role);
+        userRepository.save(user);
+        assertTrue(user.getId()>0);
+
+
     }
 }
