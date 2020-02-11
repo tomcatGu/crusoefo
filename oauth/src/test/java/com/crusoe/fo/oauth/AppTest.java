@@ -32,7 +32,7 @@ public class AppTest {
     @Transactional
     public void testUserRepository() {
         List<User> users=userRepository.findAll();
-        assertEquals(1, users.size());
+        assertEquals(0, users.size());
 
         Role role=new Role();
         role.setRolename("res1");

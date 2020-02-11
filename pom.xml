@@ -154,5 +154,6 @@
         <module>crusoeui</module>
         <module>eurekasidecar</module>
         <module>flowable-modeler</module>
+        <module>flowable-centre</module>
     </modules>
 </project>
