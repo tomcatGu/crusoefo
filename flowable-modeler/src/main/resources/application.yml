@@ -51,6 +51,9 @@ flowable:
       idm-admin:
         user: admin
         password: test
+  modeler:
+    app:
+      deployment-api-url: http://localhost:8989/flowable-task/process-api
 
   async-executor-activate: false #关闭定时任务JOB
   database-schema-update: false
