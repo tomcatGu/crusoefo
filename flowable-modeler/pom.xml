@@ -117,6 +117,12 @@
             <version>${flowable.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-ui-modeler-rest</artifactId>
+            <version>${flowable.version}</version>
+        </dependency>
+
 
     </dependencies>
 

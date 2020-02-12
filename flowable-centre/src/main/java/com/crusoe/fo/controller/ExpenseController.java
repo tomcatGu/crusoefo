@@ -37,16 +37,45 @@ public class ExpenseController {
 
     /*************** 此处为业务代码 ******************/
 
-
     @RequestMapping(value = "start")
     @ResponseBody
     public String addExpense(String userId, String processId) {
-        //启动流程
+        // 启动流程
         HashMap<String, Object> map = new HashMap<>();
         map.put("taskUser", userId);
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processId, map);
         return "提交成功.流程Id为：" + processInstance.getId();
     }
+
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public Object list(String userId) {
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(userId).orderByTaskCreateTime().desc().list();
+        for (Task task : tasks) {
+            System.out.println(task.toString());
+        }
+        return tasks.toArray().toString();
+    }
+
+    /**
+     * 批准
+     *
+     * @param taskId 任务ID
+     */
+    @RequestMapping(value = "apply")
+    @ResponseBody
+    public String apply(String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        if (task == null) {
+            throw new RuntimeException("流程不存在");
+        }
+        //通过审核
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("outcome", "通过");
+        taskService.complete(taskId, map);
+        return "processed ok!";
+    }
+
 
     /**
      * 生成流程图
@@ -54,7 +83,8 @@ public class ExpenseController {
      * @param processId 任务ID
      */
     @RequestMapping(value = "processDiagram")
-    public void genProcessDiagram(HttpServletResponse httpServletResponse, String processId) throws Exception {
+    @ResponseBody
+    public void genProcessDiagram(String processId, HttpServletResponse httpServletResponse) throws Exception {
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(processId).singleResult();
 
         // 流程走完的不显示图

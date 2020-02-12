@@ -22,7 +22,7 @@ import org.flowable.rest.service.api.RestUrls;
 import org.flowable.rest.service.api.repository.DeploymentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,21 +35,22 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping(value = "/flowable-task/process-api")
+@RequestMapping("/flowable-task/process-api")
 public class DeploymentController {
 
-//    @Autowired
-//    protected RestResponseFactory restResponseFactory;
+
+    // @Autowired
+    // protected RestResponseFactory restResponseFactory;
 
     @Autowired
     protected RepositoryService repositoryService;
 
-    @Autowired(required=false)
+    @Autowired(required = false)
     protected BpmnRestApiInterceptor restApiInterceptor;
-
 
     /**
      * 部署（发布） rest api publish中会调用此接口而非直接ui调用
+     * 
      * @param deploymentKey
      * @param deploymentName
      * @param tenantId
@@ -57,14 +58,13 @@ public class DeploymentController {
      * @param response
      * @return
      */
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "file", dataType = "file", paramType = "form", required = true)
-    })
+    @ApiImplicitParams({ @ApiImplicitParam(name = "file", dataType = "file", paramType = "form", required = true) })
     @PostMapping(value = "/app-repository/deployments", produces = "application/json", consumes = "multipart/form-data")
-    public DeploymentResponse uploadDeployment(@ApiParam(name = "deploymentKey") @RequestParam(value = "deploymentKey", required = false) String deploymentKey,
-                                               @ApiParam(name = "deploymentName") @RequestParam(value = "deploymentName", required = false) String deploymentName,
-                                               @ApiParam(name = "tenantId") @RequestParam(value = "tenantId", required = false) String tenantId,
-                                               HttpServletRequest request, HttpServletResponse response) {
+    public DeploymentResponse uploadDeployment(
+            @ApiParam(name = "deploymentKey") @RequestParam(value = "deploymentKey", required = false) String deploymentKey,
+            @ApiParam(name = "deploymentName") @RequestParam(value = "deploymentName", required = false) String deploymentName,
+            @ApiParam(name = "tenantId") @RequestParam(value = "tenantId", required = false) String tenantId,
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (!(request instanceof MultipartHttpServletRequest)) {
             throw new FlowableIllegalArgumentException("Multipart request is required");
@@ -88,7 +88,8 @@ public class DeploymentController {
         try {
             DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
             String fileName = file.getOriginalFilename();
-            if (StringUtils.isEmpty(fileName) || !(fileName.endsWith(".bpmn20.xml") || fileName.endsWith(".bpmn") || fileName.toLowerCase().endsWith(".bar") || fileName.toLowerCase().endsWith(".zip"))) {
+            if (StringUtils.isEmpty(fileName) || !(fileName.endsWith(".bpmn20.xml") || fileName.endsWith(".bpmn")
+                    || fileName.toLowerCase().endsWith(".bar") || fileName.toLowerCase().endsWith(".zip"))) {
 
                 fileName = file.getName();
             }
@@ -101,7 +102,8 @@ public class DeploymentController {
                 throw new FlowableIllegalArgumentException("File must be of type .bpmn20.xml, .bpmn, .bar or .zip");
             }
 
-            if (!decodedQueryStrings.containsKey("deploymentName") || StringUtils.isEmpty(decodedQueryStrings.get("deploymentName"))) {
+            if (!decodedQueryStrings.containsKey("deploymentName")
+                    || StringUtils.isEmpty(decodedQueryStrings.get("deploymentName"))) {
                 String fileNameWithoutExtension = fileName.split("\\.")[0];
 
                 if (StringUtils.isNotEmpty(fileNameWithoutExtension)) {
@@ -113,7 +115,8 @@ public class DeploymentController {
                 deploymentBuilder.name(decodedQueryStrings.get("deploymentName"));
             }
 
-            if (decodedQueryStrings.containsKey("deploymentKey") && StringUtils.isNotEmpty(decodedQueryStrings.get("deploymentKey"))) {
+            if (decodedQueryStrings.containsKey("deploymentKey")
+                    && StringUtils.isNotEmpty(decodedQueryStrings.get("deploymentKey"))) {
                 deploymentBuilder.key(decodedQueryStrings.get("deploymentKey"));
             }
 
@@ -134,6 +137,7 @@ public class DeploymentController {
             throw new FlowableException(e.getMessage(), e);
         }
     }
+
     public Map<String, String> splitQueryString(String queryString) {
         if (StringUtils.isEmpty(queryString)) {
             return Collections.emptyMap();
@@ -144,6 +148,7 @@ public class DeploymentController {
         }
         return queryMap;
     }
+
     protected String decode(String string) {
         if (string != null) {
             try {
@@ -154,7 +159,6 @@ public class DeploymentController {
         }
         return null;
     }
-
 
     public DeploymentResponse createDeploymentResponse(Deployment deployment) {
         return createDeploymentResponse(deployment, createUrlBuilder());
