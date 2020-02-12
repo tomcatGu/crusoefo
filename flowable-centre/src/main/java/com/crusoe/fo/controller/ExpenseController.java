@@ -20,6 +20,7 @@ import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,7 +76,18 @@ public class ExpenseController {
         taskService.complete(taskId, map);
         return "processed ok!";
     }
-
+/**
+ * 移动节点
+ */
+@RequestMapping(value = "move/{proInstId}/{nodeId}/{toNodeId}")
+public void move(@PathVariable("proInstId") String proInstId,
+                 @PathVariable("nodeId") String nodeId,
+                 @PathVariable("toNodeId") String toNodeId) {
+    runtimeService.createChangeActivityStateBuilder()
+            .processInstanceId(proInstId)
+            .moveActivityIdTo(nodeId, toNodeId)
+            .changeState();
+}
 
     /**
      * 生成流程图
@@ -108,7 +120,7 @@ public class ExpenseController {
         BpmnModel bpmnModel = repositoryService.getBpmnModel(pi.getProcessDefinitionId());
         ProcessEngineConfiguration engconf = processEngine.getProcessEngineConfiguration();
         ProcessDiagramGenerator diagramGenerator = engconf.getProcessDiagramGenerator();
-        InputStream in = diagramGenerator.generateDiagram(bpmnModel, "png", activityIds, flows,
+        InputStream in = diagramGenerator.generateDiagram(bpmnModel, "jpg", activityIds, flows,
                 engconf.getActivityFontName(), engconf.getLabelFontName(), engconf.getAnnotationFontName(),
                 engconf.getClassLoader(), 1.0, true);
 
