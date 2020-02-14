@@ -127,6 +127,35 @@ public class ExpenseController {
     }
 
     /**
+     * 移动到子流程
+     * 
+     * @param proInstId
+     * @param subProcess
+     * @param subNodeId
+     * @param parentNodeId
+     */
+    @RequestMapping(value = "moveToSub/{proInstId}/{parentNodeId}/{subNodeId}/{subProcess}")
+    public void moveToSub(@PathVariable("proInstId") String proInstId, @PathVariable("subProcess") String subProcess,
+            @PathVariable("subNodeId") String subNodeId, @PathVariable("parentNodeId") String parentNodeId) {
+        runtimeService.createChangeActivityStateBuilder().processInstanceId(proInstId)
+                .moveActivityIdToSubProcessInstanceActivityId(parentNodeId, subNodeId, subProcess).changeState();
+    }
+
+    /**
+     * 移动到父节点
+     * 
+     * @param subProInstId
+     * @param subNodeId
+     * @param parentNodeId
+     */
+    @RequestMapping(value = "moveToParent/{subProInstId}/{subNodeId}/{parentNodeId}")
+    public void moveToParent(@PathVariable("subProInstId") String subProInstId,
+            @PathVariable("subNodeId") String subNodeId, @PathVariable("parentNodeId") String parentNodeId) {
+        runtimeService.createChangeActivityStateBuilder().processInstanceId(subProInstId)
+                .moveActivityIdToParentActivityId(subNodeId, parentNodeId).changeState();
+    }
+
+    /**
      * 生成流程图
      *
      * @param processId 任务ID
