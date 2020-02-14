@@ -3,6 +3,7 @@ package com.crusoe.fo.controller;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,35 @@ public class ExpenseController {
     }
 
     /**
+     * 增加流程执行实例
+     * 
+     * @param nodeId
+     * @param proInstId
+     * @param assigneeStr 以逗号隔开的字符串
+     */
+    @RequestMapping(value = "addExecution/{nodeId}/{proInstId}/{assignees}")
+    public void addExecution(@PathVariable("nodeId") String nodeId, @PathVariable("proInstId") String proInstId,
+            @PathVariable("assignees") String assigneeStr) {
+        String[] assignees = assigneeStr.split(",");
+        for (String assignee : assignees) {
+            runtimeService.addMultiInstanceExecution(nodeId, proInstId,
+                    Collections.singletonMap("assignee", (Object) assignee));
+        }
+    }
+
+    /**
+     * 删除流程执行实例
+     * 
+     * @param excutionId
+     * @param complated  是否完成此流程执行实例
+     */
+    @RequestMapping(value = "delExecution/{excutionId}/{complated}")
+    public void delExecution(@PathVariable("excutionId") String excutionId,
+            @PathVariable("complated") Boolean complated) {
+        runtimeService.deleteMultiInstanceExecution(excutionId, complated);
+    }
+
+    /**
      * 生成流程图
      *
      * @param processId 任务ID
@@ -132,7 +162,8 @@ public class ExpenseController {
         BpmnModel bpmnModel = repositoryService.getBpmnModel(pi.getProcessDefinitionId());
         ProcessEngineConfiguration engconf = processEngine.getProcessEngineConfiguration();
         ProcessDiagramGenerator diagramGenerator = engconf.getProcessDiagramGenerator();
-        //ProcessDiagramGenerator diagramGenerator = new CustomProcessDiagramGenerator();
+        // ProcessDiagramGenerator diagramGenerator = new
+        // CustomProcessDiagramGenerator();
         engconf.setActivityFontName("宋体");
         engconf.setLabelFontName("宋体");
         engconf.setAnnotationFontName("宋体");
@@ -147,7 +178,7 @@ public class ExpenseController {
             if (activityType.equals("sequenceFlow") || activityType.equals("exclusiveGateway")) {
                 flows.add(hi.getActivityId());
             } else if (activityType.equals("userTask") || activityType.equals("startEvent")) {
-                //activityIds.add(hi.getActivityId());
+                // activityIds.add(hi.getActivityId());
             }
         }
 
@@ -341,7 +372,6 @@ public class ExpenseController {
                 .orderByHistoricActivityInstanceId().asc().list();
     }
 
-
     /**
      * 任务历史
      *
@@ -351,10 +381,8 @@ public class ExpenseController {
         List<HistoricActivityInstance> list = historyService // 历史相关Service
                 .createHistoricActivityInstanceQuery() // 创建历史活动实例查询
                 .processInstanceId(processId) // 执行流程实例id
-                .finished()
-                .list();
+                .finished().list();
         return list;
     }
-
 
 }
