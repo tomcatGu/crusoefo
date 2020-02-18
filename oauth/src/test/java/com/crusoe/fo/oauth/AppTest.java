@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -29,7 +30,7 @@ public class AppTest {
     UserRepository userRepository;
 
     @Test
-    @Transactional
+    //@Transactional
     public void testUserRepository() {
         List<User> users=userRepository.findAll();
         assertEquals(0, users.size());
@@ -38,7 +39,7 @@ public class AppTest {
         role.setRolename("res1");
         User user=new User();
         user.setUsername("admin");
-        user.setPassword("123456");
+        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
         user.getRoleList().add(role);
         userRepository.save(user);
         assertTrue(user.getId()>0);
