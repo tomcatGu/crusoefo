@@ -2,6 +2,36 @@
   <div ref="content" class="containers">
     <div ref="canvas" class="canvas" />
     <div id="js-properties-panel" class="panel" />
+    <ul class="buttons">
+      <li>下载</li>
+      <li>
+        <a
+          ref="saveDiagram"
+          @click="handleDownloadXml"
+          href="javascript:"
+          title="download BPMN diagram"
+          class="active"
+        >BPMN diagram</a>
+      </li>
+      <li>
+        <a
+          ref="saveImg"
+          @click="saveImg"
+          href="javascript:"
+          title="download as SVG image"
+          class="active"
+        >SVG image</a>
+      </li>
+      <li>
+        <a @click="handleZoom(0.2)" href="javascript:" class="active">放大</a>
+      </li>
+      <li>
+        <a @click="handleZoom(-0.2)" href="javascript:" class="active">缩小</a>
+      </li>
+      <li>
+        <a @click="resetView" href="javascript:" class="active">还原</a>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -11,6 +41,8 @@ import BpmnModeler from "bpmn-js/lib/Modeler";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "bpmn-js-properties-panel/lib/provider/camunda";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda";
+
+import customTranslate from "./customTanslate";
 
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
@@ -25,7 +57,8 @@ export default {
       // bpmn建模器
       bpmnModeler: null,
       container: null,
-      canvas: null
+      canvas: null,
+      scale: 1
     };
   },
   mounted() {
@@ -45,7 +78,10 @@ export default {
         // 左边工具栏以及节点
         propertiesProviderModule,
         // 右边的工具栏
-        propertiesPanelModule
+        propertiesPanelModule,
+        {
+          translate: ["value", customTranslate]
+        }
       ],
       moddleExtensions: {
         camunda: camundaModdleDescriptor
@@ -127,6 +163,121 @@ export default {
           // that.success()
         }
       });
+    },
+    // 实时保存
+    saveDiagram() {
+      const vm = this;
+      vm.bpmnModeler.saveXML({ format: true }, (err, xml) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+        vm.bpmnInfo.xmlStr = xml;
+      });
+      vm.bpmnModeler.saveSVG({ format: true }, (err, data) => {
+        if (err) {
+          return;
+        }
+      });
+    },
+    // 上传文件
+    handleOpenFile(e) {
+      const vm = this;
+      const input = document.createElement("input");
+      input.type = "file";
+      input.click(); // 打开文件选择框
+      input.onchange = function() {
+        const file = input.files[0];
+        if (window.FileReader) {
+          try {
+            var fr = new FileReader();
+            fr.readAsText(file); // 将文件读取为文本
+            fr.onload = function(e) {
+              vm.bpmnInfo.xmlStr = fr.result;
+              vm.createNewDiagram();
+            };
+          } catch (e) {
+            errorInfo(e.toString());
+          }
+        } else {
+          errorInfo("您的浏览器可能不支持此操作");
+        }
+      };
+      document.body.removeChild(input);
+    },
+    // 下载xml/svg
+    download(type, data, name) {
+      // 下载xml/svg
+      let dataTrack = "";
+      const a = document.createElement("a");
+      switch (type) {
+        case "xml":
+          dataTrack = "bpmn";
+          break;
+        case "svg":
+          dataTrack = "svg";
+          break;
+        default:
+          break;
+      }
+      const reName = name || `diagram.${dataTrack}`;
+      a.setAttribute(
+        "href",
+        `data:application/bpmn20-xml;charset=UTF-8,${encodeURIComponent(data)}`
+      );
+      a.setAttribute("target", "_blank");
+      a.setAttribute("dataTrack", `diagram:download-${dataTrack}`);
+      a.setAttribute("download", reName);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    },
+    // 下载 XML 格式
+    handleDownloadXml() {
+      this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
+        if (err) {
+          alert("导出错误，请重试");
+        } else {
+          this.download("xml", xml);
+        }
+      });
+    },
+    // 下载 SVG 格式
+    saveImg() {
+      this.bpmnModeler.saveSVG({ format: true }, (err, xml) => {
+        if (err) {
+          alert("导出错误，请重试");
+        } else {
+          this.download("svg", xml);
+        }
+      });
+    },
+    // 前进
+    handleRedo() {
+      this.bpmnModeler.get("commandStack").redo();
+    },
+    // 后退
+    handleUndo() {
+      this.bpmnModeler.get("commandStack").undo();
+    },
+    // 流程图放大缩小
+    handleZoom(radio) {
+      const newScale = !radio
+        ? 1.0 // 不输入radio则还原
+        : this.scale + radio <= 0.2 // 最小缩小倍数
+        ? 0.2
+        : this.scale + radio;
+
+      this.bpmnModeler.get("canvas").zoom(newScale);
+      this.scale = newScale;
+      // this.setState({
+      //    scale: newScale,
+      //});
+    },
+    resetView() {
+      //恢复到原位
+      const vm=this;
+      vm.bpmnModeler.get("canvas").zoom("fit-viewport");
     }
   }
 };
@@ -149,5 +300,26 @@ export default {
   right: 0;
   top: 0;
   width: 300px;
+}
+.buttons {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  & > li {
+    display: inline-block;
+    margin: 5px;
+    & > a {
+      color: #999;
+      background: #eee;
+      cursor: not-allowed;
+      padding: 8px;
+      border: 1px solid #ccc;
+      &.active {
+        color: #333;
+        background: #fff;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>
