@@ -57,12 +57,21 @@ export const constantRoutes = [
   {
     path: '/modeler',
     component: Layout,
+    name: 'Modeler',
+    meta: { title: 'Modeler', icon: 'example' },
     children: [{
-      path: 'index',
-      name: 'Modeler',
-      component: () => import('@/views/modeler/index'),
-      meta: { title: 'Modeler', icon: 'dashboard' }
-    }]
+      path: 'bpmn',
+      name: 'BPMN',
+      component: () => import('@/views/modeler/bpmn/index'),
+      meta: { title: 'Bpmn Modeler', icon: 'dashboard' }
+    },
+    {
+      path: 'cmmn',
+      name: 'CMMN',
+      component: () => import('@/views/modeler/cmmn/index'),
+      meta: { title: 'Cmmn Modeler', icon: 'dashboard' }
+    }
+    ]
   },
   {
     path: '/example',
