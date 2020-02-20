@@ -277,6 +277,7 @@ export default {
     resetView() {
       //恢复到原位
       const vm=this;
+      this.scale=1.0;
       vm.bpmnModeler.get("canvas").zoom("fit-viewport");
     }
   }

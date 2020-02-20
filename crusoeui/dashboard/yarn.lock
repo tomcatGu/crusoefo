@@ -707,6 +707,30 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@form-create/core@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/@form-create/core/download/@form-create/core-1.0.6.tgz#dfa807cb8f7de36daf6adb05f6376010b4dab9c6"
+  integrity sha1-36gHy499422vatsF9jdgELTaucY=
+  dependencies:
+    "@form-create/utils" "^1.0.4"
+    vue "^2.6.10"
+
+"@form-create/element-ui@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/@form-create/element-ui/download/@form-create/element-ui-1.0.6.tgz#7b699b1f0b8c8ee64c61f08966c5bc7f987b54a9"
+  integrity sha1-e2mbHwuMjuZMYfCJZsW8f5h7VKk=
+  dependencies:
+    "@form-create/core" "^1.0.6"
+    "@form-create/utils" "^1.0.4"
+    element-ui "^2.8.2"
+
+"@form-create/utils@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/@form-create/utils/download/@form-create/utils-1.0.4.tgz#065e80c3753f67234ec3a7df0aa22aca157f8381"
+  integrity sha1-Bl6Aw3U/ZyNOw6ffCqIqyhV/g4E=
+  dependencies:
+    vue "^2.5.2"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -3927,6 +3951,18 @@ element-ui@2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.7.2.tgz#8bc5bef5c3c53a2170422516b4324e70069c23d1"
   integrity sha512-Exh9QTkm9gwMMPzg1TyaTlBKyr3k4K9XcC5vl0A/mneDvJX//RsURGuOWsCNDVQMdhh5h9e+W5icosh+pKfbCg==
+  dependencies:
+    async-validator "~1.8.1"
+    babel-helper-vue-jsx-merge-props "^2.0.0"
+    deepmerge "^1.2.0"
+    normalize-wheel "^1.0.1"
+    resize-observer-polyfill "^1.5.0"
+    throttle-debounce "^1.0.1"
+
+element-ui@^2.8.2:
+  version "2.13.0"
+  resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.13.0.tgz#f6bb04e5b0a76ea5f62466044b774407ba4ebd2d"
+  integrity sha1-9rsE5bCnbqX2JGYES3dEB7pOvS0=
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -10789,6 +10825,11 @@ vue@2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
+
+vue@^2.5.2, vue@^2.6.10:
+  version "2.6.11"
+  resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1582056221876&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
+  integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
 
 vuex@3.1.0:
   version "3.1.0"
