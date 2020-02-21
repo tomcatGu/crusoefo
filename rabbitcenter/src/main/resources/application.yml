@@ -1,5 +1,5 @@
 server:
-  port: 5672
+  port: 5671
 eureka:
   instance:
     hostname: localhost
@@ -9,10 +9,16 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://localhost:8761/
   #server:
     #waitTimeInMsWhenSyncEmpty: 0
     #enable-self-preservation: false
 spring:
   application:
     name: rabbitmq-center
+  rabbitmq:
+    host: 10.132.23.119
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: my_vhost
