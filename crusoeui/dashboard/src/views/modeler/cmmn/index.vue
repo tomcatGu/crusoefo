@@ -48,7 +48,8 @@ import "cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
 import "cmmn-js/dist/assets/cmmn-font/css/cmmn-codes.css";
 import "cmmn-js/dist/assets/cmmn-font/css/cmmn-embedded.css";
 /*右边工具栏样式*/
-//import "cmmn-js-properties-panel/dist/assets/cmmn-js-properties-panel.css";
+import 'cmmn-js-properties-panel/styles/properties.less';
+
 
 export default {
   data() {
@@ -87,10 +88,28 @@ export default {
   },
   methods: {
     createNewDiagram() {
-      const cmmnXmlStr =
-        '<?xml version="1.0" encoding="UTF-8"?>\n' +
-        '<cmmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cmmn="http://www.omg.org/spec/cmmn/20100524/MODEL" xmlns:cmmndi="http://www.omg.org/spec/cmmn/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0fppxr8" targetNamespace="http://cmmn.io/schema/cmmn">\n' +
-        "</cmmn:definitions>\n";
+      const cmmnXmlStr = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+			'<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_02xmelg" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="3.4.1">\n' +
+  			'<cmmn:case id="Case_1cozor9">\n' +
+    		'<cmmn:casePlanModel id="CasePlanModel_0ln15ek" name="A CasePlanModel">\n' +
+      		'<cmmn:planItem id="PlanItem_1" definitionRef="Task_1" />\n' +
+      		'<cmmn:task id="Task_1" />\n' +
+    		'</cmmn:casePlanModel>\n' +
+  			'</cmmn:case>\n' +
+  			'<cmmndi:CMMNDI>\n' +
+  			'<cmmndi:CMMNDiagram id="init_cmmn_id" name="init_cmmn_name">\n' +
+  			'<cmmndi:Size width="500" height="500" />\n' +
+  			'<cmmndi:CMMNShape id="DI_CasePlanModel_0ln15ek" cmmnElementRef="CasePlanModel_0ln15ek">\n' +
+			'<dc:Bounds x="154" y="99" width="534" height="389" />\n' +
+			'<cmmndi:CMMNLabel />\n' +
+			'</cmmndi:CMMNShape>\n' +
+			'<cmmndi:CMMNShape id="PlanItem_1_di" cmmnElementRef="PlanItem_1">\n' +
+			'<dc:Bounds x="190" y="132" width="100" height="80" />\n' +
+			'<cmmndi:CMMNLabel />\n' +
+			'</cmmndi:CMMNShape>\n' +
+			'</cmmndi:CMMNDiagram>\n' +
+			'</cmmndi:CMMNDI>\n' +
+			'</cmmn:definitions>\n'
       // 将字符串转换成图显示出来
       this.CmmnModeler.importXML(cmmnXmlStr, function(err) {
         if (err) {
