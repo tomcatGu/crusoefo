@@ -17,7 +17,7 @@ spring:
   application:
     name: rabbitmq-center
   rabbitmq:
-    host: 10.132.23.119
+    host: localhost
     port: 5672
     username: guest
     password: guest

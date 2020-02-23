@@ -111,6 +111,12 @@ export const constantRoutes = [
         name: 'Create Form',
         component: () => import('@/views/form/create/index'),
         meta: { title: 'Create Form', icon: 'form' }
+      },
+      {
+        path: 'formio',
+        name: 'FormIO',
+        component: () => import('@/views/form/formio/index'),
+        meta: { title: 'FormIO', icon: 'form' }
       }
     ]
   },
