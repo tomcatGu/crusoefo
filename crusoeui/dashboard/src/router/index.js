@@ -120,6 +120,21 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/camunda',
+    component: Layout,
+    meta: { title: 'Camunda', icon: 'form' },
+    children: [
+      {
+        path: 'repository',
+        name: 'Repository',
+        component: () => import('@/views/camunda/repository/index'),
+        meta: { title: 'Repository List', icon: 'form' }
+      }
+
+    ]
+
+  },
 
   {
     path: '/nested',

@@ -30,6 +30,10 @@ spring:
         uri: lb://order-service/
         predicates:
         - Path=/order/**
+      - id: camunda-service
+        uri: lb://camunda-service/
+        predicates:
+        - Path=/rest/**
 #  security:
 #    oauth2:
 #      client:
