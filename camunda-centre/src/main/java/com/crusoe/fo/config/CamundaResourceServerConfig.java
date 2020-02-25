@@ -33,7 +33,7 @@ public class CamundaResourceServerConfig extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
         .authorizeRequests()
-        .antMatchers("/rest/**").permitAll()
+        .antMatchers("/rest/**").authenticated()
         .antMatchers("/**").authenticated();
     }
     
@@ -50,16 +50,17 @@ public class CamundaResourceServerConfig extends ResourceServerConfigurerAdapter
     
     @Bean
     public JwtAccessTokenConverter jwtTokenEnhancer(){
-        JwtAccessTokenConverter converter= new JwtAccessTokenConverter (); 
-        Resource resource= new ClassPathResource ("crusoe.cer");
-        String  publicKey;
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        Resource resource =  new ClassPathResource("crusoe.cert");
+
+        String publicKey;
         try {
-            publicKey=new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
-        } catch (IOException e) {
-            throw new RuntimeException();
+            publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+        }catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        
-        converter.setSigningKey(getRSAPublicKey("crusoe.cer").toString());
+
+        converter.setVerifierKey(publicKey);
         return converter;
     }
 
