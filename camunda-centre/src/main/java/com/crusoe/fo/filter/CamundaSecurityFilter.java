@@ -26,4 +26,6 @@ public class CamundaSecurityFilter {
 	public Filter getProcessEngineAuthenticationFilter() {
 		return new ProcessEngineAuthenticationFilter();
 	}
+
+	
 }
