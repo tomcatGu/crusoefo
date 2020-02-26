@@ -18,9 +18,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://10.132.23.119:5432/oauth
+    url: jdbc:postgresql://localhost:5432/oauth
     username: postgres
-    password: 123456
+    password: postgres1982
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,3 +29,4 @@ spring:
 #https://blog.csdn.net/huweijian5/article/details/83008435
 #keytool -genkeypair -alias test-jwt -validity 3650 -keyalg RSA -dname "CN=jwt,OU=jtw,O=jtw,L=zurich,S=zurich,C=CH" -keypass test123 -keystore test-jwt.jks -storepass test123
 #keytool -list -rfc --keystore test-jwt.jks | openssl x509 -inform pem -pubkey
+#生成cer证书文件命令：keytool -exportcert -alias sun -keystore f:/demo.jks -rfc -file f:/demo.cer -storepass 123456
