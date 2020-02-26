@@ -38,7 +38,7 @@
 
 <script>
 //import { getList } from '@/api/table'
-import { getRepository } from "@/api/repository";
+import { getTasks } from "@/api/task";
 export default {
   filters: {
     statusFilter(status) {
@@ -62,7 +62,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true;
-      getRepository().then(response => {
+      getTasks().then(response => {
         this.list = response;
         console.log(this.list)
         this.listLoading = false;

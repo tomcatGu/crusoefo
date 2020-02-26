@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getRepository() {
+export function getTasks() {
     return request({
-        url: 'http://localhost:6601/rest/deployment',
+        url: 'http://localhost:6601/rest/task',
         method: 'get'
     })
 }
