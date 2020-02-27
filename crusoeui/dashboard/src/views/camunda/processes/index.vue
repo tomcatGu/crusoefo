@@ -39,48 +39,49 @@
 </template>
 
 <script>
-import { getProcesses, startProcess } from "@/api/processes";
+import { getProcesses, startProcess } from '@/api/processes'
+import { MessageBox, Message } from 'element-ui'
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger"
-      };
-      return statusMap[status];
+        published: 'success',
+        draft: 'gray',
+        deleted: 'danger'
+      }
+      return statusMap[status]
     }
   },
   data() {
     return {
       list: null,
       listLoading: true
-    };
+    }
   },
   created() {
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       getProcesses().then(response => {
-        this.list = response;
-        console.log(this.list);
-        this.listLoading = false;
-      });
+        this.list = response
+        console.log(this.list)
+        this.listLoading = false
+      })
     },
     start(data) {
-      this.listLoading = true;
-      const id=data;
+      this.listLoading = true
+      const id = data
       startProcess(id).then(response => {
-        this.listLoading = false;
+        this.listLoading = false
         Message({
-          message: "流程启动成功。",
-          type: "info",
-          duration: 5 * 1000
-        });
-      });
+          message: '流程启动成功。',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
     }
   }
-};
+}
 </script>
