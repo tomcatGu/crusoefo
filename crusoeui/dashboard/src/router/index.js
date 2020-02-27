@@ -138,6 +138,13 @@ export const constantRoutes = [
         meta: { title: 'Processes List', icon: 'form' }
       },
       {
+        path: 'processes/diagram/:id',
+        name: 'Processes Diagram',
+        component: () => import('@/views/camunda/processes/diagram/index'),
+        meta: { title: 'Processes Diagram', icon: 'form' },
+        hidden:true
+      },
+      {
         path: 'task',
         name: 'Task',
         component: () => import('@/views/camunda/task/index'),
