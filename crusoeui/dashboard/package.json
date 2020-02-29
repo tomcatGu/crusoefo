@@ -15,15 +15,18 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
+    "@bpmn-io/align-to-origin": "^0.6.0",
     "@form-create/element-ui": "^1.0.6",
     "axios": "0.18.1",
     "bpmn-js": "^6.3.0",
     "bpmn-js-properties-panel": "^0.33.1",
+    "bpmn-js-token-simulation": "^0.9.0",
     "camunda-bpmn-moddle": "^4.4.0",
     "camunda-cmmn-moddle": "^1.0.0",
     "cmmn-js": "^0.19.2",
     "cmmn-js-properties-panel": "^0.5.0",
     "diagram-js": "^5.0.0",
+    "diagram-js-minimap": "^2.0.3",
     "element-ui": "2.7.2",
     "jquery": "^3.3.1",
     "js-cookie": "2.2.0",

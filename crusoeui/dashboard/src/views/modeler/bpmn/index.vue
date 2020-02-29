@@ -41,6 +41,7 @@ import BpmnModeler from 'bpmn-js/lib/Modeler'
 import propertiesPanelModule from 'bpmn-js-properties-panel'
 import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda'
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
+import AlignToOrigin from '@bpmn-io/align-to-origin'
 
 import customTranslate from './customTanslate'
 
@@ -74,6 +75,11 @@ export default {
       propertiesPanel: {
         parent: '#js-properties-panel'
       },
+      alignToOrigin: {
+        alignOnSave: true,
+        offset: 150,
+        tolerance: 50
+      },
       additionalModules: [
         // 左边工具栏以及节点
         propertiesProviderModule,
@@ -81,7 +87,8 @@ export default {
         propertiesPanelModule,
         {
           translate: ['value', customTranslate]
-        }
+        },
+        AlignToOrigin
       ],
       moddleExtensions: {
         camunda: camundaModdleDescriptor
@@ -91,6 +98,7 @@ export default {
   },
   methods: {
     createNewDiagram() {
+      const that = this
       const bpmnXmlStr =
         '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0fppxr8" targetNamespace="http://bpmn.io/schema/bpmn">\n' +
@@ -161,6 +169,7 @@ export default {
         } else {
           // 这里还没用到这个，先注释掉吧
           // that.success()
+          that.bpmnModeler.get('minimap').open()
         }
       })
       var eventBus = this.bpmnModeler.get('eventBus')

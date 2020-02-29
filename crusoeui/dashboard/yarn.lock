@@ -714,6 +714,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bpmn-io/align-to-origin@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.npm.taobao.org/@bpmn-io/align-to-origin/download/@bpmn-io/align-to-origin-0.6.0.tgz#5847a7424e615d11ab3dd1d7036ef4921bb68954"
+  integrity sha1-WEenQk5hXRGrPdHXA270khu2iVQ=
+
 "@form-create/core@^1.0.6":
   version "1.0.6"
   resolved "https://registry.npm.taobao.org/@form-create/core/download/@form-create/core-1.0.6.tgz#dfa807cb8f7de36daf6adb05f6376010b4dab9c6"
@@ -2275,6 +2280,15 @@ bpmn-js-properties-panel@^0.33.1:
     scroll-tabs "^1.0.1"
     selection-update "^0.1.2"
 
+bpmn-js-token-simulation@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.npm.taobao.org/bpmn-js-token-simulation/download/bpmn-js-token-simulation-0.9.0.tgz#0f6ecb1b547a1e77f2abcc264fbf9da3a0ae93ee"
+  integrity sha1-D27LG1R6Hnfyq8wmT7+do6Cuk+4=
+  dependencies:
+    min-dash "^3.3.0"
+    min-dom "^0.2.0"
+    svg.js "^2.6.3"
+
 bpmn-js@^6.3.0:
   version "6.3.0"
   resolved "https://registry.npm.taobao.org/bpmn-js/download/bpmn-js-6.3.0.tgz#41c4cc33f73372d5703a9f1775450e380300c8fb"
@@ -3791,6 +3805,16 @@ diagram-js-direct-editing@^1.5.0, diagram-js-direct-editing@^1.6.1:
   dependencies:
     min-dash "^3.0.0"
     min-dom "^3.0.0"
+
+diagram-js-minimap@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/diagram-js-minimap/download/diagram-js-minimap-2.0.3.tgz#cb77dcf6c0bddb1ce5299fc85dc342be5c3090df"
+  integrity sha1-y3fc9sC92xzlKZ/IXcNCvlwwkN8=
+  dependencies:
+    css.escape "^1.5.1"
+    min-dash "^3.5.2"
+    min-dom "^3.1.1"
+    tiny-svg "^2.2.2"
 
 diagram-js@^4.0.1:
   version "4.0.3"
@@ -7432,7 +7456,7 @@ mimic-fn@^2.0.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
-min-dash@^3.0.0, min-dash@^3.1.0, min-dash@^3.5.0, min-dash@^3.5.1:
+min-dash@^3.0.0, min-dash@^3.1.0, min-dash@^3.3.0, min-dash@^3.5.0, min-dash@^3.5.1, min-dash@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/min-dash/-/min-dash-3.5.2.tgz#23786fa289116ba3656038e16511577413d27200"
   integrity sha512-YVbJZUtnzT5QsgJUp9H9uyJTW6NJgswFqI27RI/+MSox860uIjaGMbSQBftEzbMXiJVRG24hpoIh3SG666SHgA==
@@ -10484,6 +10508,11 @@ svg-tags@^1.0.0:
   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
   integrity sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=
 
+svg.js@^2.6.3:
+  version "2.7.1"
+  resolved "https://registry.npm.taobao.org/svg.js/download/svg.js-2.7.1.tgz#eb977ed4737001eab859949b4a398ee1bb79948d"
+  integrity sha1-65d+1HNwAeq4WZSbSjmO4bt5lI0=
+
 svgo@1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.2.2.tgz#0253d34eccf2aed4ad4f283e11ee75198f9d7316"
@@ -10668,7 +10697,7 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-svg@^2.2.1:
+tiny-svg@^2.2.1, tiny-svg@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/tiny-svg/-/tiny-svg-2.2.2.tgz#9d9825c2e0ccb5e259bb1ae7d7ac79194e086657"
   integrity sha512-u6zCuMkDR/3VAh83X7hDRn/pi0XhwG2ycuNS0cTFtQjGdOG2tSvEb8ds65VeGWc3H6PUjJKeunueXqgkZqtMsg==
