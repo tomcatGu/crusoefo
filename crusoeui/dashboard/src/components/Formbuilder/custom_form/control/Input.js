@@ -1,26 +1,25 @@
 export default (_self, h) => {
   return [
-    h("Input", {
+    h('Input', {
       props: {
-        placeholder: _self.obj.placeholder || "这是一个输入框",
+        placeholder: _self.obj.placeholder || '这是一个输入框',
         maxlength: parseInt(_self.obj.maxLength) || 20,
-        value: _self.obj.value || ""
+        value: _self.obj.value || ''
       },
       on: {
-        "on-change": function(val) {
+        'on-change': function(val) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          _self.obj.value = event.currentTarget.value;
+          _self.obj.value = event.currentTarget.value
           _self.$emit('handleChangeVal', val.currentTarget.value)
         }
       }
     })
-  ];
-};
+  ]
+}
 
-
-export let inputConf = {
+export const inputConf = {
   // 对应数据库内类型
   type: 'input',
   // 是否可配置
@@ -35,7 +34,7 @@ export let inputConf = {
   // 最大长度
   maxLength: 20,
   // 选项内数据
-  items: [{ "label_value": null, "label_name": "" }],
+  items: [{ 'label_value': null, 'label_name': '' }],
   value: '',
   // 表单name
   name: '',

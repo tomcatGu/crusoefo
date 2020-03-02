@@ -1,19 +1,19 @@
-import moment from 'moment';
+import moment from 'moment'
 export default (_self, h) => {
   return [
     h('DatePicker', {
       props: {
-        placeholder: _self.obj.placeholder || (_self.obj.name ? "" : "请选择日期"),
-        type: (!_self.obj.format || _self.obj.format == 'yyyy年MM月dd日') ? 'date' : 'datetime',
+        placeholder: _self.obj.placeholder || (_self.obj.name ? '' : '请选择日期'),
+        type: (!_self.obj.format || _self.obj.format === 'yyyy年MM月dd日') ? 'date' : 'datetime',
         format: _self.obj.format || 'yyyy年MM月dd日',
         value: _self.obj.value
       },
       on: {
-        "on-change" (arr) {
+        'on-change'(arr) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          _self.obj.value = arr;
+          _self.obj.value = arr
           _self.$emit('handleChangeVal', arr)
         }
       }
@@ -21,8 +21,7 @@ export default (_self, h) => {
   ]
 }
 
-
-export let datePickerConf = {
+export const datePickerConf = {
   // 对应数据库内类型
   type: 'datepicker',
   // 是否可配置
@@ -37,7 +36,7 @@ export let datePickerConf = {
   // 表单name
   name: '',
   // 绑定的值
-  value: "",
+  value: '',
   // 验证错误提示信息
   ruleError: '选项不能为空',
   // 是否关联字段

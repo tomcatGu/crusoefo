@@ -3,8 +3,8 @@ export default (_self, h) => {
     h('uploadCustom', {
       props: {
         multiple: _self.obj.multiple || false,
-        type: 'drag', //支持拖拽
-        action: _self.obj.action || "/imageupload",
+        type: 'drag', // 支持拖拽
+        action: _self.obj.action || '/imageupload',
         'max-size': _self.obj.maxSize || 2048,
         defaultList: _self.obj.value,
         name: 'photo'
@@ -12,16 +12,15 @@ export default (_self, h) => {
       on: {
         handleUploadsValue(arr) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          _self.obj.value = arr;
+          _self.obj.value = arr
           _self.$emit('handleChangeVal', arr)
         }
       }
     })
   ]
 }
-
 
 export const uploadsConf = {
   // 对应数据库内类型

@@ -1,6 +1,6 @@
 import area from '../config/area'
 export default (_self, h) => {
-  let control = [
+  const control = [
     h('Cascader', {
       class: {
         'ivu-input-wrapper ': !_self.obj.details_address
@@ -10,26 +10,26 @@ export default (_self, h) => {
         display: 'inline-block'
       },
       props: {
-        placeholder: _self.obj.placeholder || (_self.obj.name ? "" : "请选择详细地址"),
+        placeholder: _self.obj.placeholder || (_self.obj.name ? '' : '请选择详细地址'),
         data: area,
         value: _self.obj.value || [],
         filterable: false,
-        'change-on-select': true,
+        'change-on-select': true
         // trigger: "hover"
       },
       on: {
-        "on-change" (arr) {
+        'on-change'(arr) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          _self.obj.value = arr;
-          _self.$emit('handleChangeVal', arr);
+          _self.obj.value = arr
+          _self.$emit('handleChangeVal', arr)
         }
       }
     }),
-    h("Input", {
+    h('Input', {
       props: {
-        placeholder: _self.obj.placeholder || "请输入详细地址",
+        placeholder: _self.obj.placeholder || '请输入详细地址',
         ref: 'details_address',
         value: (_self.obj.value[3] || {})
           .name
@@ -41,24 +41,24 @@ export default (_self, h) => {
         'min-width': '300px'
       },
       on: {
-        "on-change": function(val) {
+        'on-change': function(val) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          let temp_data = _self.obj.value.slice(0, 3);
-          _self.obj.value = temp_data.concat(val.currentTarget.value);
+          const temp_data = _self.obj.value.slice(0, 3)
+          _self.obj.value = temp_data.concat(val.currentTarget.value)
           _self.$emit('handleChangeVal', _self.obj.value)
         }
       }
     })
-  ];
+  ]
 
   if (!_self.obj.details_address) {
-    control.splice(1, 1);
+    control.splice(1, 1)
   }
-  return control;
+  return control
 }
-export let addressConf = {
+export const addressConf = {
   // 对应数据库内类型
   type: 'address',
   // 是否可配置

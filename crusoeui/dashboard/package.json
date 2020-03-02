@@ -25,11 +25,13 @@
     "camunda-cmmn-moddle": "^1.0.0",
     "cmmn-js": "^0.19.2",
     "cmmn-js-properties-panel": "^0.5.0",
+    "codemirror": "^5.52.0",
     "diagram-js": "^5.0.0",
     "diagram-js-minimap": "^2.0.3",
     "element-ui": "2.7.2",
     "jquery": "^3.3.1",
     "js-cookie": "2.2.0",
+    "jsonlint": "^1.6.3",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "normalize.css": "7.0.0",
@@ -38,6 +40,8 @@
     "vue": "2.6.10",
     "vue-formio": "^4.0.0",
     "vue-router": "3.0.6",
+    "vue-splitpane": "^1.0.6",
+    "vuedraggable": "^2.23.2",
     "vuex": "3.1.0"
   },
   "devDependencies": {

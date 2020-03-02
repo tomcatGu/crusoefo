@@ -1,31 +1,31 @@
 export default (_self, h) => {
   return [
-    h("RadioGroup", {
+    h('RadioGroup', {
       props: {
-        value: _self.obj.value || "-1"
+        value: _self.obj.value || '-1'
       },
       on: {
-        'on-change' (value) {
+        'on-change'(value) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
           _self.obj = Object.assign(_self.obj, {
             value
-          });
+          })
           _self.$emit('handleChangeVal', value)
         }
       }
     }, _self.obj.items.map(v => {
-      return h("Radio", {
+      return h('Radio', {
         props: {
           label: v.label_value
         }
       }, v.label_name)
     }))
-  ];
-};
+  ]
+}
 
-export let radioConf = {
+export const radioConf = {
   // 对应数据库内类型
   type: 'radio',
   // 是否可配置
@@ -39,7 +39,7 @@ export let radioConf = {
   // 绑定的值
   value: '',
   // 选项内数据
-  items: [{ "label_value": "1", "label_name": "单选框1" }, { "label_value": "2", "label_name": "单选框2" }],
+  items: [{ 'label_value': '1', 'label_name': '单选框1' }, { 'label_value': '2', 'label_name': '单选框2' }],
   // 表单name
   name: '',
   // 验证错误提示信息

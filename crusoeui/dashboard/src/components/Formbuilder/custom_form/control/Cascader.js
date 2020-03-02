@@ -1,43 +1,43 @@
 const temp_data = (size, parentIndex, parentName) => {
   if (parentIndex >= 3) {
-    return [];
+    return []
   }
   return Array.apply(null, { length: size })
     .map((k, v) => {
-      const name = parentName + (v + 1) + "-";
+      const name = parentName + (v + 1) + '-'
       return {
         value: name.substring(0, name.length - 1),
         label: name.substring(0, name.length - 1),
         children: temp_data(size, parentIndex + 1, name)
       }
-    });
+    })
 }
 
 export default (_self, h) => {
   return [
-    h("cascaderMulti", {
+    h('cascaderMulti', {
       props: {
-        placeholder: _self.obj.placeholder || "这是一个级联选择器",
+        placeholder: _self.obj.placeholder || '这是一个级联选择器',
         data: temp_data(3, 0, '数据'),
         multiple: _self.obj.multiple || false,
-        separate: _self.obj.multiple ? "，" : "/",
+        separate: _self.obj.multiple ? '，' : '/',
         filterable: true,
         value: _self.obj.value || []
       },
       on: {
-        "on-change" (arr) {
+        'on-change'(arr) {
           if (!_self.obj.name) {
-            return false;
+            return false
           }
-          _self.obj.value = arr;
+          _self.obj.value = arr
           _self.$emit('handleChangeVal', arr)
         }
       }
     })
-  ];
-};
+  ]
+}
 
-export let cascaderConf = {
+export const cascaderConf = {
   // 对应数据库内类型
   type: 'cascader',
   // 是否可配置

@@ -3,7 +3,7 @@ export default (_self, h) => {
     h('hr', {
       style: {
         'margin-bottom': _self.obj.marginBottom + 'px',
-        'margin-top': _self.obj.marginTop + 'px',
+        'margin-top': _self.obj.marginTop + 'px'
       }
     })
   ]

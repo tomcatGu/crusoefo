@@ -3,16 +3,16 @@ export default (_self, h) => {
     h('h' + (_self.obj.level || 3), {
       style: {
         'margin-bottom': _self.obj.marginBottom + 'px',
-        'margin-top': _self.obj.marginTop + 'px',
+        'margin-top': _self.obj.marginTop + 'px'
       },
       domProps: {
-        innerHTML: _self.obj.label || "Title"
+        innerHTML: _self.obj.label || 'Title'
       }
     })
   ]
 }
 
-export let titleConf = {
+export const titleConf = {
   // 是否可配置
   config: true,
   // 控件文本显示内容

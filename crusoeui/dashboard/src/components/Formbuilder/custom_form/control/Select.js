@@ -1,36 +1,36 @@
 export default (_self, h) => {
   return [
     h(
-      "Select", {
+      'Select', {
         props: {
-          placeholder: _self.obj.placeholder || "这是一个下拉选项框",
+          placeholder: _self.obj.placeholder || '这是一个下拉选项框',
           value: _self.obj.value || ''
         },
         on: {
-          'on-change' (value) {
+          'on-change'(value) {
             if (!_self.obj.name) {
-              return false;
+              return false
             }
-            _self.obj.value = value;
+            _self.obj.value = value
             _self.$emit('handleChangeVal', value)
           }
         }
       },
       _self.obj.items.map(v => {
         return h(
-          "Option", {
+          'Option', {
             props: {
-              value: "" + v.label_value
-            },
+              value: '' + v.label_value
+            }
           },
           v.label_name
-        );
+        )
       })
     )
-  ];
-};
+  ]
+}
 
-export let selectConf = {
+export const selectConf = {
   // 对应数据库内类型
   type: 'select',
   // 是否可配置
@@ -47,7 +47,7 @@ export let selectConf = {
     .map((k, v) => {
       return {
         label_value: v + 1,
-        label_name: "选项" + (v + 1),
+        label_name: '选项' + (v + 1)
       }
     }),
   // 绑定的值

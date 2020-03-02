@@ -5,5 +5,5 @@ export default {
   checkbox: 'change',
   cascader: 'input',
   uploads: 'handleUploadsValue',
-  textarea: 'blur,change',
+  textarea: 'blur,change'
 }

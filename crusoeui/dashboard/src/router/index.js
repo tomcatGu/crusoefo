@@ -117,13 +117,13 @@ export const constantRoutes = [
         name: 'index',
         component: () => import('@/components/Formbuilder/index'),
         meta: { title: 'Form Index', icon: 'form' }
-      }, 
+      },
       {
         path: 'formbuilder-render',
         name: 'render',
-        component: () => import('@/components/Formbuilder/reder'),
+        component: () => import('@/components/Formbuilder/render'),
         meta: { title: 'Form Render', icon: 'form' }
-      }, 
+      },
       {
         path: 'formbuilder-preview',
         name: 'preview',

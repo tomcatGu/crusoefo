@@ -4,10 +4,10 @@ export default (_self, h) => {
       style: {
         'margin-bottom': _self.obj.marginBottom + 'px',
         'margin-top': _self.obj.marginTop + 'px',
-        'color': _self.obj.color || "#000"
+        'color': _self.obj.color || '#000'
       },
       domProps: {
-        innerHTML: _self.obj.label || "文本标签"
+        innerHTML: _self.obj.label || '文本标签'
       }
     })
   ]
