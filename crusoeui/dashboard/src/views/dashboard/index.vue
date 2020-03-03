@@ -1,29 +1,137 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <div class="placeholder-container">
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
+    <div>placeholder</div>
   </div>
+  </div>
+  
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+    ...mapGetters(["name"])
   },
   data() {
     return {
       name: this.$store.getters.name
-    }
+    };
   },
   // eslint-disable-next-line no-dupe-keys
-  computed: {
-
-  }
-}
+  computed: {}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -35,5 +143,8 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.placeholder-container div {
+  margin: 10px;
 }
 </style>
