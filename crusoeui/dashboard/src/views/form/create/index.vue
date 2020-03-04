@@ -2,12 +2,14 @@
   <div class="app-container">
     <split-pane split="vertical">
       <template slot="paneL">
-
-        <el-button type="text" icon="el-icon-plus" @click="onChange" />
-        <json-editor ref="jsonEditor" v-model="value" @change="onChange" />
+        <div class="editor-container">
+          <json-editor ref="jsonEditor" v-model="value" @changed="onChange" />
+        </div>
       </template>
       <template slot="paneR">
-        <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+        <div class="editor-container">
+          <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+        </div>
       </template>
     </split-pane>
   </div>
@@ -41,9 +43,6 @@ export default {
         {
           type: 'ElButton',
           field: 'btn1',
-          props: {
-            text: '1123'
-          },
           children: ['test']
         },
         {
@@ -77,7 +76,8 @@ export default {
         }
       ],
       option: {
-        resetBtn: true
+        resetBtn: false,
+        submitBtn: false
       }
     }
   },
@@ -86,9 +86,10 @@ export default {
       // TODO 提交表单
       console.log(JSON.stringify(formData))
     },
-    onChange() {
-      // console.log('change...')
-      this.$data.rule = JSON.parse(this.$data.value)
+    onChange(data) {
+      console.log(data)
+      this.$data.rule = JSON.parse(data)
+      // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))
     }
   },
@@ -109,6 +110,11 @@ export default {
 .app-container {
   position: absolute;
   background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+.editor-container {
+  position: absolute;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
