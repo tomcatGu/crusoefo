@@ -111,30 +111,6 @@ export const constantRoutes = [
         name: 'Create Form',
         component: () => import('@/views/form/create/index'),
         meta: { title: 'Create Form', icon: 'form' }
-      },
-      {
-        path: 'formbuilder-index',
-        name: 'index',
-        component: () => import('@/components/Formbuilder/index'),
-        meta: { title: 'Form Index', icon: 'form' }
-      },
-      {
-        path: 'formbuilder-render',
-        name: 'render',
-        component: () => import('@/components/Formbuilder/render'),
-        meta: { title: 'Form Render', icon: 'form' }
-      },
-      {
-        path: 'formbuilder-preview',
-        name: 'preview',
-        component: () => import('@/components/Formbuilder/preview'),
-        meta: { title: 'Form Preview', icon: 'form' }
-      },
-      {
-        path: 'formio',
-        name: 'FormIO',
-        component: () => import('@/views/form/formio/index'),
-        meta: { title: 'FormIO', icon: 'form' }
       }
     ]
   },
