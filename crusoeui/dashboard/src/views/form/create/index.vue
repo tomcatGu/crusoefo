@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <a href="javascript:" class="active" @click="deploy">部署</a>
     <split-pane split="vertical">
       <template slot="paneL">
         <div class="editor-container">
@@ -17,9 +18,10 @@
 
 <script>
 import FormCreate from '@form-create/element-ui'
-import draggable from 'vuedraggable'
 import splitPane from 'vue-splitpane'
 import JsonEditor from '@/components/JsonEditor'
+
+import { createDeployment } from '@/api/repository'
 
 export default {
   data() {
@@ -91,11 +93,22 @@ export default {
       this.$data.rule = JSON.parse(data)
       // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))
+    },
+    deploy() {
+      // this.download('xml', xml)
+      const formData = new FormData()
+      formData.append('deployment-name', 'test')
+      formData.append('deployment-source', 'test form')
+      formData.append('enable-duplicate-filtering', true)
+      formData.append('data', new Blob([this.$data.value]), 'test.form')
+
+      createDeployment(formData).then(response => {
+        console.log(response)
+      })
     }
   },
   components: {
     formCreate: FormCreate.$form(),
-    draggable,
     splitPane,
     JsonEditor
   },

@@ -26,48 +26,60 @@
         <template slot-scope="scope">{{ scope.row.deploymentTime }}</template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
-　　　　<template slot-scope="scope">
-　　　　　　<el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
-　　　　　　<el-button type="info" >查看流程图</el-button>
-　　　　　　<el-button type="info" >删除</el-button>
-　　　　</template>
-　　</el-table-column>
+        　　　　<template slot-scope="scope">
+          　　　　　　<el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
+          　　　　　　<el-button type="info">查看流程图</el-button>
+          　　　　　　<el-button type="info">删除</el-button>
+        　　　　</template>
+      　　</el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
-//import { getList } from '@/api/table'
-import { getRepository } from "@/api/repository";
+// import { getList } from '@/api/table'
+import { getRepository } from '@/api/repository'
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: "success",
-        draft: "gray",
-        deleted: "danger"
-      };
-      return statusMap[status];
+        published: 'success',
+        draft: 'gray',
+        deleted: 'danger'
+      }
+      return statusMap[status]
     }
   },
   data() {
     return {
       list: null,
       listLoading: true
-    };
+    }
   },
   created() {
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       getRepository().then(response => {
-        this.list = response;
+        this.list = response
         console.log(this.list)
-        this.listLoading = false;
-      });
+        this.listLoading = false
+      })
     }
   }
-};
+}
 </script>
+
+<style lang="scss">
+.app-container {
+  position: absolute;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+    overflow-y: scroll;
+  white-space: nowrap;
+}
+
+</style>
