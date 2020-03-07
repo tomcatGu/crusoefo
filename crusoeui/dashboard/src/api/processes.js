@@ -1,9 +1,17 @@
 import request from '@/utils/request'
 
-export function getProcesses() {
+export function getProcesses(data) {
   return request({
     url: 'http://localhost:6601/rest/process-definition',
-    method: 'get'
+    method: 'get',
+    params: data
+  })
+}
+export function getProcessesCount(data) {
+  return request({
+    url: 'http://localhost:6601/rest/process-definition/count',
+    method: 'get',
+    params: data
   })
 }
 export function getProcessXML(data) {

@@ -9,7 +9,7 @@
       highlight-current-row
     >
       <el-table-column align="center" label="index" width="95">
-        <template slot-scope="scope">{{ scope.$index }}</template>
+        <template slot-scope="scope">{{ (page-1)*pageSize+scope.$index }}</template>
       </el-table-column>
       <el-table-column label="Id" width="110">
         <template slot-scope="scope">{{ scope.row.id }}</template>
@@ -35,11 +35,20 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page="currentPage"
+      :page-sizes="[1, 2, 3, 5, 10]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="listCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
 <script>
-import { getProcesses, startProcess } from '@/api/processes'
+import { getProcesses, getProcessesCount, startProcess } from '@/api/processes'
 import { MessageBox, Message } from 'element-ui'
 export default {
   filters: {
@@ -55,6 +64,9 @@ export default {
   data() {
     return {
       list: null,
+      listCount: 0,
+      pageSize: 2,
+      page: 1,
       listLoading: true
     }
   },
@@ -64,11 +76,27 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getProcesses().then(response => {
+      const params = {
+        firstResult: (this.$data.page - 1) * this.$data.pageSize,
+        maxResults: this.$data.pageSize
+      }
+      getProcessesCount(params).then(response => {
+        this.listCount = response.count
+      })
+      getProcesses(params).then(response => {
         this.list = response
         console.log(this.list)
         this.listLoading = false
       })
+    },
+    handleCurrentChange(page) {
+      this.$data.page = page
+      this.fetchData()
+      console.log(this.$data.list)
+    },
+    handleSizeChange(pageSize) {
+      this.$data.pageSize = pageSize
+      this.fetchData()
     },
     start(data) {
       this.listLoading = true

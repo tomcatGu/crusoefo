@@ -9,7 +9,7 @@
       highlight-current-row
     >
       <el-table-column align="center" label="index" width="95">
-        <template slot-scope="scope">{{ scope.$index }}</template>
+        <template slot-scope="scope">{{ (page-1) * pageSize + scope.$index }}</template>
       </el-table-column>
       <el-table-column label="Id" width="110">
         <template slot-scope="scope">{{ scope.row.id }}</template>
@@ -75,7 +75,7 @@ export default {
     fetchData() {
       this.listLoading = true
       const params = {
-        firstResult: this.$data.page,
+        firstResult: (this.$data.page - 1 )* this.$data.pageSize,
         maxResults: this.$data.pageSize
       }
 
@@ -90,7 +90,7 @@ export default {
       })
     },
     handleCurrentChange(page) {
-      this.$data.page = page - 1
+      this.$data.page = page
       this.fetchData()
       console.log(this.$data.list)
     },
