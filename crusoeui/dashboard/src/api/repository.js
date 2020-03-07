@@ -1,12 +1,19 @@
 import request from '@/utils/request'
 
-export function getRepository() {
+export function getRepository(data) {
   return request({
     url: 'http://localhost:6601/rest/deployment',
-    method: 'get'
+    method: 'get',
+    params: data
   })
 }
-
+export function getRepositoryCount(data) {
+  return request({
+    url: 'http://localhost:6601/rest/deployment/count',
+    method: 'get',
+    params: data
+  })
+}
 export function createDeployment(formData) {
   return request({
     headers: {

@@ -26,19 +26,28 @@
         <template slot-scope="scope">{{ scope.row.deploymentTime }}</template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
-        　　　　<template slot-scope="scope">
-          　　　　　　<el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
-          　　　　　　<el-button type="info">查看流程图</el-button>
-          　　　　　　<el-button type="info">删除</el-button>
-        　　　　</template>
-      　　</el-table-column>
+        <template slot-scope="scope">
+          <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
+          <el-button type="info">查看流程图</el-button>
+          <el-button type="info">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page="currentPage"
+      :page-sizes="[1, 2, 3, 5, 10]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="listCount"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
 <script>
 // import { getList } from '@/api/table'
-import { getRepository } from '@/api/repository'
+import { getRepository, getRepositoryCount } from '@/api/repository'
 export default {
   filters: {
     statusFilter(status) {
@@ -53,6 +62,9 @@ export default {
   data() {
     return {
       list: null,
+      listCount: 0,
+      pageSize: 2,
+      page: 1,
       listLoading: true
     }
   },
@@ -62,11 +74,29 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getRepository().then(response => {
+      const params = {
+        firstResult: this.$data.page,
+        maxResults: this.$data.pageSize
+      }
+
+      getRepositoryCount(params).then(response => {
+        this.listCount = response.count
+      })
+
+      getRepository(params).then(response => {
         this.list = response
-        console.log(this.list)
+        // console.log(this.list)
         this.listLoading = false
       })
+    },
+    handleCurrentChange(page) {
+      this.$data.page = page - 1
+      this.fetchData()
+      console.log(this.$data.list)
+    },
+    handleSizeChange(pageSize) {
+      this.$data.pageSize = pageSize
+      this.fetchData()
     }
   }
 }
@@ -78,8 +108,7 @@ export default {
   background-color: #ffffff;
   width: 100%;
   height: 100%;
-    overflow-y: scroll;
+  overflow-y: scroll;
   white-space: nowrap;
 }
-
 </style>
