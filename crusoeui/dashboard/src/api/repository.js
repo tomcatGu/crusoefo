@@ -1,10 +1,16 @@
 import request from '@/utils/request'
 
-export function getRepository(data) {
+export function getRepositories(data) {
   return request({
     url: 'http://localhost:6601/rest/deployment',
     method: 'get',
     params: data
+  })
+}
+export function getRepository(id) {
+  return request({
+    url: 'http://localhost:6601/rest/deployment/' + id,
+    method: 'get'
   })
 }
 export function getResources(id) {
@@ -37,3 +43,4 @@ export function createDeployment(formData) {
 
   })
 }
+

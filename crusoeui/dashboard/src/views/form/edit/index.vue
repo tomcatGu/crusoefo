@@ -1,20 +1,16 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="name"  placeholder="Title" style="width: 200px;" class="filter-item" />
+      <el-input v-model="source" placeholder="Title" style="width: 200px;" class="filter-item" />
 
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy" @click="handleCreate">
-        部署
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+      >部署</el-button>
     </div>
     <split-pane split="vertical">
       <template slot="paneL">
@@ -36,7 +32,11 @@ import FormCreate from '@form-create/element-ui'
 import splitPane from 'vue-splitpane'
 import JsonEditor from '@/components/JsonEditor'
 
-import { createDeployment, getResourceData } from '@/api/repository'
+import {
+  createDeployment,
+  getResourceData,
+  getRepository
+} from '@/api/repository'
 
 export default {
   data() {
@@ -46,15 +46,15 @@ export default {
       model: {},
       value: {},
       // 表单生成规则
-      rule: [
-
-      ],
+      rule: [],
       option: {
         resetBtn: false,
         submitBtn: false
       },
       id: null,
-      resourceId: null
+      resourceId: null,
+      name: null,
+      source: null
     }
   },
   methods: {
@@ -71,10 +71,10 @@ export default {
     deploy() {
       // this.download('xml', xml)
       const formData = new FormData()
-      formData.append('deployment-name', 'test')
-      formData.append('deployment-source', 'test form')
+      formData.append('deployment-name', this.$data.name)
+      formData.append('deployment-source', this.$data.source)
       formData.append('enable-duplicate-filtering', true)
-      formData.append('data', new Blob([this.$data.value]), 'test.form')
+      formData.append('data', new Blob([this.$data.value]), this.$data.name + '.form')
 
       createDeployment(formData).then(response => {
         console.log(response)
@@ -98,6 +98,10 @@ export default {
     getResourceData(this.$data.id, this.$data.resourceId).then(response => {
       this.$data.rule = response
       this.$data.value = this.$data.rule
+    })
+    getRepository(this.$data.id).then(response => {
+      this.$data.name = response.name
+      this.$data.source = response.source
     })
   }
 }

@@ -49,7 +49,7 @@
 
 <script>
 // import { getList } from '@/api/table'
-import { getRepository, getRepositoryCount } from '@/api/repository'
+import { getRepositories, getRepositoryCount } from '@/api/repository'
 export default {
   filters: {
     statusFilter(status) {
@@ -85,7 +85,7 @@ export default {
         this.listCount = response.count
       })
 
-      getRepository(params).then(response => {
+      getRepositories(params).then(response => {
         this.list = response
         // console.log(this.list)
         this.listLoading = false
