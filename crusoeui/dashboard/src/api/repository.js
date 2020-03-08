@@ -7,6 +7,18 @@ export function getRepository(data) {
     params: data
   })
 }
+export function getResources(id) {
+  return request({
+    url: 'http://localhost:6601/rest/deployment/' + id + '/resources',
+    method: 'get'
+  })
+}
+export function getResourceData(id, resourceId) {
+  return request({
+    url: 'http://localhost:6601/rest/deployment/' + id + '/resources/' + resourceId + '/data',
+    method: 'get'
+  })
+}
 export function getRepositoryCount(data) {
   return request({
     url: 'http://localhost:6601/rest/deployment/count',

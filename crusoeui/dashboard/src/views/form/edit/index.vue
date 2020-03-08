@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      
+
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" @click="deploy" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy" @click="handleCreate">
         部署
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
@@ -36,7 +36,7 @@ import FormCreate from '@form-create/element-ui'
 import splitPane from 'vue-splitpane'
 import JsonEditor from '@/components/JsonEditor'
 
-import { createDeployment } from '@/api/repository'
+import { createDeployment, getResourceData } from '@/api/repository'
 
 export default {
   data() {
@@ -47,55 +47,14 @@ export default {
       value: {},
       // 表单生成规则
       rule: [
-        {
-          type: 'input',
-          field: 'goods_name',
-          title: '商品名称'
-        },
-        {
-          type: 'datePicker',
-          field: 'created_at',
-          title: '创建时间'
-        },
-        {
-          type: 'ElButton',
-          field: 'btn1',
-          children: ['test']
-        },
-        {
-          type: 'DatePicker',
-          field: 'section_day',
-          title: '活动日期',
-          value: ['2018-02-20', new Date()],
-          // input值, type为daterange,datetimerange value为数组 [start_value,end_value]
-          props: {
-            type: 'datetimerange',
-            // 显示类型，可选值为 date、daterange、datetime、datetimerange、year、month
-            format: 'yyyy-MM-dd HH:mm:ss',
-            // 展示的日期格式
-            placement: 'bottom-start',
-            //	日期选择器出现的位置，可选值为toptop-starttop-endbottombottom-startbottom-endleftleft-startleft-endrightright-startright-end
-            placeholder: '请选择获得时间',
-            // 占位文本
-            confirm: false,
-            // 是否显示底部控制栏，开启后，选择完日期，选择器不会主动关闭，需用户确认后才可关闭
-            size: 'default',
-            // 尺寸，可选值为large、small、default或者不设置
-            disabled: false,
-            // 是否禁用选择器
-            clearable: true,
-            // 是否显示清除按钮
-            readonly: false,
-            // 完全只读，开启后不会弹出选择器
-            editable: false
-            // 文本框是否可以输入
-          }
-        }
+
       ],
       option: {
         resetBtn: false,
         submitBtn: false
-      }
+      },
+      id: null,
+      resourceId: null
     }
   },
   methods: {
@@ -131,6 +90,15 @@ export default {
     // this.model = this.$f.model();
 
     this.$data.value = this.$data.rule
+  },
+  created() {
+    console.log(this.$route.params)
+    this.$data.id = this.$route.params.id
+    this.$data.resourceId = this.$route.params.resourceId
+    getResourceData(this.$data.id, this.$data.resourceId).then(response => {
+      this.$data.rule = response
+      this.$data.value = this.$data.rule
+    })
   }
 }
 </script>

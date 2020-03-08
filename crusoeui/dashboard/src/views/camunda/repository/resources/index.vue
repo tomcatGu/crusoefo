@@ -9,7 +9,7 @@
       highlight-current-row
     >
       <el-table-column align="center" label="index" width="95">
-        <template slot-scope="scope">{{ (page-1)*pageSize+scope.$index }}</template>
+        <template slot-scope="scope">{{ (page-1) * pageSize + scope.$index }}</template>
       </el-table-column>
       <el-table-column label="Id" width="110">
         <template slot-scope="scope">{{ scope.row.id }}</template>
@@ -28,26 +28,20 @@
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
-          <el-button type="info">查看流程图</el-button>
+          <router-link :to="'/form/form-edit/'+ id + '/' +scope.row.id">
+            <el-button type="info">编辑</el-button>
+          </router-link>
           <el-button type="info">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :current-page="currentPage"
-      :page-sizes="[1, 2, 3, 5, 10]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="listCount"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+
   </div>
 </template>
 
 <script>
 // import { getList } from '@/api/table'
-import { getTasks, getTasksCount } from '@/api/task'
+import { getResources } from '@/api/repository'
 export default {
   filters: {
     statusFilter(status) {
@@ -63,27 +57,22 @@ export default {
     return {
       list: null,
       listCount: 0,
-      page: 1,
       pageSize: 2,
-      listLoading: true
+      page: 1,
+      listLoading: true,
+      id: null
     }
   },
   created() {
+    this.id = this.$route.params.id
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.listLoading = true
-      const params = {
-        firstResult: (this.$data.page - 1) * this.$data.pageSize,
-        maxResults: this.$data.pageSize
-      }
-      getTasksCount(params).then(response => {
-        this.$data.listCount = response.count
-      })
-      getTasks(params).then(response => {
+      getResources(this.$data.id).then(response => {
         this.list = response
-        console.log(this.list)
+        // console.log(this.list)
         this.listLoading = false
       })
     },
@@ -99,14 +88,14 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .app-container {
   position: absolute;
   background-color: #ffffff;
   width: 100%;
   height: 100%;
-    overflow-y: scroll;
+  overflow-y: scroll;
   white-space: nowrap;
 }
-
 </style>

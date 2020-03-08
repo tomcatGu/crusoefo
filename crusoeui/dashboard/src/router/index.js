@@ -111,6 +111,13 @@ export const constantRoutes = [
         name: 'Create Form',
         component: () => import('@/views/form/create/index'),
         meta: { title: 'Create Form', icon: 'form' }
+      },
+      {
+        path: 'form-edit/:id/:resourceId',
+        name: 'Edit Form',
+        component: () => import('@/views/form/edit/index'),
+        meta: { title: 'Edit Form', icon: 'form' },
+        hidden: true
       }
     ]
   },
@@ -124,6 +131,13 @@ export const constantRoutes = [
         name: 'Repository',
         component: () => import('@/views/camunda/repository/index'),
         meta: { title: 'Repository List', icon: 'form' }
+      },
+      {
+        path: 'repository/resources/:id',
+        name: 'Resources List',
+        component: () => import('@/views/camunda/repository/resources/index'),
+        meta: { title: 'Resources List', icon: 'form' },
+        hidden: true
       },
       {
         path: 'processes',

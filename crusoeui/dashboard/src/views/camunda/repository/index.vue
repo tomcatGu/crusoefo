@@ -28,7 +28,9 @@
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
-          <el-button type="info">查看流程图</el-button>
+          <router-link :to="'repository/resources/'+scope.row.id">
+            <el-button type="info">查看资源</el-button>
+          </router-link>
           <el-button type="info">删除</el-button>
         </template>
       </el-table-column>
@@ -75,7 +77,7 @@ export default {
     fetchData() {
       this.listLoading = true
       const params = {
-        firstResult: (this.$data.page - 1 )* this.$data.pageSize,
+        firstResult: (this.$data.page - 1) * this.$data.pageSize,
         maxResults: this.$data.pageSize
       }
 
