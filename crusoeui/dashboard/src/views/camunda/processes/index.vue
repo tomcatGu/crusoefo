@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { getProcesses, getProcessesCount, startProcess } from '@/api/processes'
+import { getProcesses, getProcessesCount, startProcess, getStartFormKey } from '@/api/processes'
 import { MessageBox, Message } from 'element-ui'
 export default {
   filters: {
@@ -67,7 +67,8 @@ export default {
       listCount: 0,
       pageSize: 2,
       page: 1,
-      listLoading: true
+      listLoading: true,
+      startFormKey: null
     }
   },
   created() {
@@ -101,6 +102,10 @@ export default {
     start(data) {
       this.listLoading = true
       const id = data
+      getStartFormKey(id).then(response => {
+        this.$data.startFormKey = response.key
+        this.$route.push('/form/' + id + '/show/' + response.key)
+      })
       startProcess(id).then(response => {
         this.listLoading = false
         Message({
