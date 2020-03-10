@@ -2,19 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" @click="deploy" style="margin-left: 10px;" type="primary" icon="el-icon-edit" >
+
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy">
         部署
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
+
     </div>
     <split-pane split="vertical">
       <template slot="paneL">
@@ -120,6 +112,9 @@ export default {
       createDeployment(formData).then(response => {
         console.log(response)
       })
+    },
+    getValue() {
+      return this.value
     }
   },
   components: {

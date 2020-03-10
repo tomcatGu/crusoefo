@@ -1,40 +1,55 @@
 <template>
-  <div ref="content" class="containers">
-    <div ref="canvas" class="canvas" />
-    <div id="js-properties-panel" class="panel" />
-    <ul class="buttons">
-      <li>下载</li>
-      <li>
-        <a
-          ref="saveDiagram"
-          href="javascript:"
-          title="download BPMN diagram"
-          class="active"
-          @click="handleDownloadXml"
-        >BPMN diagram</a>
-      </li>
-      <li>
-        <a
-          ref="saveImg"
-          href="javascript:"
-          title="download as SVG image"
-          class="active"
-          @click="saveImg"
-        >SVG image</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active" @click="deploy">部署</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active" @click="handleZoom(0.2)">放大</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active" @click="handleZoom(-0.2)">缩小</a>
-      </li>
-      <li>
-        <a href="javascript:" class="active" @click="resetView">还原</a>
-      </li>
-    </ul>
+  <div>
+    <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy1">
+      部署
+    </el-button>
+    <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
+      <el-tab-pane label="modeler" style="height:900px">
+        <div ref="content" class="containers">
+          <div ref="canvas" class="canvas" />
+          <div id="js-properties-panel" class="panel" />
+          <ul class="buttons">
+            <li>下载</li>
+            <li>
+              <a
+                ref="saveDiagram"
+                href="javascript:"
+                title="download BPMN diagram"
+                class="active"
+                @click="handleDownloadXml"
+              >BPMN diagram</a>
+            </li>
+            <li>
+              <a
+                ref="saveImg"
+                href="javascript:"
+                title="download as SVG image"
+                class="active"
+                @click="saveImg"
+              >SVG image</a>
+            </li>
+            <li>
+              <a href="javascript:" class="active" @click="deploy">部署</a>
+            </li>
+            <li>
+              <a href="javascript:" class="active" @click="handleZoom(0.2)">放大</a>
+            </li>
+            <li>
+              <a href="javascript:" class="active" @click="handleZoom(-0.2)">缩小</a>
+            </li>
+            <li>
+              <a href="javascript:" class="active" @click="resetView">还原</a>
+            </li>
+          </ul>
+        </div></el-tab-pane>
+      <el-tab-pane
+        v-for="(item, index) in editableTabs"
+        :key="item.name"
+        :label="item.title"
+        :name="item.name"
+        style="height:900px;"
+      ><tab-component :is="item.content" /></el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>
@@ -48,6 +63,7 @@ import AlignToOrigin from '@bpmn-io/align-to-origin'
 import customTranslate from './customTanslate'
 
 import { createDeployment } from '@/api/repository'
+import embbedFormCreate from '@/components/EmbbedFormCreate'
 
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -57,13 +73,25 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 export default {
+  components: {
+    embbedFormCreate
+  },
   data() {
     return {
       // bpmn建模器
       bpmnModeler: null,
       container: null,
       canvas: null,
-      scale: 1
+      scale: 1,
+      editableTabsValue: '2',
+      editableTabs: [
+        {
+          title: 'Tab 1',
+          name: '1',
+          content: embbedFormCreate
+        }
+      ],
+      tabIndex: 1
     }
   },
   mounted() {
@@ -330,6 +358,39 @@ export default {
           })
         }
       })
+    },
+    deploy1() {
+      this.editableTabs.forEach(tab => {
+        console.log(tab.content)
+      })
+    },
+    handleTabsEdit(targetName, action) {
+      if (action === 'add') {
+        const newTabName = ++this.tabIndex + ''
+        this.editableTabs.push({
+          title: 'New EmbbedForm',
+          name: newTabName,
+          content: embbedFormCreate
+        })
+        this.editableTabsValue = newTabName
+      }
+      if (action === 'remove') {
+        const tabs = this.editableTabs
+        let activeName = this.editableTabsValue
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              const nextTab = tabs[index + 1] || tabs[index - 1]
+              if (nextTab) {
+                activeName = nextTab.name
+              }
+            }
+          })
+        }
+
+        this.editableTabsValue = activeName
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName)
+      }
     }
   }
 }
@@ -376,5 +437,12 @@ export default {
       }
     }
   }
+}
+.editor-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  white-space: nowrap;
 }
 </style>
