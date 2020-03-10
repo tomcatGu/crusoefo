@@ -1,17 +1,12 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <div>
       <el-input placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy">
-        部署
-      </el-button>
-
     </div>
     <split-pane split="vertical">
       <template slot="paneL">
         <div class="editor-container">
-          <json-editor ref="jsonEditor" v-model="value" @changed="onChange" />
+          <json-editor slot="editor" ref="jsonEditor" v-model="value" @changed="onChange" />
         </div>
       </template>
       <template slot="paneR">
@@ -96,8 +91,10 @@ export default {
       console.log(JSON.stringify(formData))
     },
     onChange(data) {
-      console.log(data)
+      // console.log(data)
+      this.$emit('valueChanged', data)
       this.$data.rule = JSON.parse(data)
+
       // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))
     },
@@ -114,7 +111,7 @@ export default {
       })
     },
     getValue() {
-      return this.value
+      return this.$data.value
     }
   },
   components: {
@@ -124,7 +121,6 @@ export default {
   },
   mounted() {
     // this.model = this.$f.model();
-
     this.$data.value = this.$data.rule
   }
 }

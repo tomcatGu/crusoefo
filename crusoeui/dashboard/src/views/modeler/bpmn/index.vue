@@ -2,14 +2,13 @@
   <div>
     <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy1">
       部署
-    </el-button>
+    </el-button>         <form-create v-mod
     <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
       <el-tab-pane label="modeler" style="height:900px">
         <div ref="content" class="containers">
           <div ref="canvas" class="canvas" />
           <div id="js-properties-panel" class="panel" />
           <ul class="buttons">
-            <li>下载</li>
             <li>
               <a
                 ref="saveDiagram"
@@ -45,10 +44,11 @@
       <el-tab-pane
         v-for="(item, index) in editableTabs"
         :key="item.name"
+        ref="form"
         :label="item.title"
         :name="item.name"
         style="height:900px;"
-      ><tab-component :is="item.content" /></el-tab-pane>
+      ><tab-component :is="item.content" @valueChanged="valueChanged" /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
       container: null,
       canvas: null,
       scale: 1,
-      editableTabsValue: '2',
+      editableTabsValue: '1',
       editableTabs: [
         {
           title: 'Tab 1',
@@ -91,7 +91,8 @@ export default {
           content: embbedFormCreate
         }
       ],
-      tabIndex: 1
+      tabIndex: 1,
+      value: ''
     }
   },
   mounted() {
@@ -361,14 +362,18 @@ export default {
     },
     deploy1() {
       this.editableTabs.forEach(tab => {
-        console.log(tab.content)
+        console.log(tab.content.editorValue)
       })
+    },
+    valueChanged(data) {
+      console.log(this.editableTabsValue)
+      console.log(data)
     },
     handleTabsEdit(targetName, action) {
       if (action === 'add') {
         const newTabName = ++this.tabIndex + ''
         this.editableTabs.push({
-          title: 'New EmbbedForm',
+          title: 'New EmbbedForm' + this.tabIndex,
           name: newTabName,
           content: embbedFormCreate
         })
@@ -419,7 +424,7 @@ export default {
 }
 .buttons {
   position: absolute;
-  left: 20px;
+  left: 0px;
   bottom: 20px;
   & > li {
     display: inline-block;
