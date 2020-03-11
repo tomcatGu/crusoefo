@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { getProcesses, getProcessesCount, startProcess, getStartFormKey } from '@/api/processes'
+import { getProcesses, getProcessesCount, startProcess, getStartFormKey, getDeployedStartForm } from '@/api/processes'
 import { MessageBox, Message } from 'element-ui'
 export default {
   filters: {
@@ -102,18 +102,20 @@ export default {
     start(data) {
       this.listLoading = true
       const id = data
+      const that = this
       getStartFormKey(id).then(response => {
-        this.$data.startFormKey = response.key
-        this.$route.push('/form/' + id + '/show/' + response.key)
+        console.log(response.key)
+        that.$data.startFormKey = response.key
+        that.$router.push({ path: '/form/start-form/' + id })
       })
-      startProcess(id).then(response => {
+      /*       startProcess(id).then(response => {
         this.listLoading = false
         Message({
           message: '流程启动成功。',
           type: 'success',
           duration: 2 * 1000
         })
-      })
+      }) */
     }
   }
 }

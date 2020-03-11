@@ -21,7 +21,21 @@ export function getProcessXML(data) {
     method: 'get'
   })
 }
+export function getStartFormKey(data) {
+  console.log(data)
+  return request({
+    url: 'http://localhost:6601/rest/process-definition/' + data + '/startForm',
+    method: 'get'
+  })
+}
 
+export function getDeployedStartForm(data) {
+  console.log(data)
+  return request({
+    url: 'http://localhost:6601/rest/process-definition/' + data + '/deployed-start-form',
+    method: 'get'
+  })
+}
 export function startProcess(data) {
   console.log(data)
   return request({

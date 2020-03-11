@@ -118,6 +118,13 @@ export const constantRoutes = [
         component: () => import('@/views/form/edit/index'),
         meta: { title: 'Edit Form', icon: 'form' },
         hidden: true
+      },
+      {
+        path: 'start-form/:id/',
+        name: 'Start Form',
+        component: () => import('@/views/form/start/index'),
+        meta: { title: 'Start Form', icon: 'form' },
+        hidden: true
       }
     ]
   },
@@ -157,6 +164,13 @@ export const constantRoutes = [
         name: 'Task',
         component: () => import('@/views/camunda/task/index'),
         meta: { title: 'Task List', icon: 'form' }
+      },
+      {
+        path: 'task-form/:id/',
+        name: 'Start Task',
+        component: () => import('@/views/form/task/index'),
+        meta: { title: 'Start Task', icon: 'form' },
+        hidden: true
       }
 
     ]

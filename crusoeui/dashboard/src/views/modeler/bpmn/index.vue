@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @contextmenu.prevent="handleTabNameEdit" />
+
     <el-button
       class="filter-item"
       style="margin-left: 10px;"
@@ -10,6 +10,7 @@
     >部署</el-button>
     <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
       <el-tab-pane name="modeler" label="modeler" style="height:900px">
+        <el-input v-model="bpmnName" placeholder="请输入流程图名称" />
         <div ref="content" class="containers">
           <div ref="canvas" class="canvas" />
           <div id="js-properties-panel" class="panel" />
@@ -73,6 +74,8 @@ import customTranslate from './customTanslate'
 import { createDeployment } from '@/api/repository'
 import embbedFormCreate from '@/components/EmbbedFormCreate'
 
+import { MessageBox, Message } from 'element-ui'
+
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
@@ -94,7 +97,8 @@ export default {
       editableTabsValue: 'modeler',
       editableTabs: [
       ],
-      tabIndex: 1
+      tabIndex: 1,
+      bpmnName: null
     }
   },
   mounted() {
@@ -102,7 +106,6 @@ export default {
     this.container = this.$refs.content
     // 获取到属性ref为“canvas”的dom节点
     const canvas = this.$refs.canvas
-
     // 建模，官方文档这里讲的很详细
     this.bpmnModeler = new BpmnModeler({
       container: canvas,
@@ -351,32 +354,27 @@ export default {
         } else {
           // this.download('xml', xml)
           const formData = new FormData()
-          formData.append('deployment-name', 'test')
-          formData.append('deployment-source', 'Process_1')
+          formData.append('deployment-name', this.bpmnName)
+          formData.append('deployment-source', this.bpmnName + ' Process')
           formData.append('enable-duplicate-filtering', true)
-          formData.append('flow', new Blob([xml]), 'test.bpmn')
+          formData.append('flow', new Blob([xml]), this.bpmnName + '.bpmn')
 
           for (var i = 0; i < this.$refs.eform.length; i++) {
-            console.log(this.$refs.eform[i].value)
-            console.log(this.editableTabs[i].title)
-            formData.append(this.editableTabs[i].title, new Blob([this.$refs.eform[i].value]), this.editableTabs[i].title + '.form')
+            // console.log(this.$refs.eform[i].value)
+            // console.log(this.editableTabs[i].title)
+            formData.append(this.editableTabs[i].title, new Blob([this.$refs.eform[i].value]), 'forms/' + this.editableTabs[i].title + '.form')
           }
 
           createDeployment(formData).then(response => {
-            console.log(response)
+            // console.log(response)
+            Message({
+              message: '部署流程及表单成功。',
+              type: 'success',
+              duration: 2 * 1000
+            })
           })
         }
       })
-    },
-    deploy1() {
-      console.log(this.$refs.eform)
-      this.$refs.eform.forEach(f => {
-        console.log(f.value)
-      })
-    },
-    handleTabNameEdit(event) {
-      console.log('dlclick')
-      return false
     },
     handleTabsEdit(targetName, action) {
       if (action === 'add') {

@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column label="Name" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+          <span @click="startTask(scope.row.id)">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Source" width="110" align="center">
@@ -28,8 +28,6 @@
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
-          <el-button type="info">查看流程图</el-button>
-          <el-button type="info">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,6 +93,24 @@ export default {
     handleSizeChange(pageSize) {
       this.$data.pageSize = pageSize
       this.fetchData()
+    },
+    startTask(data) {
+      this.listLoading = true
+      const id = data
+      const that = this
+      // getTaskFormKey(id).then(response => {
+      //  console.log(response.key)
+      //  that.$data.startFormKey = response.key
+      that.$router.push({ path: '/camunda/task-form/' + id })
+      // })
+      /*       startProcess(id).then(response => {
+        this.listLoading = false
+        Message({
+          message: '流程启动成功。',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      }) */
     }
   }
 }
