@@ -1,14 +1,20 @@
 <template>
   <div>
-    <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="deploy1">
-      部署
-    </el-button>         <form-create v-mod
+    <div @contextmenu.prevent="handleTabNameEdit" />
+    <el-button
+      class="filter-item"
+      style="margin-left: 10px;"
+      type="primary"
+      icon="el-icon-edit"
+      @click="deploy"
+    >部署</el-button>
     <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
-      <el-tab-pane label="modeler" style="height:900px">
+      <el-tab-pane name="modeler" label="modeler" style="height:900px">
         <div ref="content" class="containers">
           <div ref="canvas" class="canvas" />
           <div id="js-properties-panel" class="panel" />
           <ul class="buttons">
+            <li>下载</li>
             <li>
               <a
                 ref="saveDiagram"
@@ -40,15 +46,17 @@
               <a href="javascript:" class="active" @click="resetView">还原</a>
             </li>
           </ul>
-        </div></el-tab-pane>
+        </div>
+      </el-tab-pane>
       <el-tab-pane
         v-for="(item, index) in editableTabs"
         :key="item.name"
-        ref="form"
         :label="item.title"
         :name="item.name"
         style="height:900px;"
-      ><tab-component :is="item.content" @valueChanged="valueChanged" /></el-tab-pane>
+      >
+        <tab-component :is="item.content" ref="eform" />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -83,16 +91,10 @@ export default {
       container: null,
       canvas: null,
       scale: 1,
-      editableTabsValue: '1',
+      editableTabsValue: 'modeler',
       editableTabs: [
-        {
-          title: 'Tab 1',
-          name: '1',
-          content: embbedFormCreate
-        }
       ],
-      tabIndex: 1,
-      value: ''
+      tabIndex: 1
     }
   },
   mounted() {
@@ -202,7 +204,7 @@ export default {
         } else {
           // 这里还没用到这个，先注释掉吧
           // that.success()
-          that.bpmnModeler.get('minimap').open()
+          // that.bpmnModeler.get('minimap').open()
         }
       })
       var eventBus = this.bpmnModeler.get('eventBus')
@@ -352,7 +354,13 @@ export default {
           formData.append('deployment-name', 'test')
           formData.append('deployment-source', 'Process_1')
           formData.append('enable-duplicate-filtering', true)
-          formData.append('data', new Blob([xml]), 'test.bpmn')
+          formData.append('flow', new Blob([xml]), 'test.bpmn')
+
+          for (var i = 0; i < this.$refs.eform.length; i++) {
+            console.log(this.$refs.eform[i].value)
+            console.log(this.editableTabs[i].title)
+            formData.append(this.editableTabs[i].title, new Blob([this.$refs.eform[i].value]), this.editableTabs[i].title + '.form')
+          }
 
           createDeployment(formData).then(response => {
             console.log(response)
@@ -361,23 +369,29 @@ export default {
       })
     },
     deploy1() {
-      this.editableTabs.forEach(tab => {
-        console.log(tab.content.editorValue)
+      console.log(this.$refs.eform)
+      this.$refs.eform.forEach(f => {
+        console.log(f.value)
       })
     },
-    valueChanged(data) {
-      console.log(this.editableTabsValue)
-      console.log(data)
+    handleTabNameEdit(event) {
+      console.log('dlclick')
+      return false
     },
     handleTabsEdit(targetName, action) {
       if (action === 'add') {
-        const newTabName = ++this.tabIndex + ''
-        this.editableTabs.push({
-          title: 'New EmbbedForm' + this.tabIndex,
-          name: newTabName,
-          content: embbedFormCreate
+        this.$prompt('请输入名称', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
+          const newTabName = ++this.tabIndex + ''
+          this.editableTabs.push({
+            title: value,
+            name: newTabName,
+            content: embbedFormCreate
+          })
+          this.editableTabsValue = newTabName
         })
-        this.editableTabsValue = newTabName
       }
       if (action === 'remove') {
         const tabs = this.editableTabs
@@ -424,7 +438,7 @@ export default {
 }
 .buttons {
   position: absolute;
-  left: 0px;
+  left: 20px;
   bottom: 20px;
   & > li {
     display: inline-block;

@@ -1,13 +1,21 @@
 import request from '@/utils/request'
 
-export function login2(data) {
-  return request({
-    url: 'http://localhost:6601/oauth/token?grant_type=password&client_id=client_1&client_secret=123456&scope=web&state=xyz' + '&username=' + data.username + '&password=' + data.password,
-    method: 'get',
-    data
-  })
-}
 export function login(data) {
+  if (process.env.NODE_ENV === 'development') {
+    return request({
+      url: '/user/login',
+      method: 'post',
+      data
+    })
+  } else {
+    return request({
+      url: 'http://localhost:6601/oauth/token?grant_type=password&client_id=client_1&client_secret=123456&scope=web&state=xyz' + '&username=' + data.username + '&password=' + data.password,
+      method: 'get',
+      data
+    })
+  }
+}
+export function login2(data) {
   return request({
     url: '/user/login',
     method: 'post',
