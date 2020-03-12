@@ -47,3 +47,13 @@ export function startProcess(data) {
     data: '{}'
   })
 }
+export function submitStartForm(id, data) {
+  return request({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url: 'http://localhost:6601/rest/process-definition/' + id + '/submit-form',
+    method: 'post',
+    data
+  })
+}

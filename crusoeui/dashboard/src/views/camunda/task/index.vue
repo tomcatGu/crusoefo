@@ -19,11 +19,11 @@
           <span @click="startTask(scope.row.id)">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Source" width="110" align="center">
-        <template slot-scope="scope">{{ scope.row.source }}</template>
+      <el-table-column label="Owner" width="110" align="center">
+        <template slot-scope="scope">{{ scope.row.owner }}</template>
       </el-table-column>
-      <el-table-column label="DeploymentTime" width="110" align="center">
-        <template slot-scope="scope">{{ scope.row.deploymentTime }}</template>
+      <el-table-column label="Created" width="110" align="center">
+        <template slot-scope="scope">{{ scope.row.created }}</template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
