@@ -6,7 +6,10 @@
 
 <script>
 import FormCreate from '@form-create/element-ui'
-import { getDeployedStartForm } from '@/api/processes'
+import { getDeployedStartForm, submitStartForm } from '@/api/processes'
+
+import { Message } from 'element-ui'
+import { formatTime } from '@/utils'
 
 export default {
   components: {
@@ -20,8 +23,7 @@ export default {
       // 表单生成规则
       rule: [],
       option: {
-        resetBtn: false,
-        submitBtn: false
+        resetBtn: false
       },
       id: null,
       formKey: null
@@ -42,7 +44,49 @@ export default {
   methods: {
     onSubmit(formData) {
       // TODO 提交表单
-      console.log(JSON.stringify(formData))
+      // console.log(this.rule)
+      // console.log(JSON.stringify(formData))
+      var variables = {}
+      this.rule.forEach(r => {
+        // console.log(r.field)
+        // console.log(r.type)
+        var v = {}
+        switch (r.type) {
+          case 'input': {
+            v.type = 'String'
+            v.value = formData[r.field]
+            break
+          }
+          case 'InputNumber': {
+            v.value = formData[r.field]
+            v.type = 'long'
+            break
+          }
+          case 'datePicker': {
+            v.type = 'date'
+            v.value = formatTime(new Date(formData[r.field]), '{y}-{m}-{d}T{h}:{i}:{s}.000+0800')
+            break }
+          case 'switch': {
+            v.type = 'boolean'
+            v.value = formData[r.field]
+            break
+          }
+          default: {
+            v.type = 'String'
+            v.value = formData[r.field]
+            break
+          }
+        }
+
+        variables[r.field] = v
+      })
+      submitStartForm(this.id, { 'variables': variables }).then(response => {
+        Message({
+          message: '提交表单成功。',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
     }
   }
 }
