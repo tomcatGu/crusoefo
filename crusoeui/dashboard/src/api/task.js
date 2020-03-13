@@ -20,3 +20,13 @@ export function getTasksCount(data) {
     params: data
   })
 }
+export function submitTaskForm(id, data) {
+  return request({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url: 'http://localhost:6601/rest/task/' + id + '/submit-form',
+    method: 'post',
+    data
+  })
+}

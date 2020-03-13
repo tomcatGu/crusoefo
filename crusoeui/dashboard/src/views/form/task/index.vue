@@ -6,7 +6,9 @@
 
 <script>
 import FormCreate from '@form-create/element-ui'
-import { getDeployedForm } from '@/api/task'
+import { getDeployedForm, submitTaskForm } from '@/api/task'
+import { Message } from 'element-ui'
+import { formatTime } from '@/utils'
 
 export default {
   components: {
@@ -20,8 +22,7 @@ export default {
       // 表单生成规则
       rule: [],
       option: {
-        resetBtn: false,
-        submitBtn: false
+        resetBtn: false
       },
       id: null,
       resourceId: null,
@@ -34,24 +35,59 @@ export default {
   },
   created() {
     console.log(this.$route.params)
-    this.$data.id = this.$route.params.id
-    this.$data.formKey = this.$route.params.formKey
+    this.id = this.$route.params.id
+    this.formKey = this.$route.params.formKey
     // this.$data.resourceId = this.$route.params.resourceId
     getDeployedForm(this.$data.id).then(response => {
-      this.$data.rule = response
-      this.$data.value = this.$data.rule
+      this.rule = response
     })
   },
   methods: {
     onSubmit(formData) {
       // TODO 提交表单
-      console.log(JSON.stringify(formData))
-    },
-    onChange(data) {
-      console.log(data)
-      this.$data.rule = JSON.parse(data)
-      // this.$data.rule = JSON.parse(this.$data.value)
-      // this.formData.create(JSON.parse(this.rule))
+      // console.log(this.rule)
+      // console.log(JSON.stringify(formData))
+      var variables = {}
+      this.rule.forEach(r => {
+        // console.log(r.field)
+        // console.log(r.type)
+        var v = {}
+        switch (r.type) {
+          case 'input': {
+            v.type = 'String'
+            v.value = formData[r.field]
+            break
+          }
+          case 'InputNumber': {
+            v.value = formData[r.field]
+            v.type = 'long'
+            break
+          }
+          case 'datePicker': {
+            v.type = 'date'
+            v.value = formatTime(new Date(formData[r.field]), '{y}-{m}-{d}T{h}:{i}:{s}.000+0800')
+            break }
+          case 'switch': {
+            v.type = 'boolean'
+            v.value = formData[r.field]
+            break
+          }
+          default: {
+            v.type = 'String'
+            v.value = formData[r.field]
+            break
+          }
+        }
+
+        variables[r.field] = v
+      })
+      submitTaskForm(this.id, { 'variables': variables }).then(response => {
+        Message({
+          message: '提交表单成功。',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
     }
   }
 }
