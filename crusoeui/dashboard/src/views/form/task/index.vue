@@ -6,7 +6,7 @@
 
 <script>
 import FormCreate from '@form-create/element-ui'
-import { getDeployedForm, submitTaskForm } from '@/api/task'
+import { getDeployedForm, submitTaskForm, getTaskVariables } from '@/api/task'
 import { Message } from 'element-ui'
 import { formatTime } from '@/utils'
 
@@ -38,8 +38,11 @@ export default {
     this.id = this.$route.params.id
     this.formKey = this.$route.params.formKey
     // this.$data.resourceId = this.$route.params.resourceId
-    getDeployedForm(this.$data.id).then(response => {
+    getDeployedForm(this.id).then(response => {
       this.rule = response
+      getTaskVariables(this.id).then(response => {
+        console.log(response)
+      })
     })
   },
   methods: {

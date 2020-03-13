@@ -7,6 +7,12 @@ export function getTasks(data) {
     params: data
   })
 }
+export function getTaskVariables(data) {
+  return request({
+    url: 'http://localhost:6601/rest/task/' + data + '/variables',
+    method: 'get'
+  })
+}
 export function getDeployedForm(data) {
   return request({
     url: 'http://localhost:6601/rest/task/' + data +'/deployed-form',
