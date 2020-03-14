@@ -2,14 +2,14 @@ import request from '@/utils/request'
 
 export function getProcesses(data) {
   return request({
-    url: 'http://localhost:6601/rest/process-definition',
+    url: '/rest/process-definition',
     method: 'get',
     params: data
   })
 }
 export function getProcessesCount(data) {
   return request({
-    url: 'http://localhost:6601/rest/process-definition/count',
+    url: '/rest/process-definition/count',
     method: 'get',
     params: data
   })
@@ -17,14 +17,14 @@ export function getProcessesCount(data) {
 export function getProcessXML(data) {
   console.log(data)
   return request({
-    url: 'http://localhost:6601/rest/process-definition/' + data + '/xml',
+    url: '/rest/process-definition/' + data + '/xml',
     method: 'get'
   })
 }
 export function getStartFormKey(data) {
   console.log(data)
   return request({
-    url: 'http://localhost:6601/rest/process-definition/' + data + '/startForm',
+    url: '/rest/process-definition/' + data + '/startForm',
     method: 'get'
   })
 }
@@ -32,7 +32,7 @@ export function getStartFormKey(data) {
 export function getDeployedStartForm(data) {
   console.log(data)
   return request({
-    url: 'http://localhost:6601/rest/process-definition/' + data + '/deployed-start-form',
+    url: '/rest/process-definition/' + data + '/deployed-start-form',
     method: 'get'
   })
 }
@@ -42,7 +42,7 @@ export function startProcess(data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: 'http://localhost:6601/rest/process-definition/' + data + '/start',
+    url: '/rest/process-definition/' + data + '/start',
     method: 'post',
     data: '{}'
   })
@@ -52,7 +52,7 @@ export function submitStartForm(id, data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: 'http://localhost:6601/rest/process-definition/' + id + '/submit-form',
+    url: '/rest/process-definition/' + id + '/submit-form',
     method: 'post',
     data
   })

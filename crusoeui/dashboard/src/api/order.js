@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getOrder() {
   return request({
-    url: 'http://localhost:6601/order/message',
+    url: '/order/message',
     method: 'get'
   })
 }

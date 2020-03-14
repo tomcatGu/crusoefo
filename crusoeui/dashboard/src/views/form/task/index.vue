@@ -32,18 +32,35 @@ export default {
   },
 
   mounted() {
-  },
-  created() {
-    console.log(this.$route.params)
+    const that = this
     this.id = this.$route.params.id
     this.formKey = this.$route.params.formKey
     // this.$data.resourceId = this.$route.params.resourceId
     getDeployedForm(this.id).then(response => {
       this.rule = response
       getTaskVariables(this.id).then(response => {
-        console.log(response)
+        // console.log(response)
+        // console.log(that.$data.$f)
+        for (const v in response) {
+          const rule = this.$data.$f.getRule(v)
+          switch (rule.type) {
+            case 'DatePicker': {
+              if (rule.props.type === 'datetimerange') {
+                that.$data.$f.setValue(v, this.evil(response[v].value))
+              } else {
+                that.$data.$f.setValue(v, response[v].value)
+              }
+              break
+            }
+            default:
+              that.$data.$f.setValue(v, response[v].value)
+          }
+        }
       })
     })
+  },
+  created() {
+
   },
   methods: {
     onSubmit(formData) {
@@ -91,6 +108,11 @@ export default {
           duration: 2 * 1000
         })
       })
+    },
+    evil(fn) {
+      // 一个变量指向Function，防止有些前端编译工具报错
+      const Fn = Function
+      return new Fn('return ' + fn)()
     }
   }
 }
