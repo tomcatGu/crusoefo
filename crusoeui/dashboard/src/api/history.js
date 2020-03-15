@@ -7,3 +7,10 @@ export function getActivityInstances(data) {
     params: data
   })
 }
+export function getIncidents(data) {
+  return request({
+    url: '/rest/history/incident',
+    method: 'get',
+    params: data
+  })
+}

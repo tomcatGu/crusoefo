@@ -28,7 +28,11 @@
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
+          <router-link :to="'processInstance/'+scope.row.processInstanceId+'/diagram/'+scope.row.processDefinitionId">
+            <el-button type="info">查看流程图</el-button>
+          </router-link>
         </template>
+
       </el-table-column>
     </el-table>
     <el-pagination

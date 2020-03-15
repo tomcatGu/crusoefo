@@ -103,6 +103,7 @@ export default {
               processInstanceId: that.id
             }
             getActivityInstances(params).then(response => {
+              console.log(response)
               const canvas = that.bpmnViewer.get('canvas')
               const nodes = []
               response.forEach(activity => {
@@ -134,7 +135,7 @@ export default {
           // e.element = the model element
           // e.gfx = the graphical element
 
-          console.log(event, 'on', e.element.id)
+          // console.log(event, 'on', e.element.id)
           if (event === 'element.click') {
             const elementRegistry = that.bpmnViewer.get('elementRegistry')
             const task = elementRegistry.get(e.element.id)
@@ -142,7 +143,7 @@ export default {
 
             const outgoingConnections = businessObject.outgoing
             const incoming = businessObject.incoming
-            console.log('outgoingConnections', outgoingConnections)
+            // console.log('outgoingConnections', outgoingConnections)
 
             const canvas = that.bpmnViewer.get('canvas')
             const nodeCodes2 = [incoming[0].id, outgoingConnections[0].id]
@@ -251,7 +252,8 @@ export default {
 }
 .nodeSuccess:not(.djs-connection) .djs-visual > :nth-child(1) {
   stroke: green !important;
-  stroke-width: 3px;
+  fill:#999;
+  stroke-width: 3px !important;
   /* elements as success */
 }
 
