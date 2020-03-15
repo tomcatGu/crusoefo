@@ -57,3 +57,17 @@ export function submitStartForm(id, data) {
     data
   })
 }
+export function getProcessInstances(data) {
+  return request({
+    url: '/rest/process-instance',
+    method: 'get',
+    params: data
+  })
+}
+export function getProcessInstanceCount(data) {
+  return request({
+    url: '/rest/process-instance/count',
+    method: 'get',
+    params: data
+  })
+}

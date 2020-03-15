@@ -160,6 +160,19 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: 'processInstance',
+        name: 'Process Instance',
+        component: () => import('@/views/camunda/processInstance/index'),
+        meta: { title: 'ProcessInstance List', icon: 'form' }
+      },
+      {
+        path: 'processInstance/:id/diagram/:definitionId',
+        name: 'ProcessInstance Diagram',
+        component: () => import('@/views/camunda/processInstance/diagram/index'),
+        meta: { title: 'ProcessInstance Diagram', icon: 'form' },
+        hidden: true
+      },
+      {
         path: 'task',
         name: 'Task',
         component: () => import('@/views/camunda/task/index'),
