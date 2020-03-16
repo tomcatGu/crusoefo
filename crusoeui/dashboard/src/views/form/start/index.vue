@@ -80,7 +80,7 @@ export default {
 
         variables[r.field] = v
       })
-      submitStartForm(this.id, { 'variables': variables }).then(response => {
+      submitStartForm(this.id, { 'variables': variables, 'businessKey': formData['businessKey'] || '未命名' }).then(response => {
         Message({
           message: '提交表单成功。',
           type: 'success',

@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column label="Name" width="110" align="center">
         <template slot-scope="scope">
-          <span @click="startTask(scope.row.id)">{{ scope.row.name }}</span>
+          <span @click="startTask(scope.row.id)">[{{ scope.row.name }}]{{ scope.row.businessKey }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Owner" width="110" align="center">
@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="startProcess(scope.row.id)">启动流程</el-button>
+          <el-button type="text" @click="startTask(scope.row.id)">处理任务</el-button>
           <router-link :to="'processInstance/'+scope.row.processInstanceId+'/diagram/'+scope.row.processDefinitionId">
             <el-button type="info">查看流程图</el-button>
           </router-link>
@@ -50,6 +50,7 @@
 <script>
 // import { getList } from '@/api/table'
 import { getTasks, getTasksCount } from '@/api/task'
+import { getProcessInstance } from '@/api/processes'
 export default {
   filters: {
     statusFilter(status) {
@@ -70,7 +71,7 @@ export default {
       listLoading: true
     }
   },
-  created() {
+  mounted() {
     this.fetchData()
   },
   methods: {
@@ -84,8 +85,18 @@ export default {
         this.$data.listCount = response.count
       })
       getTasks(params).then(response => {
-        this.list = response
+        const arr = response
+        arr.forEach(element => {
+          element.businessKey = ''
+        })
+        arr.forEach(element => {
+          getProcessInstance(element.processInstanceId).then(response => {
+            element.businessKey = response.businessKey || '未命名'
+          })
+        })
+        this.list = arr
         console.log(this.list)
+        this.$forceUpdate()
         this.listLoading = false
       })
     },

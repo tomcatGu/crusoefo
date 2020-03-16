@@ -71,3 +71,9 @@ export function getProcessInstanceCount(data) {
     params: data
   })
 }
+export function getProcessInstance(data) {
+  return request({
+    url: '/rest/process-instance/' + data,
+    method: 'get'
+  })
+}
