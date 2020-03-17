@@ -173,7 +173,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			if (accessToken instanceof DefaultOAuth2AccessToken) {
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
-				additionalInformation.put("username", authentication.getDetails());
+				//additionalInformation.put("username", authentication.getDetails());
 				List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 				List<String> authorityList = new ArrayList<String>();
 				for (GrantedAuthority grantedAuthority : authorities) {

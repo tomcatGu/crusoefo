@@ -104,18 +104,21 @@ export default {
       const id = data
       const that = this
       getStartFormKey(id).then(response => {
-        console.log(response.key)
-        that.$data.startFormKey = response.key
-        that.$router.push({ path: '/form/start-form/' + id })
+        console.log('form key:', response.key)
+        if (response.key != null) {
+          that.$data.startFormKey = response.key
+          that.$router.push({ path: '/form/start-form/' + id })
+        } else {
+          startProcess(id).then(response => {
+            this.listLoading = false
+            Message({
+              message: '流程启动成功。',
+              type: 'success',
+              duration: 2 * 1000
+            })
+          })
+        }
       })
-      /*       startProcess(id).then(response => {
-        this.listLoading = false
-        Message({
-          message: '流程启动成功。',
-          type: 'success',
-          duration: 2 * 1000
-        })
-      }) */
     }
   }
 }

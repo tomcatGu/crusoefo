@@ -2,6 +2,8 @@ import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
+const jwt = require('jsonwebtoken')
+
 const state = {
   token: getToken(),
   name: '',
@@ -39,7 +41,9 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      const data = { name: 'admin', avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
+      const userDetails = jwt.decode(getToken())
+      // console.log(userDetails)
+      const data = { name: userDetails.user_name, avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
       console.log(data)
       commit('SET_NAME', data.name)
       commit('SET_AVATAR', data.avatar)

@@ -36,3 +36,9 @@ export function submitTaskForm(id, data) {
     data
   })
 }
+export function completeTask(data) {
+  return request({
+    url: '/rest/task/' + data + '/complete',
+    method: 'post'
+  })
+}

@@ -16,7 +16,7 @@
       </el-table-column>
       <el-table-column label="businessKey" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.businessKey }}</span>
+          <span>{{ scope.row.businessKey || '未命名' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="ended" width="110" align="center">
