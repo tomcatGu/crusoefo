@@ -7,8 +7,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.crusoe.fo.oauth.entity.Department;
 import com.crusoe.fo.oauth.entity.Role;
 import com.crusoe.fo.oauth.entity.User;
+import com.crusoe.fo.oauth.repository.DepartmentRepository;
 import com.crusoe.fo.oauth.repository.UserRepository;
 
 import org.junit.Test;
@@ -28,6 +30,8 @@ public class AppTest {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     @Test
     //@Transactional
@@ -35,14 +39,30 @@ public class AppTest {
         List<User> users=userRepository.findAll();
         assertEquals(0, users.size());
 
+        //Department dept1=departmentRepository.findByName("root node");
+
+        //assertEquals(0, dept1.getUserList().size());
+
+        
+        Department dept=new Department();
+        dept.setName("root node");
+        dept.setParent(null);
+        departmentRepository.save(dept);
+
+
         Role role=new Role();
         role.setRolename("res1");
         User user=new User();
         user.setUsername("admin");
         user.setPassword(new BCryptPasswordEncoder().encode("123456"));
         user.getRoleList().add(role);
+        user.setDepartment(dept);
         userRepository.save(user);
         assertTrue(user.getId()>0);
+
+
+
+        
 
 
     }

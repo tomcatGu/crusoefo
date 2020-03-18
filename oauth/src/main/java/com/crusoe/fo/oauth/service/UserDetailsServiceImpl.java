@@ -3,6 +3,7 @@ package com.crusoe.fo.oauth.service;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.crusoe.fo.oauth.entity.Department;
 import com.crusoe.fo.oauth.entity.Role;
 import com.crusoe.fo.oauth.repository.UserRepository;
 
@@ -41,20 +42,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 一个user,只拥有res1和res2
 		// 一个guest,只拥有res1
 		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
-		User user = null;
-		Collection<GrantedAuthority> authorities = new HashSet<>();
 
-		for (Role role : userEntity.getRoleList()) {
-			authorities.add(new SimpleGrantedAuthority(role.getRolename()));
-
-		}
-		user = new User(userEntity.getUsername(), userEntity.getPassword(), authorities);
 		/*
 		 * if ("admin".equalsIgnoreCase(s)) { user = mockAdmin(); } if
 		 * ("user".equalsIgnoreCase(s)) { user = mockUser(); } if
 		 * ("guest".equalsIgnoreCase(s)) { user = mockGuest(); }
 		 */
-		return user;
+		return userEntity;
+	}
+
+	public Department findDepartmentByUsername(String s) throws UsernameNotFoundException{
+		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
+		return userEntity.getDepartment();
 	}
 
 	private User mockAdmin() {

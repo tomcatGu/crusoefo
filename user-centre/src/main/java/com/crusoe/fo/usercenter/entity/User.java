@@ -1,4 +1,4 @@
-package com.crusoe.fo.oauth.entity;
+package com.crusoe.fo.usercenter.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;

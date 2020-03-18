@@ -36,6 +36,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
+import com.crusoe.fo.oauth.entity.User;
 import com.crusoe.fo.oauth.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -43,7 +44,6 @@ import com.crusoe.fo.oauth.service.UserDetailsServiceImpl;
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
-
 	AuthenticationManager authenticationManager;
 	@Autowired
 	RedisConnectionFactory redisConnectionFactory;
@@ -174,6 +174,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 				Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 				//additionalInformation.put("username", authentication.getDetails());
+				User user=(User)authentication.getUserAuthentication().getPrincipal();
 				List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
 				List<String> authorityList = new ArrayList<String>();
 				for (GrantedAuthority grantedAuthority : authorities) {
@@ -181,6 +182,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				}
 
 				additionalInformation.put("authorities", authorityList);
+
+				additionalInformation.put("department",user.getDepartment().getName());
 
 				additionalInformation.put("code", 20000);
 				// additionalInformation.put("data",new Test("123",123.456));

@@ -42,7 +42,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       const userDetails = jwt.decode(getToken())
-      // console.log(userDetails)
+      console.log(userDetails)
       const data = { name: userDetails.user_name, avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
       console.log(data)
       commit('SET_NAME', data.name)
