@@ -182,6 +182,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				}
 
 				additionalInformation.put("authorities", authorityList);
+				additionalInformation.put("username",user.getUsername());
 
 				additionalInformation.put("department",user.getDepartment().getName());
 

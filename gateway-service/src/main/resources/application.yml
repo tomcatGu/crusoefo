@@ -18,7 +18,7 @@ spring:
       - id: baidu
         uri: http://www.baidu.com/
         predicates:
-        - Path=/baidu/**
+          - Path=/baidu/**
         #filters:
         #- JwtCheckGatewayFilterFactory
         #- PreOauth2SSOGatewayFilter
@@ -26,14 +26,32 @@ spring:
         uri: lb://oauth2-service/oauth
         predicates:
         - Path=/oauth/**
+        filters:
+        - OAuth=true
       - id: order-service
         uri: lb://order-service/
         predicates:
-        - Path=/order/**
+          - Path=/order/**
       - id: camunda-service
         uri: lb://camunda-service/
         predicates:
-        - Path=/rest/**
+          - Path=/rest/**
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 
+    timeout: 2000
+    #cluster:
+      #nodes: 192.168.211.134:7000,192.168.211.134:7001
+      #- 
+      #max-redirects: 
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
 #  security:
 #    oauth2:
 #      client:
