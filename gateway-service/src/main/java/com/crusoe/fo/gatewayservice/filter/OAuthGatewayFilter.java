@@ -69,11 +69,11 @@ public class OAuthGatewayFilter implements GatewayFilter, Ordered {
 
                         try {
                             JSONObject jsonObject = JSONObjectUtils.parse(str);
-                            System.out.println(stringRedisTemplate.opsForValue().get("admin"));
-                            stringRedisTemplate.opsForValue().append(jsonObject.get("username").toString(),
-                                    jsonObject.get("access_token").toString());
-                            System.out.println(jsonObject.get("access_token"));
-                            System.out.println(jsonObject.get("username"));
+                            //System.out.println(stringRedisTemplate.opsForValue().get("admin"));
+                            stringRedisTemplate.opsForValue().set(jsonObject.get("username").toString(),
+                            jsonObject.get("access_token").toString());
+                            //System.out.println(jsonObject.get("access_token"));
+                            //System.out.println(jsonObject.get("username"));
                         } catch (java.text.ParseException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();

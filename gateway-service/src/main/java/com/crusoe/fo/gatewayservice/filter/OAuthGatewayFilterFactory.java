@@ -12,9 +12,11 @@ public class OAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Obje
 {
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    OAuthGatewayFilter oAuthGatewayFilter;
     @Override
     public GatewayFilter apply(Object config)
     {
-        return new OAuthGatewayFilter(stringRedisTemplate);
+        return oAuthGatewayFilter;
     }
 }

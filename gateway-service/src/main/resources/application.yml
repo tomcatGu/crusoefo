@@ -18,9 +18,9 @@ spring:
       - id: baidu
         uri: http://www.baidu.com/
         predicates:
-          - Path=/baidu/**
-        #filters:
-        #- JwtCheckGatewayFilterFactory
+        - Path=/baidu/**
+        filters:
+        - JwtCheck
         #- PreOauth2SSOGatewayFilter
       - id: auth-service
         uri: lb://oauth2-service/oauth
@@ -35,7 +35,9 @@ spring:
       - id: camunda-service
         uri: lb://camunda-service/
         predicates:
-          - Path=/rest/**
+        - Path=/rest/**
+        filters:
+        - JwtCheck
   redis:
     database: 0
     host: localhost

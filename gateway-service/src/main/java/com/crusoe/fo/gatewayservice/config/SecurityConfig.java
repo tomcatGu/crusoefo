@@ -20,10 +20,6 @@ import java.security.interfaces.RSAPublicKey;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SecurityConfig{
-	@Bean
-	public JwtCheckGatewayFilterFactory jwtCheckGatewayFilterFactory() {
-		return new JwtCheckGatewayFilterFactory();
-	}
 
 //	 @Bean
 //	public MapReactiveUserDetailsService userDetailsService() {
