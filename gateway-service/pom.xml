@@ -8,7 +8,6 @@
         <groupId>com.crusoe.fo</groupId>
         <artifactId>crusoe-flowable</artifactId>
         <version>0.0.1</version>
-
     </parent>
     <artifactId>gateway-service</artifactId>
     <name>gateway-service</name>
@@ -17,7 +16,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-               
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

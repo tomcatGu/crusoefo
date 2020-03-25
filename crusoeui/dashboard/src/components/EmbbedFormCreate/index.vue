@@ -1,10 +1,9 @@
 <template>
   <div class="app-container">
-    <el-button @click="autoFormatSelection">auto format</el-button>
     <split-pane split="vertical">
       <template slot="paneL">
-        <div class="editor-container">
-          <MonacoEditor v-model="value" class="editor" language="javascript" @change="onChange" />
+        <div>
+          <MonacoEditor height="600" :code="value" class="editor" language="typescript" @codeChange="onChange" />
         </div>
       </template>
       <template slot="paneR">
@@ -23,7 +22,10 @@ import { obj2String, evil } from '@/utils'
 
 // require component
 
-import MonacoEditor from 'vue-monaco'
+// import MonacoEditor from 'vue-monaco'
+import MonacoEditor from 'vue-monaco-editor2'
+
+// import MonacoEditor from 'monaco-editor-vue'
 
 import { createDeployment } from '@/api/repository'
 
@@ -33,58 +35,30 @@ export default {
       // 表单实例对象
       $f: {},
       model: {},
-      value: '',
+      value: '[\n' +
+        '{ type: "input",\n' +
+        'field: "goods_name",\n' +
+        'title: "商品名称",\n' +
+         ' on: {\n' +
+           ' change: (data) => {\n' +
+             ' alert(`change!![${data}]`)\n' +
+            '}\n' +
+         ' }\n' +
+        '},\n' +
+        '{\n' +
+          'type: "datePicker",\n' +
+         ' field: "created_at",\n' +
+          'title: "创建时间"\n' +
+       ' },\n' +
+       ' {\n' +
+         ' type: "ElButton",\n' +
+          'field: "btn1",\n' +
+          'children: ["test"]\n' +
+       ' }\n' +
+
+      ']',
       // 表单生成规则
       rule: [
-        {
-          type: 'input',
-          field: 'goods_name',
-          title: '商品名称',
-          on: {
-            change: () => {
-              alert(`change!![${this.fApi.getValue('event')}]`)
-            }
-          }
-        },
-        {
-          type: 'datePicker',
-          field: 'created_at',
-          title: '创建时间'
-        },
-        {
-          type: 'ElButton',
-          field: 'btn1',
-          children: ['test']
-        },
-        {
-          type: 'DatePicker',
-          field: 'section_day',
-          title: '活动日期',
-          value: ['2018-02-20', new Date()],
-          // input值, type为daterange,datetimerange value为数组 [start_value,end_value]
-          props: {
-            type: 'datetimerange',
-            // 显示类型，可选值为 date、daterange、datetime、datetimerange、year、month
-            format: 'yyyy-MM-dd HH:mm:ss',
-            // 展示的日期格式
-            placement: 'bottom-start',
-            //	日期选择器出现的位置，可选值为toptop-starttop-endbottombottom-startbottom-endleftleft-startleft-endrightright-startright-end
-            placeholder: '请选择获得时间',
-            // 占位文本
-            confirm: false,
-            // 是否显示底部控制栏，开启后，选择完日期，选择器不会主动关闭，需用户确认后才可关闭
-            size: 'default',
-            // 尺寸，可选值为large、small、default或者不设置
-            disabled: false,
-            // 是否禁用选择器
-            clearable: true,
-            // 是否显示清除按钮
-            readonly: false,
-            // 完全只读，开启后不会弹出选择器
-            editable: false
-            // 文本框是否可以输入
-          }
-        }
       ],
       option: {
         resetBtn: false,
@@ -97,10 +71,10 @@ export default {
       // TODO 提交表单
       console.log(obj2String(formData))
     },
-    onChange(data) {
-      console.log(data)
+    onChange(editor) {
+      console.log(this.value)
       // this.$emit('valueChanged', data)
-      this.$data.rule = evil(data)
+      this.$data.rule = evil(editor.getValue())
 
       // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))
@@ -126,8 +100,9 @@ export default {
   mounted() {
     // this.model = this.$f.model();
 
-    this.value = obj2String(this.$data.rule)
-    console.log(this.value)
+    // this.value = obj2String(this.$data.rule)
+    this.rule = evil(this.value)
+    // console.log(this.value)
     // debugger
   }
 }
@@ -143,8 +118,6 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  white-space: nowrap;
 }
 .editor {
   width: 600px;
