@@ -2937,6 +2937,11 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
+codemirror@^5.41.0:
+  version "5.52.2"
+  resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.52.2.tgz?cache=0&sync_timestamp=1584691606242&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcodemirror%2Fdownload%2Fcodemirror-5.52.2.tgz#c29e1f7179f85eb0dd17c0586fa810e4838ff584"
+  integrity sha1-wp4fcXn4XrDdF8BYb6gQ5IOP9YQ=
+
 codemirror@^5.52.0:
   version "5.52.0"
   resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.52.0.tgz#4dbd6aef7f0e63db826b9a23922f0c03ac75c0a7"
@@ -3844,6 +3849,11 @@ didi@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/didi/-/didi-4.0.0.tgz#2b89d892a67fd3777f7642d3bf06697b69e9b622"
   integrity sha512-AzMElh8mCHOPWPCWfGjoJRla31fMXUT6+287W5ef3IPmtuBcyG9+MkFS7uPP6v3t2Cl086KwWfRB9mESa0OsHQ==
+
+diff-match-patch@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/diff-match-patch/download/diff-match-patch-1.0.4.tgz#6ac4b55237463761c4daf0dc603eb869124744b1"
+  integrity sha1-asS1UjdGN2HE2vDcYD64aRJHRLE=
 
 diff@^3.2.0:
   version "3.5.0"
@@ -7666,6 +7676,11 @@ moddle@^5.0.1:
   dependencies:
     min-dash "^3.0.0"
 
+monaco-editor@^0.17.0:
+  version "0.17.1"
+  resolved "https://registry.npm.taobao.org/monaco-editor/download/monaco-editor-0.17.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmonaco-editor%2Fdownload%2Fmonaco-editor-0.17.1.tgz#8fbe96ca54bfa75262706e044f8f780e904aa45c"
+  integrity sha1-j76WylS/p1JicG4ET494DpBKpFw=
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -7715,6 +7730,11 @@ nan@^2.12.1, nan@^2.13.2:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
+
+nano-assign@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/nano-assign/download/nano-assign-1.0.1.tgz#abb1c50d0416b865fb37bbd155c5368bb54378e5"
+  integrity sha1-q7HFDQQWuGX7N7vRVcU2i7VDeOU=
 
 nanomatch@^1.2.1, nanomatch@^1.2.9:
   version "1.2.13"
@@ -11156,6 +11176,14 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-codemirror@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.npm.taobao.org/vue-codemirror/download/vue-codemirror-4.0.6.tgz#b786bb80d8d762a93aab8e46f79a81006f0437c4"
+  integrity sha1-t4a7gNjXYqk6q45G95qBAG8EN8Q=
+  dependencies:
+    codemirror "^5.41.0"
+    diff-match-patch "^1.0.0"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -11211,6 +11239,14 @@ vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-monaco@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/vue-monaco/download/vue-monaco-1.1.0.tgz#045df2621dfe82d01e0568f1f1f84155726b33fe"
+  integrity sha1-BF3yYh3+gtAeBWjx8fhBVXJrM/4=
+  dependencies:
+    monaco-editor "^0.17.0"
+    nano-assign "^1.0.0"
 
 vue-router@3.0.6:
   version "3.0.6"

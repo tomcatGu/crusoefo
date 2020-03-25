@@ -105,3 +105,44 @@ export function param2Obj(url) {
       '"}'
   )
 }
+/**
+ * like eval()
+ * @param {string} fn
+ * @returns {Object}
+ */
+export function evil(fn) {
+  // 一个变量指向Function，防止有些前端编译工具报错
+  const Fn = Function
+  return new Fn('return ' + fn)()
+}
+/**
+ *
+ * @param {Object} _obj
+ */
+export function obj2String(_obj) {
+  var t = typeof (_obj)
+  if (t !== 'object' || _obj === null) {
+    // simple data type
+    if (t === 'string') {
+      _obj = '"' + _obj + '"'
+    }
+    return String(_obj)
+  } else {
+    if (_obj instanceof Date) {
+      return _obj.toLocaleString()
+    }
+    // recurse array or object
+    var n; var v; var json = []; var arr = (_obj && _obj.constructor === Array)
+    for (n in _obj) {
+      v = _obj[n]
+      t = typeof (v)
+      if (t === 'string') {
+        v = '"' + v + '"'
+      } else if (t === 'object' && v !== null) {
+        v = obj2String(v)
+      }
+      json.push((arr ? '' : '"' + n + '":') + String(v))
+    }
+    return (arr ? '[' : '{') + String(json) + (arr ? ']' : '}')
+  }
+}

@@ -1,12 +1,10 @@
 <template>
   <div class="app-container">
-    <div>
-      <el-input placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-    </div>
+    <el-button @click="autoFormatSelection">auto format</el-button>
     <split-pane split="vertical">
       <template slot="paneL">
         <div class="editor-container">
-          <json-editor slot="editor" ref="jsonEditor" v-model="value" @changed="onChange" />
+          <MonacoEditor v-model="value" class="editor" language="javascript" @change="onChange" />
         </div>
       </template>
       <template slot="paneR">
@@ -21,7 +19,11 @@
 <script>
 import FormCreate from '@form-create/element-ui'
 import splitPane from 'vue-splitpane'
-import JsonEditor from '@/components/JsonEditor'
+import { obj2String, evil } from '@/utils'
+
+// require component
+
+import MonacoEditor from 'vue-monaco'
 
 import { createDeployment } from '@/api/repository'
 
@@ -31,13 +33,18 @@ export default {
       // 表单实例对象
       $f: {},
       model: {},
-      value: {},
+      value: '',
       // 表单生成规则
       rule: [
         {
           type: 'input',
           field: 'goods_name',
-          title: '商品名称'
+          title: '商品名称',
+          on: {
+            change: () => {
+              alert(`change!![${this.fApi.getValue('event')}]`)
+            }
+          }
         },
         {
           type: 'datePicker',
@@ -88,12 +95,12 @@ export default {
   methods: {
     onSubmit(formData) {
       // TODO 提交表单
-      console.log(JSON.stringify(formData))
+      console.log(obj2String(formData))
     },
     onChange(data) {
-      // console.log(data)
-      this.$emit('valueChanged', data)
-      this.$data.rule = JSON.parse(data)
+      console.log(data)
+      // this.$emit('valueChanged', data)
+      this.$data.rule = evil(data)
 
       // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))
@@ -109,19 +116,19 @@ export default {
       createDeployment(formData).then(response => {
         console.log(response)
       })
-    },
-    getValue() {
-      return this.$data.value
     }
   },
   components: {
     formCreate: FormCreate.$form(),
     splitPane,
-    JsonEditor
+    MonacoEditor
   },
   mounted() {
     // this.model = this.$f.model();
-    this.$data.value = this.$data.rule
+
+    this.value = obj2String(this.$data.rule)
+    console.log(this.value)
+    // debugger
   }
 }
 </script>
@@ -138,5 +145,9 @@ export default {
   height: 100%;
   overflow-y: scroll;
   white-space: nowrap;
+}
+.editor {
+  width: 600px;
+  height: 800px;
 }
 </style>
