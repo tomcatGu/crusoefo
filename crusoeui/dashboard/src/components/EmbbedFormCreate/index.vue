@@ -3,12 +3,12 @@
     <split-pane split="vertical">
       <template slot="paneL">
         <div>
-          <MonacoEditor height="600" :code="value" class="editor" language="typescript" @codeChange="onChange" />
+          <MonacoEditor width="100%" height="600" :code="value" class="editor" language="typescript" @codeChange="onChange" />
         </div>
       </template>
       <template slot="paneR">
         <div class="editor-container">
-          <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+          <form-create v-model="fApi" :rule="rule" :option="option" @on-submit="onSubmit" />
         </div>
       </template>
     </split-pane>
@@ -28,12 +28,18 @@ import MonacoEditor from 'vue-monaco-editor2'
 // import MonacoEditor from 'monaco-editor-vue'
 
 import { createDeployment } from '@/api/repository'
+import formCreate from '@form-create/element-ui'
 
 export default {
+  components: {
+    formCreate: FormCreate.$form(),
+    splitPane,
+    MonacoEditor
+  },
   data() {
     return {
       // 表单实例对象
-      $f: {},
+      fApi: {},
       model: {},
       value: '[\n' +
         '{ type: "input",\n' +
@@ -41,7 +47,7 @@ export default {
         'title: "商品名称",\n' +
          ' on: {\n' +
            ' change: (data) => {\n' +
-             ' alert(`change!![${data}]`)\n' +
+             ' console.log(`change!![${data}]`)\n' +
             '}\n' +
          ' }\n' +
         '},\n' +
@@ -65,6 +71,14 @@ export default {
         submitBtn: false
       }
     }
+  },
+  mounted() {
+    // this.model = this.$f.model();
+    formCreate.fApi = this.fApi
+    // this.value = obj2String(this.$data.rule)
+    this.rule = evil(this.value)
+    // console.log(this.value)
+    // debugger
   },
   methods: {
     onSubmit(formData) {
@@ -91,19 +105,6 @@ export default {
         console.log(response)
       })
     }
-  },
-  components: {
-    formCreate: FormCreate.$form(),
-    splitPane,
-    MonacoEditor
-  },
-  mounted() {
-    // this.model = this.$f.model();
-
-    // this.value = obj2String(this.$data.rule)
-    this.rule = evil(this.value)
-    // console.log(this.value)
-    // debugger
   }
 }
 </script>

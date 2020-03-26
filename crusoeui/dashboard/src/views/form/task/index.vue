@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+    <form-create v-model="fApi" :rule="rule" :option="option" @on-submit="onSubmit" />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       // 表单实例对象
-      $f: {},
+      fApi: {},
       model: {},
       // 表单生成规则
       rule: [],
@@ -35,6 +35,7 @@ export default {
     const that = this
     this.id = this.$route.params.id
     this.formKey = this.$route.params.formKey
+    FormCreate.fApi = this.fApi
     // this.$data.resourceId = this.$route.params.resourceId
     getDeployedForm(this.id).then(response => {
       this.rule = response
