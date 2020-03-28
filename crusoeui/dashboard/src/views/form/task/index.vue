@@ -38,7 +38,8 @@ export default {
     FormCreate.fApi = this.fApi
     // this.$data.resourceId = this.$route.params.resourceId
     getDeployedForm(this.id).then(response => {
-      this.rule = response
+      console.log(response)
+      this.rule = this.evil(response)
       getTaskVariables(this.id).then(response => {
         // console.log(response)
         // console.log(that.$data.$f)
@@ -99,10 +100,12 @@ export default {
             break
           }
         }
-
-        variables[r.field] = v
+        console.log('field=' + r.field)
+        if (r.field !== null && r.field !== '') {
+          variables[r.field] = v
+        }
       })
-      submitTaskForm(this.id, { 'variables': variables }).then(response => {
+      submitTaskForm(this.id, { 'variables': variables, 'withVariablesInReturn': true }).then(response => {
         Message({
           message: '提交表单成功。',
           type: 'success',

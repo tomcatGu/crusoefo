@@ -89,6 +89,7 @@ export default {
       console.log(this.value)
       // this.$emit('valueChanged', data)
       this.$data.rule = evil(editor.getValue())
+      this.value = editor.getValue()
 
       // this.$data.rule = JSON.parse(this.$data.value)
       // this.formData.create(JSON.parse(this.rule))

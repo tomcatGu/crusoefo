@@ -15,9 +15,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://10.132.23.119/oauth
+    url: jdbc:postgresql://localhost/oauth
     username: postgres
-    password: 123456
+    password: postgres1982
 
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
@@ -32,7 +32,7 @@ spring:
     min-evictable-idle-time-millis: 300000
     validation-query: SELECT * FROM tbapplication
     test-while-idle: true
-    test-on-borrow: fals      <version>2.2.3</version>e
+    test-on-borrow: false
     test-on-return: false
     # 打开PSCache，并且指定每个连接上PSCache的大小
     pool-prepared-statements: true

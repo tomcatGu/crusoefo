@@ -38,6 +38,13 @@ spring:
         - Path=/rest/**
         filters:
         - JwtCheck
+      - id: user-service
+        uri: lb://user-service/
+        predicates:
+        - Path=/identity/**
+        filters:
+        - StripPrefix=1
+        - JwtCheck
   redis:
     database: 0
     host: localhost
