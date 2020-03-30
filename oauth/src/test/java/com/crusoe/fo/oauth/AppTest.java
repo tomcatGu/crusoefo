@@ -7,11 +7,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import com.crusoe.fo.oauth.entity.Department;
-import com.crusoe.fo.oauth.entity.Role;
-import com.crusoe.fo.oauth.entity.User;
-import com.crusoe.fo.oauth.repository.DepartmentRepository;
-import com.crusoe.fo.oauth.repository.UserRepository;
+import com.crusoe.fo.usercenter.entity.Department;
+import com.crusoe.fo.usercenter.entity.Role;
+import com.crusoe.fo.usercenter.entity.User;
+import com.crusoe.fo.usercenter.repository.DepartmentRepository;
+import com.crusoe.fo.usercenter.repository.UserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

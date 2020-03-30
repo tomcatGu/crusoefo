@@ -36,7 +36,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-import com.crusoe.fo.oauth.entity.User;
+import com.crusoe.fo.usercenter.entity.User;
 import com.crusoe.fo.oauth.service.UserDetailsServiceImpl;
 
 @Configuration

@@ -3,9 +3,9 @@ package com.crusoe.fo.oauth.service;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.crusoe.fo.oauth.entity.Department;
-import com.crusoe.fo.oauth.entity.Role;
-import com.crusoe.fo.oauth.repository.UserRepository;
+import com.crusoe.fo.usercenter.entity.Department;
+import com.crusoe.fo.usercenter.entity.Role;
+import com.crusoe.fo.usercenter.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 这里为了方便演示，创建了两个用户，一个admin，拥有res1,res2和res3
 		// 一个user,只拥有res1和res2
 		// 一个guest,只拥有res1
-		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
+		com.crusoe.fo.usercenter.entity.User userEntity = userRepository.findByUsername(s);
 
 		/*
 		 * if ("admin".equalsIgnoreCase(s)) { user = mockAdmin(); } if
@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	public Department findDepartmentByUsername(String s) throws UsernameNotFoundException{
-		com.crusoe.fo.oauth.entity.User userEntity = userRepository.findByUsername(s);
+		com.crusoe.fo.usercenter.entity.User userEntity = userRepository.findByUsername(s);
 		return userEntity.getDepartment();
 	}
 

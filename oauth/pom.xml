@@ -21,7 +21,11 @@
 
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.crusoe.fo</groupId>
+			<artifactId>user-centre-common</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
