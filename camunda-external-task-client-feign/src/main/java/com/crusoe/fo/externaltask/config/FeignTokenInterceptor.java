@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import feign.RequestInterceptor;
@@ -20,24 +21,25 @@ import feign.RequestTemplate;
 @Configuration
 public class FeignTokenInterceptor implements RequestInterceptor {
     @Resource
-    IAuthFeignService authService;
+    OAuth2RestTemplate authRestemplate;
 
     @Override
     public void apply(RequestTemplate template) {
 
-        String token = authService.getToken("admin", "123456", "password", "web", "client_1", "123456");
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node;
-        try {
-            node = mapper.readTree(token);
-            template.header("Authorization", "Bearer " + node.get("access_token").asText());
-        } catch (JsonMappingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // tring token = authService.getToken("admin", "123456", "password", "web",
+        // "client_1", "123456");
+        // ObjectMapper mapper = new ObjectMapper();
+        // JsonNode node;
+        // try {
+        // node = mapper.readTree(token);
+        template.header("Authorization", "Bearer " + authRestemplate.getAccessToken());
+        // } catch (JsonMappingException e) {
+        // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (JsonProcessingException e) {
+        // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
 
     }
 

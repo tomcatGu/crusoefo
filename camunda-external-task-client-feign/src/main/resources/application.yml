@@ -18,6 +18,16 @@ spring:
     url: jdbc:postgresql://10.132.23.119/oauth
     username: postgres
     password: 123456
+security:
+  oauth2:
+    client:
+      clientId: client_1
+      clientSecret: 123456
+      accessTokenUri: http://localhost:7000/oauth/token
+      grant-type: password
+      scope: web
+    resource:
+      user-info-uri: http://localhost:6660/me
 #开启Hystrix
 feign:
   hystrix:

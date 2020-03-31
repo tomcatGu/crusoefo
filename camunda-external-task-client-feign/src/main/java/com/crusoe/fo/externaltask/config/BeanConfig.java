@@ -2,11 +2,16 @@ package com.crusoe.fo.externaltask.config;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
+
+import feign.RequestInterceptor;
 
 @Configuration
 @EnableAsync
@@ -31,4 +36,17 @@ public class BeanConfig {
         executor.setWaitForTasksToCompleteOnShutdown(true);
         return executor;
     }
+
+     // 下面3个Bean 配合 application.yml 对应的EndPoint 需要加上 #oauth2.hasScope('server')
+     @Bean
+     @ConfigurationProperties(prefix = "security.oauth2.client")
+     public ClientCredentialsResourceDetails clientCredentialsResourceDetails() {
+         return new ClientCredentialsResourceDetails();
+     }
+ 
+ 
+     @Bean
+     public OAuth2RestTemplate clientCredentialsRestTemplate() {
+         return new OAuth2RestTemplate(clientCredentialsResourceDetails());
+     }
 }
