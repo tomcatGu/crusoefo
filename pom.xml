@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -113,13 +113,14 @@
                 </executions>
                 <configuration>
                     <repository>${docker.registry.name.prefix}/${project.artifactId}</repository>
-                    
+
                     <tag>${project.version}</tag>
                     <username>duser</username>
                     <password>123456</password>
-<!-- 					<pushImage>true</pushImage>
+                    <!-- 					<pushImage>true</pushImage>
 					<dockerDirectory>src/main/docker</dockerDirectory>
- -->                    <buildArgs>
+ -->
+                    <buildArgs>
                         <finalName>${project.build.finalName}</finalName>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
@@ -155,6 +156,9 @@
         <module>eurekasidecar</module>
         <module>flowable-modeler</module>
         <module>flowable-centre</module>
-      <module>camunda-centre</module>
-  </modules>
+        <module>camunda-centre</module>
+        <module>user-centre</module>
+        <module>user-centre-common</module>
+        <module>camunda-external-task-client-feign</module>
+    </modules>
 </project>
