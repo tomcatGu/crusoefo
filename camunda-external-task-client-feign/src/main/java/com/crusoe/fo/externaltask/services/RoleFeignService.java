@@ -1,6 +1,7 @@
 package com.crusoe.fo.externaltask.services;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 import javax.annotation.Resource;
 
@@ -18,6 +19,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,20 +43,25 @@ public class RoleFeignService {
             @Override
             public void intercept(ClientRequestContext requestContext) {
                 // TODO Auto-generated method stub
-                String token = authService.getToken("admin", "123456", "password", "web", "client_1", "123456");
-                log.info(token);
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode node;
-                try {
-                    node = mapper.readTree(token);
-                    requestContext.addHeader("Authorization", "Bearer " + node.get("access_token").asText());
-                } catch (JsonMappingException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (JsonProcessingException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                // String token = authService.getToken("admin", "123456", "password", "web",
+                // "client_1", "123456");
+
+                MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+                map.add("username", "admin");
+                map.add("password", "123456");
+                map.add("grant_type", "password");
+                map.add("scop", "web");
+                map.add("client_id", "client_1");
+                map.add("client_secret", "123456");
+                LinkedHashMap<String, String> token = (LinkedHashMap<String, String>) authService.generateToken(map);
+
+                log.info(token.get("access_token"));
+                // ObjectMapper mapper = new ObjectMapper();
+                // JsonNode node;
+
+                // node = mapper.readTree(token);
+                requestContext.addHeader("Authorization", "Bearer " + token.get("access_token"));
+
             }
         };
         ExternalTaskClient client = ExternalTaskClient.create().baseUrl("http://localhost:8787/rest")
