@@ -3,7 +3,6 @@ package com.crusoe.fo.externaltask.config;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.crusoe.fo.externaltask.services.IAuthFeignService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,7 +31,7 @@ public class FeignTokenInterceptor implements RequestInterceptor {
         // JsonNode node;
         // try {
         // node = mapper.readTree(token);
-        template.header("Authorization", "Bearer " + authRestemplate.getAccessToken());
+        template.header("Authorization", "Bearer " + authRestemplate.getAccessToken().getValue());
         // } catch (JsonMappingException e) {
         // TODO Auto-generated catch block
         // e.printStackTrace();

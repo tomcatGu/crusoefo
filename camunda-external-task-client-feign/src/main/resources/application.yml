@@ -26,8 +26,11 @@ security:
       accessTokenUri: http://localhost:7000/oauth/token
       grant-type: password
       scope: web
+      username: admin
+      password: 123456
     resource:
-      user-info-uri: http://localhost:6660/me
+      user-info-uri: http://localhost:7000/me
+
 #开启Hystrix
 feign:
   hystrix:

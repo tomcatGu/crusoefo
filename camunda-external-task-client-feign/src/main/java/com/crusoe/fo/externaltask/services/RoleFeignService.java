@@ -18,6 +18,7 @@ import org.camunda.bpm.client.interceptor.ClientRequestInterceptor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,7 +31,7 @@ public class RoleFeignService {
     // @Resource
     IRoleFeignService roleService;
     @Resource
-    IAuthFeignService authService;
+    OAuth2RestTemplate authService;
 
     public RoleFeignService(IRoleFeignService service) {
         this.roleService = service;
@@ -46,21 +47,22 @@ public class RoleFeignService {
                 // String token = authService.getToken("admin", "123456", "password", "web",
                 // "client_1", "123456");
 
-                MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-                map.add("username", "admin");
-                map.add("password", "123456");
-                map.add("grant_type", "password");
-                map.add("scop", "web");
-                map.add("client_id", "client_1");
-                map.add("client_secret", "123456");
-                LinkedHashMap<String, String> token = (LinkedHashMap<String, String>) authService.generateToken(map);
+                // MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+                // map.add("username", "admin");
+                // map.add("password", "123456");
+                // map.add("grant_type", "password");
+                // map.add("scop", "web");
+                // map.add("client_id", "client_1");
+                // map.add("client_secret", "123456");
+                // LinkedHashMap<String, String> token = (LinkedHashMap<String, String>) authService.generateToken(map);
 
-                log.info(token.get("access_token"));
+                // log.info(token.get("access_token"));
                 // ObjectMapper mapper = new ObjectMapper();
                 // JsonNode node;
 
                 // node = mapper.readTree(token);
-                requestContext.addHeader("Authorization", "Bearer " + token.get("access_token"));
+                //log.info(authService.getAccessToken().getValue());
+                requestContext.addHeader("Authorization", "Bearer " + authService.getAccessToken().getValue());
 
             }
         };
@@ -69,7 +71,7 @@ public class RoleFeignService {
         log.info("External Task Client start...");
 
         // subscribe to the topic
-        client.subscribe("creditScoreChecker").lockDuration(1000).handler((externalTask, externalTaskService) -> {
+        client.subscribe("createRole").lockDuration(1000).handler((externalTask, externalTaskService) -> {
 
             // retrieve a variable from the Workflow Engine
             String rolename = externalTask.getVariable("rolename");
