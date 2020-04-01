@@ -1,5 +1,6 @@
 package com.crusoe.fo.usercenter.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDTO {
+public class UserDTO implements Serializable{
     private Long id;
 	private String username;
 	private String name;

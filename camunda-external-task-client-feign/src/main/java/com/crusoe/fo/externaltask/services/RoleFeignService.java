@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.camunda.bpm.client.ExternalTaskClient;
 import org.camunda.bpm.client.interceptor.ClientRequestContext;
 import org.camunda.bpm.client.interceptor.ClientRequestInterceptor;
+import org.camunda.bpm.engine.variable.Variables;
+import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -24,6 +26,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import lombok.extern.slf4j.Slf4j;
+
+import static org.camunda.spin.Spin.JSON;
 
 @Component
 @Slf4j
@@ -79,15 +83,11 @@ public class RoleFeignService {
             roleDTO.setRolename(rolename);
             roleDTO = roleService.createRole(roleDTO);
 
-            // List<Integer> creditScores = new ArrayList<>(Arrays.asList(rolename, 9, 1, 4,
-            // 10));
 
-            // create an object typed variable
-            // ObjectValue creditScoresObject =
-            // Variables.objectValue(creditScores).create();
+            String json = JSON(roleDTO).toString();
 
             // complete the external task
-            externalTaskService.complete(externalTask, Collections.singletonMap("role", roleDTO));
+            externalTaskService.complete(externalTask, Collections.singletonMap("aRole", json));
 
             System.out.println("The External Task " + externalTask.getId() + " has been completed!");
 
