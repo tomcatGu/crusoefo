@@ -6,8 +6,9 @@
 
 <script>
 import FormCreate from '@form-create/element-ui'
+import * as businessApi from '@/api/businessApi'
 import { getDeployedForm, submitTaskForm, getTaskVariables } from '@/api/task'
-import { Message } from 'element-ui'
+import { Message, Form } from 'element-ui'
 import { formatTime } from '@/utils'
 
 export default {
@@ -35,7 +36,9 @@ export default {
     const that = this
     this.id = this.$route.params.id
     this.formKey = this.$route.params.formKey
-    FormCreate.fApi = this.fApi
+    FormCreate.fApi = this.fApi ` `
+    FormCreate.businessApi = businessApi
+    FormCreate.onSubmit = this.onSubmit
     // this.$data.resourceId = this.$route.params.resourceId
     getDeployedForm(this.id).then(response => {
       console.log(response)

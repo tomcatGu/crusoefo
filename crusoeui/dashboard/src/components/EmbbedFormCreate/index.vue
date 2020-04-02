@@ -28,7 +28,7 @@ import MonacoEditor from 'vue-monaco-editor2'
 // import MonacoEditor from 'monaco-editor-vue'
 
 import { createDeployment } from '@/api/repository'
-import formCreate from '@form-create/element-ui'
+import * as businessApi from '@/api/businessApi'
 
 export default {
   components: {
@@ -74,7 +74,9 @@ export default {
   },
   mounted() {
     // this.model = this.$f.model();
-    formCreate.fApi = this.fApi
+    FormCreate.fApi = this.fApi
+    FormCreate.businessApi = businessApi
+    //console.log(formCreate.businessApi)
     // this.value = obj2String(this.$data.rule)
     this.rule = evil(this.value)
     // console.log(this.value)
