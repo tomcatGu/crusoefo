@@ -128,9 +128,8 @@ export default {
     return {
       name: this.$store.getters.name
     }
-  },
-  // eslint-disable-next-line no-dupe-keys
-  computed: {}
+  }
+
 }
 </script>
 

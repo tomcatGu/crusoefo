@@ -10,7 +10,7 @@ import { getDeployedStartForm, submitStartForm } from '@/api/processes'
 
 import { Message } from 'element-ui'
 import { formatTime } from '@/utils'
-
+import { getToken } from '@/utils/auth'
 export default {
   components: {
     formCreate: FormCreate.$form()
@@ -80,6 +80,10 @@ export default {
 
         variables[r.field] = v
       })
+      const v = {}
+      v.type = 'String'
+      v.value = getToken()
+      variables['access_token'] = v
       submitStartForm(this.id, { 'variables': variables, 'businessKey': formData['businessKey'] || '未命名' }).then(response => {
         Message({
           message: '提交表单成功。',

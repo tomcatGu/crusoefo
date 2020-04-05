@@ -36,15 +36,15 @@ export function getDeployedStartForm(data) {
     method: 'get'
   })
 }
-export function startProcess(data) {
-  console.log(data)
+export function startProcess(id, data) {
+  console.log(id)
   return request({
     headers: {
       'Content-Type': 'application/json'
     },
-    url: '/rest/process-definition/' + data + '/start',
+    url: '/rest/process-definition/' + id + '/start',
     method: 'post',
-    data: '{}'
+    data
   })
 }
 export function submitStartForm(id, data) {

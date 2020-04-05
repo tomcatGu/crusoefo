@@ -48,8 +48,15 @@
 </template>
 
 <script>
-import { getProcesses, getProcessesCount, startProcess, getStartFormKey, getDeployedStartForm } from '@/api/processes'
+import {
+  getProcesses,
+  getProcessesCount,
+  startProcess,
+  getStartFormKey,
+  getDeployedStartForm
+} from '@/api/processes'
 import { MessageBox, Message } from 'element-ui'
+import { getToken } from '@/utils/auth'
 export default {
   filters: {
     statusFilter(status) {
@@ -109,7 +116,12 @@ export default {
           that.$data.startFormKey = response.key
           that.$router.push({ path: '/form/start-form/' + id })
         } else {
-          startProcess(id).then(response => {
+          var variables = {}
+          var v = {}
+          v.type = 'String'
+          v.value = getToken()
+          variables['access_token'] = v
+          startProcess(id, { variables: variables }).then(response => {
             this.listLoading = false
             Message({
               message: '流程启动成功。',
@@ -129,8 +141,7 @@ export default {
   background-color: #ffffff;
   width: 100%;
   height: 100%;
-    overflow-y: scroll;
+  overflow-y: scroll;
   white-space: nowrap;
 }
-
 </style>

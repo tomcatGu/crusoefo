@@ -15,8 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.camunda.bpm.client.ExternalTaskClient;
 import org.camunda.bpm.client.interceptor.ClientRequestContext;
 import org.camunda.bpm.client.interceptor.ClientRequestInterceptor;
-import org.camunda.bpm.engine.variable.Variables;
-import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -27,15 +25,13 @@ import org.springframework.util.MultiValueMap;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static org.camunda.spin.Spin.JSON;
-
 @Component
 @Slf4j
 public class RoleFeignService {
     // @Resource
     IRoleFeignService roleService;
     @Resource
-    OAuth2RestTemplate authService;
+    OAuth2RestTemplate authRestTemplate;
 
     public RoleFeignService(IRoleFeignService service) {
         this.roleService = service;
@@ -65,8 +61,7 @@ public class RoleFeignService {
                 // JsonNode node;
 
                 // node = mapper.readTree(token);
-                //log.info(authService.getAccessToken().getValue());
-                requestContext.addHeader("Authorization", "Bearer " + authService.getAccessToken().getValue());
+                requestContext.addHeader("Authorization", "Bearer " + authRestTemplate.getAccessToken());
 
             }
         };
@@ -75,7 +70,7 @@ public class RoleFeignService {
         log.info("External Task Client start...");
 
         // subscribe to the topic
-        client.subscribe("createRole").lockDuration(1000).handler((externalTask, externalTaskService) -> {
+        client.subscribe("creditScoreChecker").lockDuration(1000).handler((externalTask, externalTaskService) -> {
 
             // retrieve a variable from the Workflow Engine
             String rolename = externalTask.getVariable("rolename");
@@ -83,11 +78,15 @@ public class RoleFeignService {
             roleDTO.setRolename(rolename);
             roleDTO = roleService.createRole(roleDTO);
 
+            // List<Integer> creditScores = new ArrayList<>(Arrays.asList(rolename, 9, 1, 4,
+            // 10));
 
-            String json = JSON(roleDTO).toString();
+            // create an object typed variable
+            // ObjectValue creditScoresObject =
+            // Variables.objectValue(creditScores).create();
 
             // complete the external task
-            externalTaskService.complete(externalTask, Collections.singletonMap("aRole", json));
+            externalTaskService.complete(externalTask, Collections.singletonMap("role", roleDTO));
 
             System.out.println("The External Task " + externalTask.getId() + " has been completed!");
 
