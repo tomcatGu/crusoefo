@@ -19,6 +19,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -43,8 +46,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       const userDetails = jwt.decode(getToken())
       console.log(userDetails)
-      const data = { name: userDetails.user_name, avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
+      const data = { name: userDetails.user_name, roles: userDetails.authorities, avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
       console.log(data)
+      commit('SET_ROLES', data.roles)
       commit('SET_NAME', data.name)
       commit('SET_AVATAR', data.avatar)
       resolve(data)
