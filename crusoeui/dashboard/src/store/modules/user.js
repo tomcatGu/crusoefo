@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken')
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  roles: []
 }
 
 const mutations = {
@@ -45,9 +46,9 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       const userDetails = jwt.decode(getToken())
-      console.log(userDetails)
+      // console.log(userDetails)
       const data = { name: userDetails.user_name, roles: userDetails.authorities, avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' }
-      console.log(data)
+      // console.log(data)
       commit('SET_ROLES', data.roles)
       commit('SET_NAME', data.name)
       commit('SET_AVATAR', data.avatar)
