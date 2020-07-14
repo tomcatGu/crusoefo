@@ -47,12 +47,32 @@ export function startProcess(id, data) {
     data
   })
 }
+export function startProcessByKey(key, data) {
+  return request({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url: '/rest/process-definition/key/' + key + '/start',
+    method: 'post',
+    data
+  })
+}
 export function submitStartForm(id, data) {
   return request({
     headers: {
       'Content-Type': 'application/json'
     },
     url: '/rest/process-definition/' + id + '/submit-form',
+    method: 'post',
+    data
+  })
+}
+export function submitStartFormByKey(key, data) {
+  return request({
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    url: '/rest/process-definition/key/' + key + '/submit-form',
     method: 'post',
     data
   })

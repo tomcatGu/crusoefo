@@ -36,7 +36,7 @@ export default {
     const that = this
     this.id = this.$route.params.id
     this.formKey = this.$route.params.formKey
-    FormCreate.fApi = this.fApi ` `
+    FormCreate.fApi = this.fApi
     FormCreate.businessApi = businessApi
     FormCreate.onSubmit = this.onSubmit
     // this.$data.resourceId = this.$route.params.resourceId
