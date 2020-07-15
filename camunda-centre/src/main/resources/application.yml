@@ -3,6 +3,8 @@ server:
    
 spring:
   cloud:
+    discovery:
+      enabled: true
     consul:
       host: localhost
       port: 8500
