@@ -2,14 +2,14 @@ import request from '@/utils/request'
 
 export function getProcesses(data) {
   return request({
-    url: '/rest/process-definition',
+    url: '/engine-rest/process-definition',
     method: 'get',
     params: data
   })
 }
 export function getProcessesCount(data) {
   return request({
-    url: '/rest/process-definition/count',
+    url: '/engine-rest/process-definition/count',
     method: 'get',
     params: data
   })
@@ -17,14 +17,14 @@ export function getProcessesCount(data) {
 export function getProcessXML(data) {
   console.log(data)
   return request({
-    url: '/rest/process-definition/' + data + '/xml',
+    url: '/engine-rest/process-definition/' + data + '/xml',
     method: 'get'
   })
 }
 export function getStartFormKey(data) {
   console.log(data)
   return request({
-    url: '/rest/process-definition/' + data + '/startForm',
+    url: '/engine-rest/process-definition/' + data + '/startForm',
     method: 'get'
   })
 }
@@ -32,7 +32,7 @@ export function getStartFormKey(data) {
 export function getDeployedStartForm(data) {
   console.log(data)
   return request({
-    url: '/rest/process-definition/' + data + '/deployed-start-form',
+    url: '/engine-rest/process-definition/' + data + '/deployed-start-form',
     method: 'get'
   })
 }
@@ -42,7 +42,7 @@ export function startProcess(id, data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: '/rest/process-definition/' + id + '/start',
+    url: '/engine-rest/process-definition/' + id + '/start',
     method: 'post',
     data
   })
@@ -52,7 +52,7 @@ export function startProcessByKey(key, data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: '/rest/process-definition/key/' + key + '/start',
+    url: '/engine-rest/process-definition/key/' + key + '/start',
     method: 'post',
     data
   })
@@ -62,7 +62,7 @@ export function submitStartForm(id, data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: '/rest/process-definition/' + id + '/submit-form',
+    url: '/engine-rest/process-definition/' + id + '/submit-form',
     method: 'post',
     data
   })
@@ -72,28 +72,28 @@ export function submitStartFormByKey(key, data) {
     headers: {
       'Content-Type': 'application/json'
     },
-    url: '/rest/process-definition/key/' + key + '/submit-form',
+    url: '/engine-rest/process-definition/key/' + key + '/submit-form',
     method: 'post',
     data
   })
 }
 export function getProcessInstances(data) {
   return request({
-    url: '/rest/process-instance',
+    url: '/engine-rest/process-instance',
     method: 'get',
     params: data
   })
 }
 export function getProcessInstanceCount(data) {
   return request({
-    url: '/rest/process-instance/count',
+    url: '/engine-rest/process-instance/count',
     method: 'get',
     params: data
   })
 }
 export function getProcessInstance(data) {
   return request({
-    url: '/rest/process-instance/' + data,
+    url: '/engine-rest/process-instance/' + data,
     method: 'get'
   })
 }
