@@ -36,6 +36,13 @@ export default {
     splitPane,
     MonacoEditor
   },
+
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       // 表单实例对象
@@ -76,7 +83,7 @@ export default {
     // this.model = this.$f.model();
     FormCreate.fApi = this.fApi
     FormCreate.businessApi = businessApi
-    //console.log(formCreate.businessApi)
+    // console.log(formCreate.businessApi)
     // this.value = obj2String(this.$data.rule)
     this.rule = evil(this.value)
     // console.log(this.value)
