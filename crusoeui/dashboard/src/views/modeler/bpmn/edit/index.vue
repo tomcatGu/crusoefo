@@ -73,7 +73,7 @@ import customTranslate from '../customTanslate'
 import { createDeployment } from '@/api/repository'
 import { MessageBox, Message } from 'element-ui'
 import { getProcessXML } from '@/api/processes'
-import { getResources } from '@/api/repository'
+import { getResources, getResourceData } from '@/api/repository'
 
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -137,6 +137,14 @@ export default {
     createNewDiagram() {
       var that = this
       var bpmnXmlStr
+      getResources(this.id).then(response => {
+        response.forEach(resource => {
+          getResourceData(resource.deploymentId, resource.id).then(response => {
+          })
+        })
+      })
+
+
       getProcessXML(this.id).then((response) => {
         bpmnXmlStr = response.bpmn20Xml
         // 将字符串转换成图显示出来
