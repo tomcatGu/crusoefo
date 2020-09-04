@@ -31,6 +31,9 @@
           <router-link :to="'processes/diagram/'+scope.row.id">
             <el-button type="info">查看流程图</el-button>
           </router-link>
+          <router-link :to="'/modeler/bpmn-edit/'+scope.row.id">
+            <el-button type="info">修改</el-button>
+          </router-link>
           <el-button type="info">删除</el-button>
         </template>
       </el-table-column>

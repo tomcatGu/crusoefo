@@ -9,6 +9,7 @@ spring:
       host: localhost
       port: 8500
       discovery:
+        prefer-ip-address: true
         service-name: gateway-service
     gateway:
       routes:

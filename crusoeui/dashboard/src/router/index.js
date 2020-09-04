@@ -66,6 +66,13 @@ export const constantRoutes = [
       meta: { title: 'Bpmn Modeler', icon: 'dashboard' }
     },
     {
+      path: 'bpmn-edit/:id',
+      name: 'BPMN EDIT',
+      component: () => import('@/views/modeler/bpmn/edit/index'),
+      meta: { title: 'Edit Bpmn Modeler', icon: 'dashboard' },
+      hidden: true
+    },
+    {
       path: 'cmmn',
       name: 'CMMN',
       component: () => import('@/views/modeler/cmmn/index'),
@@ -204,7 +211,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Nested',
       icon: 'nested',
-      roles: ['res1']
+      roles: ['admin']
     },
     children: [
       {

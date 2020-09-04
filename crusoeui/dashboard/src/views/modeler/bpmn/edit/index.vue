@@ -68,11 +68,9 @@ import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camu
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
 import AlignToOrigin from '@bpmn-io/align-to-origin'
 
-import customTranslate from './customTanslate'
+import customTranslate from '../customTanslate'
 
 import { createDeployment } from '@/api/repository'
-import embbedFormCreate from '@/components/EmbbedFormCreate'
-
 import { MessageBox, Message } from 'element-ui'
 import { getProcessXML } from '@/api/processes'
 import { getResources } from '@/api/repository'
@@ -85,9 +83,6 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 export default {
-  components: {
-    embbedFormCreate
-  },
   data() {
     return {
       // bpmn建模器
@@ -98,8 +93,12 @@ export default {
       editableTabsValue: 'modeler',
       editableTabs: [],
       tabIndex: 1,
-      bpmnName: null
+      bpmnName: null,
+      id: null
     }
+  },
+  created() {
+    this.id = this.$route.params.id
   },
   mounted() {
     // 获取到属性ref为“content”的dom节点
@@ -141,7 +140,7 @@ export default {
       getProcessXML(this.id).then((response) => {
         bpmnXmlStr = response.bpmn20Xml
         // 将字符串转换成图显示出来
-        this.bpmnViewer.importXML(bpmnXmlStr, function(err) {
+        this.bpmnModeler.importXML(bpmnXmlStr, function(err) {
           if (err) {
             console.error(err)
           } else {
@@ -156,7 +155,7 @@ export default {
             // const nodeCodes2 = ['SequenceFlow_1u5gq9e', 'SequenceFlow_1n5pril']
             // const colorClass2 = 'lineSuccess'
             // that.setNodeColor(nodeCodes2, colorClass2, canvas)
-            that.bpmnViewer.get('minimap').open()
+            // that.bpmnModeler.get('minimap').open()
           }
         })
       })
