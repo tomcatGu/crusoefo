@@ -55,7 +55,8 @@
         :name="item.name"
         style="height:900px;"
       >
-        <tab-component :is="item.content" ref="eform" />
+        <tab-component :is="item.content" ref="eform" :form-str="forms[index]" />
+        <span>{{index}}</span>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -147,32 +148,35 @@ export default {
           getResourceData(resource.deploymentId, resource.id).then(response => {
             if (resource.name.match(/^.+(\.bpmn)\b$/)) {
               bpmnXmlStr = response
-              console.log(bpmnXmlStr)
+             // console.log(bpmnXmlStr)
               // 将字符串转换成图显示出来
-              var reader = new FileReader()
-              reader.readAsText(response, 'utf-8')
-              reader.onload = function(event) {
-                that.bpmnModeler.importXML(event.target.result, function(err) {
-                  if (err) {
-                    console.error(err)
-                  }
-                })
-              }
+              // var reader = new FileReader()
+              // reader.readAsText(response, 'utf-8')
+              // reader.onload = function(event) {
+              that.bpmnModeler.importXML(bpmnXmlStr, function(err) {
+                if (err) {
+                  console.error(err)
+                }
+              })
+              // }
             } else {
               const newTabName = ++this.tabIndex + ''
               const title = resource.name
+              this.forms[this.tabIndex - 2] = response
+              console.log(this.forms)
+              //console.log(response)
 
-              reader = new FileReader()
-              reader.readAsText(response, 'utf-8')
-              reader.onload = function(event) {
-                // console.log(reader.result)
-                that.editableTabs.push({
-                  title: title,
-                  name: newTabName,
-                  content: new EmbbedFormCreate({ propsData: { 'formStr': '[abc]' }})
-                })
-              }
+              // var reader = new FileReader()
+              // reader.readAsText(response, 'utf-8')
+              // reader.onload = function(event) {
+              // console.log(reader.result)
+              that.editableTabs.push({
+                title: title,
+                name: newTabName,
+                content: EmbbedFormCreate
+              })
             }
+            // }
           })
         })
       })

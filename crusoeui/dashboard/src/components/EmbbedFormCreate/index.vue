@@ -3,7 +3,14 @@
     <split-pane split="vertical">
       <template slot="paneL">
         <div>
-          <MonacoEditor width="100%" height="600" :code="value" class="editor" language="typescript" @codeChange="onChange" />
+          <MonacoEditor
+            width="100%"
+            height="600"
+            :code="value"
+            class="editor"
+            language="typescript"
+            @codeChange="onChange"
+          />
         </div>
       </template>
       <template slot="paneR">
@@ -46,24 +53,13 @@ export default {
       value: '[\n' +
         '{ type: "input",\n' +
         'field: "goods_name",\n' +
-        'title: "商品名称",\n' +
+        'title: "名称",\n' +
          ' on: {\n' +
            ' change: (data) => {\n' +
              ' console.log(`change!![${data}]`)\n' +
             '}\n' +
          ' }\n' +
-        '},\n' +
-        '{\n' +
-          'type: "datePicker",\n' +
-         ' field: "created_at",\n' +
-          'title: "创建时间"\n' +
-       ' },\n' +
-       ' {\n' +
-         ' type: "ElButton",\n' +
-          'field: "btn1",\n' +
-          'children: ["test"]\n' +
-       ' }\n' +
-
+        '}\n' +
       ']',
       // 表单生成规则
       rule: [
@@ -74,6 +70,13 @@ export default {
       }
     }
   },
+  watch: {
+    formStr(val) {
+      this.value = this.formStr
+      this.rule = evil(this.value)
+    }
+
+  },
   mounted() {
     // this.model = this.$f.model();
     FormCreate.fApi = this.fApi
@@ -81,7 +84,8 @@ export default {
     // console.log(formCreate.businessApi)
     // this.value = obj2String(this.$data.rule)
     // console.log(this.formStr)
-    this.value = this.formStr
+    if (this.formStr !== undefined) { this.value = this.formStr }
+    // console.log(this.formStr)
     this.rule = evil(this.value)
     // console.log(this.value)
     // debugger
