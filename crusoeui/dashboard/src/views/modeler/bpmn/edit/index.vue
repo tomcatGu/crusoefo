@@ -69,6 +69,7 @@ import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
 import AlignToOrigin from '@bpmn-io/align-to-origin'
 
 import customTranslate from '../customTanslate'
+import EmbbedFormCreate from '@/components/EmbbedFormCreate'
 
 import { createDeployment } from '@/api/repository'
 import { MessageBox, Message } from 'element-ui'
@@ -83,6 +84,9 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 export default {
+  components: {
+    EmbbedFormCreate
+  },
   data() {
     return {
       // bpmn建模器
@@ -94,7 +98,8 @@ export default {
       editableTabs: [],
       tabIndex: 1,
       bpmnName: null,
-      id: null
+      id: null,
+      forms: []
     }
   },
   created() {
@@ -140,44 +145,38 @@ export default {
       getResources(this.id).then(response => {
         response.forEach(resource => {
           getResourceData(resource.deploymentId, resource.id).then(response => {
+            if (resource.name.match(/^.+(\.bpmn)\b$/)) {
+              bpmnXmlStr = response
+              console.log(bpmnXmlStr)
+              // 将字符串转换成图显示出来
+              var reader = new FileReader()
+              reader.readAsText(response, 'utf-8')
+              reader.onload = function(event) {
+                that.bpmnModeler.importXML(event.target.result, function(err) {
+                  if (err) {
+                    console.error(err)
+                  }
+                })
+              }
+            } else {
+              const newTabName = ++this.tabIndex + ''
+              const title = resource.name
+
+              reader = new FileReader()
+              reader.readAsText(response, 'utf-8')
+              reader.onload = function(event) {
+                // console.log(reader.result)
+                that.editableTabs.push({
+                  title: title,
+                  name: newTabName,
+                  content: new EmbbedFormCreate({ propsData: { 'formStr': '[abc]' }})
+                })
+              }
+            }
           })
         })
       })
 
-
-      getProcessXML(this.id).then((response) => {
-        bpmnXmlStr = response.bpmn20Xml
-        // 将字符串转换成图显示出来
-        this.bpmnModeler.importXML(bpmnXmlStr, function(err) {
-          if (err) {
-            console.error(err)
-          } else {
-            // 这里还没用到这个，先注释掉吧
-            // that.success()
-            // 就是在这里写死了
-            // const canvas = that.bpmnViewer.get('canvas')
-            // const nodeCodes = ['StartEvent_1', 'Task_0qg0mca', 'Task_0307aue']
-            // const colorClass = 'nodeSuccess'
-            // that.setNodeColor(nodeCodes, colorClass, canvas)
-
-            // const nodeCodes2 = ['SequenceFlow_1u5gq9e', 'SequenceFlow_1n5pril']
-            // const colorClass2 = 'lineSuccess'
-            // that.setNodeColor(nodeCodes2, colorClass2, canvas)
-            // that.bpmnModeler.get('minimap').open()
-          }
-        })
-      })
-
-      // 将字符串转换成图显示出来
-      this.bpmnModeler.importXML(bpmnXmlStr, function(err) {
-        if (err) {
-          console.error(err)
-        } else {
-          // 这里还没用到这个，先注释掉吧
-          // that.success()
-          // that.bpmnModeler.get('minimap').open()
-        }
-      })
       var eventBus = this.bpmnModeler.get('eventBus')
 
       // you may hook into any of the following events
@@ -358,7 +357,7 @@ export default {
           this.editableTabs.push({
             title: value,
             name: newTabName,
-            content: embbedFormCreate
+            content: EmbbedFormCreate
           })
           this.editableTabsValue = newTabName
         })

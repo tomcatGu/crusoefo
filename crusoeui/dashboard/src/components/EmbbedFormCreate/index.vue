@@ -37,12 +37,7 @@ export default {
     MonacoEditor
   },
 
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
+  props: ['formStr'],
   data() {
     return {
       // 表单实例对象
@@ -85,6 +80,8 @@ export default {
     FormCreate.businessApi = businessApi
     // console.log(formCreate.businessApi)
     // this.value = obj2String(this.$data.rule)
+    // console.log(this.formStr)
+    this.value = this.formStr
     this.rule = evil(this.value)
     // console.log(this.value)
     // debugger

@@ -21,7 +21,6 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="100">
         <template slot-scope="scope">
-
           <router-link :to="'/form/form-edit/'+ id + '/' +scope.row.id">
             <el-button type="info">编辑</el-button>
           </router-link>
