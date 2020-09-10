@@ -336,7 +336,7 @@ export default {
             formData.append(
               this.editableTabs[i].title,
               new Blob([this.$refs.eform[i].value]),
-              'forms/' + this.editableTabs[i].title + '.form'
+              this.editableTabs[i].title
             )
           }
 

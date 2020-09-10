@@ -21,6 +21,8 @@ export function getResources(id) {
 }
 export function getResourceData(id, resourceId) {
   return request({
+    responseEncoding: 'utf8',
+    // responseType: 'blob',
     url: '/engine-rest/deployment/' + id + '/resources/' + resourceId + '/data',
     method: 'get'
   })
@@ -35,7 +37,7 @@ export function getRepositoryCount(data) {
 export function createDeployment(formData) {
   return request({
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data;charset=utf-8'
     },
     url: '/engine-rest/deployment/create',
     method: 'post',
