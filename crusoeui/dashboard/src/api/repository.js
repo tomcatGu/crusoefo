@@ -45,4 +45,15 @@ export function createDeployment(formData) {
 
   })
 }
+export function redeploy(id, formData) {
+  return request({
+    headers: {
+      'Content-Type': 'multipart/form-data;charset=utf-8'
+    },
+    url: '/engine-rest/deployment/' + id + '/redeploy',
+    method: 'post',
+    data: formData
+
+  })
+}
 

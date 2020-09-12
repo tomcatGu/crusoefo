@@ -6,7 +6,7 @@
       type="primary"
       icon="el-icon-edit"
       @click="deploy"
-    >部署</el-button>
+    >重新部署</el-button>
     <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
       <el-tab-pane name="modeler" label="modeler" style="height:900px">
         <el-input v-model="bpmnName" placeholder="请输入流程图名称" />
@@ -56,7 +56,7 @@
         style="height:900px;"
       >
         <tab-component :is="item.content" ref="eform" :form-str="forms[index]" />
-        <span>{{index}}</span>
+        <span>{{ index }}</span>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -72,7 +72,7 @@ import AlignToOrigin from '@bpmn-io/align-to-origin'
 import customTranslate from '../customTanslate'
 import EmbbedFormCreate from '@/components/EmbbedFormCreate'
 
-import { createDeployment } from '@/api/repository'
+import { createDeployment, redeploy } from '@/api/repository'
 import { MessageBox, Message } from 'element-ui'
 import { getProcessXML } from '@/api/processes'
 import { getResources, getResourceData } from '@/api/repository'
@@ -146,9 +146,12 @@ export default {
       getResources(this.id).then(response => {
         response.forEach(resource => {
           getResourceData(resource.deploymentId, resource.id).then(response => {
-            if (resource.name.match(/^.+(\.bpmn)\b$/)) {
+            const regx = /^.+(\.bpmn)\b$/
+            if (resource.name.match(regx)) {
+              resource.name = resource.name.replace(/(\.bpmn)\b$/, '')
+              this.bpmnName = resource.name
               bpmnXmlStr = response
-             // console.log(bpmnXmlStr)
+              // console.log(bpmnXmlStr)
               // 将字符串转换成图显示出来
               // var reader = new FileReader()
               // reader.readAsText(response, 'utf-8')
@@ -161,10 +164,10 @@ export default {
               // }
             } else {
               const newTabName = ++this.tabIndex + ''
-              const title = resource.name
+              const title = resource.name.replace(/^(forms\/)|(\.form)\b$/g, '')
               this.forms[this.tabIndex - 2] = response
-              console.log(this.forms)
-              //console.log(response)
+              // console.log(this.forms)
+              // console.log(response)
 
               // var reader = new FileReader()
               // reader.readAsText(response, 'utf-8')
@@ -336,14 +339,14 @@ export default {
             formData.append(
               this.editableTabs[i].title,
               new Blob([this.$refs.eform[i].value]),
-              this.editableTabs[i].title
+              'forms/' + this.editableTabs[i].title + '.form'
             )
           }
 
           createDeployment(formData).then((response) => {
             // console.log(response)
             Message({
-              message: '部署流程及表单成功。',
+              message: '重新部署流程及表单成功。',
               type: 'success',
               duration: 2 * 1000
             })

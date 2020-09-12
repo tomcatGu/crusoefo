@@ -12,7 +12,8 @@
         @click="handleCreate"
       >部署</el-button>
     </div>
-    <split-pane split="vertical">
+    <EmbbedFormCreate />
+<!--     <split-pane split="vertical">
       <template slot="paneL">
         <div class="editor-container">
           <json-editor ref="jsonEditor" v-model="value" @changed="onChange" />
@@ -21,9 +22,10 @@
       <template slot="paneR">
         <div class="editor-container">
           <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+
         </div>
       </template>
-    </split-pane>
+    </split-pane> -->
   </div>
 </template>
 
@@ -31,6 +33,7 @@
 import FormCreate from '@form-create/element-ui'
 import splitPane from 'vue-splitpane'
 import JsonEditor from '@/components/JsonEditor'
+import embbedFormCreate from '@/components/EmbbedFormCreate'
 
 import {
   createDeployment,
@@ -39,6 +42,7 @@ import {
 } from '@/api/repository'
 
 export default {
+
   data() {
     return {
       // 表单实例对象
@@ -96,8 +100,8 @@ export default {
     this.$data.id = this.$route.params.id
     this.$data.resourceId = this.$route.params.resourceId
     getResourceData(this.$data.id, this.$data.resourceId).then(response => {
-      this.$data.rule = response
-      this.$data.value = this.$data.rule
+      this.rule = response
+      this.value = this.$data.rule
     })
     getRepository(this.$data.id).then(response => {
       this.$data.name = response.name
