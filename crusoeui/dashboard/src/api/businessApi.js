@@ -7,3 +7,11 @@ export function createRole(data) {
     data
   })
 }
+
+export function createUser(data) {
+  return request({
+    url: '/identity/user/create',
+    method: 'post',
+    data
+  })
+}

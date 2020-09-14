@@ -357,6 +357,7 @@ export default {
           formData.append('deployment-name', this.bpmnName)
           formData.append('deployment-source', this.bpmnName + ' Process')
           formData.append('enable-duplicate-filtering', true)
+          formData.append('tenant-id', this.$store.getters.name)
           formData.append('flow', new Blob([xml]), this.bpmnName + '.bpmn')
 
           for (var i = 0; i < this.$refs.eform.length; i++) {
