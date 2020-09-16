@@ -5,7 +5,8 @@ import com.crusoe.fo.usercenter.repository.UserRepository;
 import com.crusoe.fo.usercenter.services.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+@Service("UserService")
 public class UserServiceImpl implements IUserService {
     @Autowired
     UserRepository userRepository;
