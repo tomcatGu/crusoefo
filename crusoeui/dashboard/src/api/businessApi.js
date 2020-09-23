@@ -15,3 +15,12 @@ export function createUser(data) {
     data
   })
 }
+
+export function requestData(url, method, params) {
+  console.log(url)
+  return request({
+    url: url,
+    method: method,
+    params
+  })
+}
