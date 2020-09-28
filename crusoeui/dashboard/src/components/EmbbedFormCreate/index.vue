@@ -1,13 +1,11 @@
 <template>
   <div class="app-container">
-    <split-pane split="vertical">
+    <split-pane split="vertical" v-on:resize="resize">
       <template slot="paneL">
-        <div>
+        <div class="editor">
           <MonacoEditor
-            width="100%"
-            height="600"
+            ref="editor"
             :code="value"
-            class="editor"
             language="typescript"
             @codeChange="onChange"
           />
@@ -115,6 +113,10 @@ export default {
       createDeployment(formData).then(response => {
         console.log(response)
       })
+    },
+    resize() {
+      console.log(this.$refs.editor)
+      this.$refs.editor.layout()
     }
   }
 }
@@ -132,7 +134,9 @@ export default {
   height: 100%;
 }
 .editor {
-  width: 600px;
-  height: 800px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 </style>

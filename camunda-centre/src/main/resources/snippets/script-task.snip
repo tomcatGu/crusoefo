@@ -56,3 +56,36 @@ with (new JavaImporter(org.jsoup))
         }
     }
 ]
+
+//tree 
+{
+        type: "tree",
+        title: "权限",
+        field: "rule",
+        value: [],
+        props: {
+            data: [],
+            lazy:true,
+            load: (node, resolve) => {
+                if (node.level === 0) {
+                    return resolve([{ title: 'region' }]);
+                }
+                if (node.level > 1) return resolve([]);
+
+                setTimeout(() => {
+                    const data = [{
+                        title: 'leaf',
+                        leaf: true
+                    }, {
+                        title: 'zone'
+                    }];
+
+                    resolve(data);
+                }, 500);
+            },
+
+            props: {
+                "label": "title"
+            }
+        }
+    }
