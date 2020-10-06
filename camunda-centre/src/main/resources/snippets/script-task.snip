@@ -68,19 +68,30 @@ with (new JavaImporter(org.jsoup))
             lazy:true,
             load: (node, resolve) => {
                 if (node.level === 0) {
-                    return resolve([{ title: 'region' }]);
+
+                    return resolve([{ title: 'region',id: 0 }]);
                 }
                 if (node.level > 1) return resolve([]);
 
                 setTimeout(() => {
                     const data = [{
                         title: 'leaf',
+                        id: 1,
                         leaf: true
                     }, {
-                        title: 'zone'
+                        title: 'zone',
+                        id: 2
                     }];
+                    let leafs=[]
 
-                    resolve(data);
+                    requestData("/department/0","GET").then(response =>{
+                        for(let i=0;i<response.length;i++){
+                            leafs.push({title:response[i].name,id:response[i].id})
+                        }
+                        resolve(leafs);
+                    })
+
+
                 }, 500);
             },
 

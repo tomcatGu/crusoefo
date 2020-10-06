@@ -7,8 +7,9 @@ import lombok.Data;
 
 @Data
 public class RoleDTO implements Serializable {
-    private long id;
+    private Long id;
     private String rolename;
+    private Long ordinal;
     private List<UserDTO> userList;
 
 }

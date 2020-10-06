@@ -13,6 +13,8 @@ public class DepartmentDTO implements Serializable{
 
     private String name;
 
+    private Long ordinal;
+
 
     private List<DepartmentDTO> children=new ArrayList<DepartmentDTO>();
 

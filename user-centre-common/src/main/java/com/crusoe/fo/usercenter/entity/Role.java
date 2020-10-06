@@ -30,6 +30,7 @@ public class Role implements Serializable {
     @GeneratedValue
     private long id;
     private String rolename;
+    private Long ordinal;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roleList")

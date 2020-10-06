@@ -33,6 +33,8 @@ public class Department {
 
     private String name;
 
+    private Long ordinal;
+
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Department parent;

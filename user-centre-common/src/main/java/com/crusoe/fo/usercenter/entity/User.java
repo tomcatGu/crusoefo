@@ -39,6 +39,7 @@ public class User implements UserDetails {
 
     private String username;
     private String password;
+    private Long ordinal;
     private boolean accountNonExpired=true;
     private boolean accountNonLocked=true;
     private boolean credentialsNonExpired=true;

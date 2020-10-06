@@ -16,6 +16,7 @@ public class UserDTO implements Serializable{
 	private String username;
 	private String name;
 	private String password;
+	private Long ordinal;
 	private boolean enabled = true;
     private List<RoleDTO> roles = new ArrayList<RoleDTO>();
     private DepartmentDTO department;
