@@ -84,7 +84,7 @@ with (new JavaImporter(org.jsoup))
                     }];
                     let leafs=[]
 
-                    requestData("/department/0","GET").then(response =>{
+                    formCreate.businessApi.requestData("http://localhost:6601/identity/department/getDepartments/"+node.data.id,"GET").then(response =>{
                         for(let i=0;i<response.length;i++){
                             leafs.push({title:response[i].name,id:response[i].id})
                         }
