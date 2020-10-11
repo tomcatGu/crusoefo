@@ -18,9 +18,12 @@ public class DepartmentServiceImpl implements IDepartmentService {
     @Override
     public List<Department> findByParent(Long parentId) {
         // TODO Auto-generated method stub
-        Department parent=departmentRepository.findById(parentId).get();
-        return departmentRepository.findByParent(parent);
-
+        if (parentId == -1) {
+            return departmentRepository.findByParentIsNull();
+        } else {
+            Department parent = departmentRepository.findById(parentId).get();
+            return departmentRepository.findByParent(parent);
+        }
     }
-    
+
 }

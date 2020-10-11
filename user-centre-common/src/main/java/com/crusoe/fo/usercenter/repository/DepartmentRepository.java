@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
     public Department findByName(String deptName);
+    public List<Department> findByParentIsNull();
     public List<Department> findByParent(Department parent);
 }

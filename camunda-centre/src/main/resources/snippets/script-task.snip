@@ -69,9 +69,9 @@ with (new JavaImporter(org.jsoup))
             load: (node, resolve) => {
                 if (node.level === 0) {
 
-                    return resolve([{ title: 'region',id: 0 }]);
+                    return resolve([{ title: 'region',id: -1 }]);
                 }
-                if (node.level > 1) return resolve([]);
+                // if (node.level > 1) return resolve([]);
 
                 setTimeout(() => {
                     const data = [{
