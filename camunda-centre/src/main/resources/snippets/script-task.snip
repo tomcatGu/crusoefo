@@ -61,15 +61,18 @@ with (new JavaImporter(org.jsoup))
 {
         type: "tree",
         title: "权限",
-        field: "rule",
-        value: [],
+        field: "dept",
         props: {
             data: [],
-            lazy:true,
+            lazy: true,
+            checkOnClickNode:true,
+            showCheckbox:true,
+            checkStrictly:true,
+            highlightCurrent: true,
             load: (node, resolve) => {
                 if (node.level === 0) {
 
-                    return resolve([{ title: 'region',id: -1 }]);
+                    return resolve([{ title: 'region', id: -1 }]);
                 }
                 // if (node.level > 1) return resolve([]);
 
@@ -82,11 +85,11 @@ with (new JavaImporter(org.jsoup))
                         title: 'zone',
                         id: 2
                     }];
-                    let leafs=[]
+                    let leafs = []
 
-                    formCreate.businessApi.requestData("http://localhost:6601/identity/department/getDepartments/"+node.data.id,"GET").then(response =>{
-                        for(let i=0;i<response.length;i++){
-                            leafs.push({title:response[i].name,id:response[i].id})
+                    formCreate.businessApi.requestData("http://localhost:6601/identity/department/getDepartments/" + node.data.id, "GET").then(response => {
+                        for (let i = 0; i < response.length; i++) {
+                            leafs.push({ title: response[i].name, id: response[i].id })
                         }
                         resolve(leafs);
                     })
