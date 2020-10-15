@@ -103,3 +103,20 @@ with (new JavaImporter(org.jsoup))
             }
         }
     }
+    //Checkbox
+        {
+        type: "checkbox",
+        title: "标签",
+        field: "label",
+        value: [],
+        options: (() => {
+            formCreate.businessApi.requestData("http://localhost:6601/identity/role/getAllRoles/", "GET").then(
+                response => {
+                    console.log(response)
+                    return [{ value: "11111", label: "不好用", disabled: false }]
+                }
+            )
+            return [{ value: "11111", label: "好用1", disabled: false }]
+        })()
+
+    },
