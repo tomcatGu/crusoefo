@@ -1,0 +1,123 @@
+//create user form
+[
+{ type: "input",
+field: "username",
+title: "用户名",
+ on: {
+ change: (data) => {
+ console.log(`change!![${data}]`)
+}
+ }
+},
+{
+        type: "checkbox",
+        title: "角色",
+        field: "roles",
+        value: [],
+        options: (() => {
+            let roles=[]
+            formCreate.businessApi.requestData("http://localhost:6601/identity/role/getAllRoles/", "GET").then(
+                response => {
+                    console.log(response)
+                    for(var i=0;i<response.length;i++){
+                        roles.push({value:response[i].id,label:response[i].rolename,disabled:false})
+
+                    }
+                   
+                }
+            )
+            return roles
+        })()
+
+    },
+    {
+        type: "tree",
+        title: "部门",
+        field: "department",
+        props: {
+            data: [],
+            lazy: true,
+            checkOnClickNode:true,
+            showCheckbox:true,
+            checkStrictly:true,
+            highlightCurrent: true,
+            load: (node, resolve) => {
+                if (node.level === 0) {
+
+                    return resolve([{ title: 'region', id: -1 }]);
+                }
+                // if (node.level > 1) return resolve([]);
+
+                setTimeout(() => {
+                    const data = [{
+                        title: 'leaf',
+                        id: 1,
+                        leaf: true
+                    }, {
+                        title: 'zone',
+                        id: 2
+                    }];
+                    let leafs = []
+
+                    formCreate.businessApi.requestData("http://localhost:6601/identity/department/getDepartments/" + node.data.id, "GET").then(response => {
+                        for (let i = 0; i < response.length; i++) {
+                            leafs.push({ title: response[i].name, id: response[i].id })
+                        }
+                        resolve(leafs);
+                    })
+
+
+                }, 500);
+            },
+
+            props: {
+                "label": "title"
+            }
+        }
+    },
+{
+        type: "ElButton",
+        children: ["提交"],
+        on: {
+            click: () => {
+
+                // const roleCreate= () => import('./api/role.js')
+
+                formCreate.fApi.submit((formData, $f) => {
+                    alert(JSON.stringify(formData));
+                    /*
+                    roleCreate(formData).then(response => {
+                        // console.log(response)
+                        Message({
+                            message: '添加角色成功。',
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    })
+                    */
+                    var rs=[]
+                   
+                    for(var i=0;i<formData.roles.length;i++){
+
+                        rs.push({"id":formData.roles[i]})
+                    }
+                    
+                    var user={
+                        "username":formData.username,
+                        "roles":rs,
+                        "department":{"id":formData.department[0]}
+                    }
+
+                    formCreate.businessApi.requestData("http://localhost:6601/identity/user/create", "post",user).then(
+                response => {
+                    console.log(response)
+
+                   
+                }
+            )
+                })
+
+            }
+        }
+    }
+]
