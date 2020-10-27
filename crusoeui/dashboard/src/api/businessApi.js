@@ -16,11 +16,11 @@ export function createUser(data) {
   })
 }
 
-export function requestData(url, method, params) {
+export function requestData(url, method, data) {
   console.log(url)
   return request({
     url: url,
     method: method,
-    params
+    data
   })
 }
