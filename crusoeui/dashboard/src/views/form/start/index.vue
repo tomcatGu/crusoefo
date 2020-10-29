@@ -1,15 +1,21 @@
 <template>
   <div class="app-container">
-    <form-create v-model="$data.$f" :rule="rule" :option="option" @on-submit="onSubmit" />
+    <form-create
+      v-model="fApi"
+      :rule="rule"
+      :option="option"
+      @on-submit="onSubmit"
+    />
   </div>
 </template>
 
 <script>
 import FormCreate from '@form-create/element-ui'
-import { getDeployedStartForm, submitStartForm } from '@/api/processes'
+import * as businessApi from '@/api/businessApi'
+import { getDeployedStartForm, getDeployedStartFormByKey, submitStartForm, submitStartFormByKey } from '@/api/processes'
 
 import { Message } from 'element-ui'
-import { formatTime } from '@/utils'
+import { formatTime, obj2String, evil } from '@/utils'
 import { getToken } from '@/utils/auth'
 export default {
   components: {
@@ -18,7 +24,7 @@ export default {
   data() {
     return {
       // 表单实例对象
-      $f: {},
+      fApi: {},
       model: {},
       // 表单生成规则
       rule: [],
@@ -26,20 +32,31 @@ export default {
         resetBtn: false
       },
       id: null,
-      formKey: null
+      businessKey: null
     }
   },
 
   mounted() {
+    FormCreate.fApi = this.fApi
+    FormCreate.businessApi = businessApi
+    FormCreate.onSubmit = this.onSubmit
   },
   created() {
     console.log(this.$route.params)
     this.id = this.$route.params.id
-    this.formKey = this.$route.params.formKey
+    this.key = this.$route.params.key
+
     // this.$data.resourceId = this.$route.params.resourceId
-    getDeployedStartForm(this.$data.id).then(response => {
-      this.rule = response
-    })
+    if (this.id !== undefined) {
+      getDeployedStartForm(this.id).then(response => {
+        this.rule = evil(response)
+      })
+    }
+    if (this.key !== undefined) {
+      getDeployedStartFormByKey(this.key).then(response => {
+        this.rule = evil(response)
+      })
+    }
   },
   methods: {
     onSubmit(formData) {
@@ -84,13 +101,24 @@ export default {
       v.type = 'String'
       v.value = getToken()
       variables['access_token'] = v
-      submitStartForm(this.id, { 'variables': variables, 'businessKey': formData['businessKey'] || '未命名' }).then(response => {
-        Message({
-          message: '提交表单成功。',
-          type: 'success',
-          duration: 2 * 1000
+      if (this.id !== undefined) {
+        submitStartForm(this.id, { 'variables': variables, 'businessKey': formData['businessKey'] || '未命名' }).then(response => {
+          Message({
+            message: '提交表单成功。',
+            type: 'success',
+            duration: 2 * 1000
+          })
         })
-      })
+      }
+      if (this.key !== undefined) {
+        submitStartFormByKey(this.key, { 'variables': variables, 'businessKey': formData['businessKey'] || '未命名' }).then(response => {
+          Message({
+            message: '提交表单成功。',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        })
+      }
     }
   }
 }

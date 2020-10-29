@@ -132,6 +132,13 @@ export const constantRoutes = [
         component: () => import('@/views/form/start/index'),
         meta: { title: 'Start Form', icon: 'form' },
         hidden: true
+      },
+      {
+        path: 'start-form/key/:key/',
+        name: 'Start Form',
+        component: () => import('@/views/form/start/index'),
+        meta: { title: 'Start Form', icon: 'form' },
+        hidden: true
       }
     ]
   },
@@ -203,6 +210,22 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/user',
+    component: Layout,
+    meta: {
+      title: '用户管理',
+      icon: 'example',
+      roles: ['res1']
+    },
+    children: [
+      {
+        path: '/form/start-form/key/addUserProcess',
+        meta: { title: '添加用户', icon: 'link' }
+      }
+    ]
+
+  },
   {
     path: '/nested',
     component: Layout,

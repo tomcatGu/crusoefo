@@ -79,6 +79,7 @@ export default {
     // this.model = this.$f.model();
     FormCreate.fApi = this.fApi
     FormCreate.businessApi = businessApi
+    window['requestData'] = businessApi.requestData
     // console.log(formCreate.businessApi)
     // this.value = obj2String(this.$data.rule)
     // console.log(this.formStr)
@@ -94,7 +95,7 @@ export default {
       console.log(obj2String(formData))
     },
     onChange(editor) {
-      console.log(this.value)
+      // console.log(this.value)
       // this.$emit('valueChanged', data)
       this.$data.rule = evil(editor.getValue())
       this.value = editor.getValue()

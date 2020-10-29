@@ -36,6 +36,13 @@ export function getDeployedStartForm(data) {
     method: 'get'
   })
 }
+export function getDeployedStartFormByKey(data) {
+  console.log(data)
+  return request({
+    url: '/engine-rest/process-definition/key/' + data + '/deployed-start-form',
+    method: 'get'
+  })
+}
 export function startProcess(id, data) {
   console.log(id)
   return request({
