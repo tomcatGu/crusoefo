@@ -213,6 +213,7 @@ export const asyncRoutes = [
   {
     path: '/user',
     component: Layout,
+    alwaysShow: true,
     meta: {
       title: '用户管理',
       icon: 'example',
@@ -221,7 +222,8 @@ export const asyncRoutes = [
     children: [
       {
         path: '/form/start-form/key/addUserProcess',
-        meta: { title: '添加用户', icon: 'link' }
+        name: 'Add User',
+        meta: { title: '添加用户', icon: 'link', roles: ['res1'] }
       }
     ]
 
