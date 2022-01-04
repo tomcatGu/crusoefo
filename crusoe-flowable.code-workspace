@@ -10,6 +10,9 @@
 		{
 			"name": "Blink",
 			"path": "../../../../../home/user/Documents/PlatformIO/Projects/Blink"
+		},
+		{
+			"path": "../python-projects"
 		}
 	],
 	"settings": {

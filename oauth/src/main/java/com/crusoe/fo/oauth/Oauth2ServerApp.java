@@ -11,3 +11,9 @@ public class Oauth2ServerApp {
         SpringApplication.run(Oauth2ServerApp.class, args);
     }
 }
+
+	// @Bean
+	// public ConsumerTokenServices consumerTokenServices() {
+	// 	return new DefaultTokenServices();
+
+	// }
