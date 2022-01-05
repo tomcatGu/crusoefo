@@ -2914,16 +2914,16 @@ cmmn-font@^0.5.0:
   resolved "https://registry.npm.taobao.org/cmmn-font/download/cmmn-font-0.5.0.tgz#3bd91a56421c51d70772dfd5983f2756aa022c76"
   integrity sha1-O9kaVkIcUdcHct/VmD8nVqoCLHY=
 
-cmmn-js-properties-panel@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npm.taobao.org/cmmn-js-properties-panel/download/cmmn-js-properties-panel-0.5.0.tgz#96e0fcb6422061cd732925ab1aa7df8b4e3bab52"
-  integrity sha1-luD8tkIgYc1zKSWrGqffi047q1I=
+cmmn-js-properties-panel@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/cmmn-js-properties-panel/-/cmmn-js-properties-panel-0.8.0.tgz#c1b4de71d76d7c979931c79e4ef790ec430fa8bc"
+  integrity sha512-0XVnvZOhkmOxEyxJ8WZujIDdvQ/kN44nrKS+UkGedkaC9Us7EP/eWY6cxemm/lb77eFlWWN4Nm3uR89Gc/oqGw==
   dependencies:
     ids "^0.2.0"
     inherits "^2.0.1"
-    lodash "^3.0.1"
+    lodash "^4.17.10"
     min-dom "^3.0.0"
-    scroll-tabs "^0.2.1"
+    scroll-tabs "^1.0.1"
     selection-update "^0.1.2"
 
 cmmn-js@^0.19.2:
@@ -4459,11 +4459,6 @@ eventemitter3@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.0.tgz#d65176163887ee59f386d64c82610b696a4a74eb"
   integrity sha512-qerSRB0p+UDEssxTtm6EDKcE7W4OaoisfIMl4CngyEhjpYglocpNg6UEqCvemdGhosAsg4sO2dXJOdyBifPGCg==
-
-events@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/events/download/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
-  integrity sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=
 
 events@^3.0.0:
   version "3.0.0"
@@ -7216,11 +7211,6 @@ lodash@4.17.11:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
-lodash@^3.0.1, lodash@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-  integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
-
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
@@ -9922,16 +9912,6 @@ script-loader@0.7.2:
   integrity sha512-UMNLEvgOAQuzK8ji8qIscM3GIrRCWN6MmMXGD4SD5l6cSycgGsCo0tX5xRnfQcoghqct0tjHjcykgI1PyBE2aA==
   dependencies:
     raw-loader "~0.5.1"
-
-scroll-tabs@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npm.taobao.org/scroll-tabs/download/scroll-tabs-0.2.1.tgz#770d462b40f633b9cae6eee3521f785c49da8f6f"
-  integrity sha1-dw1GK0D2M7nK5u7jUh94XEnaj28=
-  dependencies:
-    events "^1.1.0"
-    inherits "^2.0.1"
-    lodash "^3.10.1"
-    min-dom "^0.2.0"
 
 scroll-tabs@^1.0.1:
   version "1.0.1"
