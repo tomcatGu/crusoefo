@@ -23,13 +23,11 @@ security:
     client:
       clientId: client_1
       clientSecret: 123456
-      accessTokenUri: http://localhost:7000/oauth/token
+      accessTokenUri: http://localhost:6601/oauth/token
       grant-type: password
       scope: web
       username: admin
       password: 123456
-    resource:
-      user-info-uri: http://localhost:7000/me
 
 #开启Hystrix
 feign:

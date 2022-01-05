@@ -6,10 +6,6 @@
 		{
 			"name": "quarkus-getting-started",
 			"path": "quarkus-getting-started"
-		},
-		{
-			"name": "Blink",
-			"path": "../../../../../home/user/Documents/PlatformIO/Projects/Blink"
 		}
 	],
 	"settings": {
@@ -17,6 +13,6 @@
 		"java.dependency.syncWithFolderExplorer": true,
 		"java.dependency.packagePresentation": "hierarchical",
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"java.home": "/media/user/_dde_data/jdk-13.0.2"
+		"java.home": "D:\\openjdk-13.0.2"
 	}
 }

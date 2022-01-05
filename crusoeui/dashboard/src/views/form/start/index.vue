@@ -29,7 +29,8 @@ export default {
       // 表单生成规则
       rule: [],
       option: {
-        resetBtn: false
+        resetBtn: false,
+        submitBtn: false
       },
       id: null,
       businessKey: null
