@@ -17,7 +17,7 @@
   "dependencies": {
     "@bpmn-io/align-to-origin": "^0.6.0",
     "@form-create/element-ui": "^1.0.6",
-    "axios": "0.18.1",
+    "axios": "0.21.2",
     "bpmn-js": "^6.3.0",
     "bpmn-js-properties-panel": "^0.33.1",
     "bpmn-js-token-simulation": "^0.9.0",
