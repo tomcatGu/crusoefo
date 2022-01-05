@@ -16,6 +16,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
@@ -46,8 +47,9 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 
 //@Configuration(proxyBeanMethods = false)
+@Configuration
 //@EnableAuthorizationServer
-@Component
+@Import(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfiguration extends
 AuthorizationServerConfigurerAdapter {
 
@@ -92,7 +94,7 @@ AuthorizationServerConfigurerAdapter {
 			JwtEncodingContext.with(jwtEncodingContext.getHeaders(), claims);
 		};
 	}
-
+/*** 
 	@Override
     public void configure(
         ClientDetailsServiceConfigurer clients
@@ -103,7 +105,7 @@ AuthorizationServerConfigurerAdapter {
                 .secret("{noop}secret")
                 .scopes("all");
     }
-
+*/
 	/**
 	 * Authorization server 集成
 	 *
@@ -118,22 +120,26 @@ AuthorizationServerConfigurerAdapter {
 	// 	this.defaultOAuth2AuthorizationServerConfigurer(http);
 	// 	return http.formLogin(Customizer.withDefaults()).build();
 	// }
-
+/** 
 	void defaultOAuth2AuthorizationServerConfigurer(HttpSecurity http) throws Exception {
 		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
 		// TODO 你可以根据需求对authorizationServerConfigurer进行一些个性化配置
 		RequestMatcher authorizationServerEndpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
 		// 拦截 授权服务器相关的请求端点
-		http.requestMatcher(authorizationServerEndpointsMatcher).authorizeRequests().anyRequest().authenticated().and()
+		http.requestMatcher(authorizationServerEndpointsMatcher)
+				.authorizeRequests().anyRequest()
+				.permitAll()
+				//.authenticated()
+				.and()
 				// 忽略掉相关端点的csrf
 				.csrf(csrf -> csrf.ignoringRequestMatchers(authorizationServerEndpointsMatcher))
 				// 开启form登录
-				.formLogin().and()
+				//.formLogin().and()
 				// 应用 授权服务器的配置
 				.apply(authorizationServerConfigurer);
 	}
-
+*/
 	/*
 	 * @Autowired private RedisConnectionFactory connectionFactory;
 	 * 
@@ -199,7 +205,7 @@ AuthorizationServerConfigurerAdapter {
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
 		RegisteredClient client = RegisteredClient.withId("pig").clientId("pig").clientSecret("pig")
-				.clientAuthenticationMethod(ClientAuthenticationMethod.BASIC)
+				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantTypes(authorizationGrantTypes -> {
 					authorizationGrantTypes.add(AuthorizationGrantType.AUTHORIZATION_CODE);
 					authorizationGrantTypes.add(AuthorizationGrantType.REFRESH_TOKEN);
@@ -252,7 +258,7 @@ AuthorizationServerConfigurerAdapter {
 	/**
 	 * 配置一些断点的路径，比如：获取token、授权端点 等
 	 */
-	@Bean
+	//@Bean
 	public Builder providerSettings() {
 		return ProviderSettings.builder()
 				// 配置获取token的端点路径
