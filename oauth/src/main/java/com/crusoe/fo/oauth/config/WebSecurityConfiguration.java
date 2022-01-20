@@ -31,7 +31,7 @@ public class WebSecurityConfiguration{
         http.authorizeRequests(authorizeRequests ->
                         authorizeRequests.anyRequest().authenticated()
                 )
-                .formLogin().and().cors();
+                .formLogin().and().cors().and().csrf().disable();
         return http.build();
     }
 	

@@ -1,7 +1,5 @@
 package com.crusoe.fo.gatewayservice;
 
-import javax.ws.rs.core.Application;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

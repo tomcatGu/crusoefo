@@ -204,12 +204,12 @@ AuthorizationServerConfigurerAdapter {
 	// 创立默认的bean 登录客户端,基于 受权码、 刷新令牌的能力
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
-		RegisteredClient client = RegisteredClient.withId("pig").clientId("pig").clientSecret("pig")
+		RegisteredClient client = RegisteredClient.withId("pig").clientId("pig").clientSecret(passwordEncoder.encode("pig"))
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantTypes(authorizationGrantTypes -> {
 					authorizationGrantTypes.add(AuthorizationGrantType.AUTHORIZATION_CODE);
 					authorizationGrantTypes.add(AuthorizationGrantType.REFRESH_TOKEN);
-				}).redirectUri("https://pig4cloud.com").build();
+				}).redirectUri("https://www.baidu.com").build();
 		return new InMemoryRegisteredClientRepository(client);
 	}
 

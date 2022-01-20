@@ -1,4 +1,4 @@
-\package com.crusoe.fo.gatewayservice.filter;
+package com.crusoe.fo.gatewayservice.filter;
 
 import java.text.ParseException;
 
@@ -40,7 +40,7 @@ public class JwtCheckGatewayFilterFactory extends AbstractGatewayFilterFactory<O
 				String token = jwtToken.substring(firstdot + 1, lastdot);
 				byte[] btoken = Base64Utils.decodeFromString(token);
 				try {
-					JSONObject jsonObject = JSONObjectUtils.parse(new String(btoken));
+					JSONObject jsonObject = (JSONObject) JSONObjectUtils.parse(new String(btoken));
 					// System.out.println(jsonObject.get("username"));
 					String cacheToken = stringRedisTemplate.opsForValue().get(jsonObject.get("username"));
 
