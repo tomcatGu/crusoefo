@@ -5,6 +5,8 @@ spring:
   application:
     name: gateway-service
   cloud:
+    config:
+      enabled: false
     consul:
       host: localhost
       port: 8500

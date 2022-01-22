@@ -208,6 +208,7 @@ AuthorizationServerConfigurerAdapter {
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantTypes(authorizationGrantTypes -> {
 					authorizationGrantTypes.add(AuthorizationGrantType.AUTHORIZATION_CODE);
+					authorizationGrantTypes.add(AuthorizationGrantType.CLIENT_CREDENTIALS);
 					authorizationGrantTypes.add(AuthorizationGrantType.REFRESH_TOKEN);
 				}).redirectUri("https://www.baidu.com").build();
 		return new InMemoryRegisteredClientRepository(client);
