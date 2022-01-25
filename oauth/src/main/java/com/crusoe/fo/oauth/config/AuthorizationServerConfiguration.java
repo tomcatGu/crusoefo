@@ -5,9 +5,12 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.crusoe.fo.oauth.service.UserDetailsServiceImpl;
+import com.crusoe.fo.usercenter.entity.User;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -26,6 +29,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -48,13 +53,13 @@ import org.springframework.stereotype.Component;
 
 //@Configuration(proxyBeanMethods = false)
 @Configuration
-//@EnableAuthorizationServer
+// @EnableAuthorizationServer
 @Import(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfiguration extends
-AuthorizationServerConfigurerAdapter {
+		AuthorizationServerConfigurerAdapter {
 
-	//@Autowired
-	//AuthenticationManager authenticationManager;
+	// @Autowired
+	// AuthenticationManager authenticationManager;
 	@Autowired
 	RedisConnectionFactory redisConnectionFactory;
 	@Autowired
@@ -65,21 +70,11 @@ AuthorizationServerConfigurerAdapter {
 
 	// @Bean
 	// public ConsumerTokenServices consumerTokenServices() {
-	// 	return new DefaultTokenServices();
+	// return new DefaultTokenServices();
 
 	// }
 
-	/**
-	 * 个性化 JWT token
-	 */
-	class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
 
-		@Override
-		public void customize(JwtEncodingContext context) {
-			// 添加一个自定义头
-			context.getHeaders().header("client-id", context.getRegisteredClient().getClientId());
-		}
-	}
 
 	/**
 	 * 对jwt token 进行增强，如果有需要的话
@@ -94,18 +89,18 @@ AuthorizationServerConfigurerAdapter {
 			JwtEncodingContext.with(jwtEncodingContext.getHeaders(), claims);
 		};
 	}
-/*** 
-	@Override
-    public void configure(
-        ClientDetailsServiceConfigurer clients
-    ) throws Exception {
-        clients.inMemory()
-            .withClient("client")
-                .authorizedGrantTypes("password")
-                .secret("{noop}secret")
-                .scopes("all");
-    }
-*/
+	/***
+	 * @Override
+	 *           public void configure(
+	 *           ClientDetailsServiceConfigurer clients
+	 *           ) throws Exception {
+	 *           clients.inMemory()
+	 *           .withClient("client")
+	 *           .authorizedGrantTypes("password")
+	 *           .secret("{noop}secret")
+	 *           .scopes("all");
+	 *           }
+	 */
 	/**
 	 * Authorization server 集成
 	 *
@@ -115,31 +110,36 @@ AuthorizationServerConfigurerAdapter {
 	 */
 	// @Bean
 	// @Order(Ordered.HIGHEST_PRECEDENCE)
-	// public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-	// 	// Authorization Server 默认配置
-	// 	this.defaultOAuth2AuthorizationServerConfigurer(http);
-	// 	return http.formLogin(Customizer.withDefaults()).build();
+	// public SecurityFilterChain
+	// authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+	// // Authorization Server 默认配置
+	// this.defaultOAuth2AuthorizationServerConfigurer(http);
+	// return http.formLogin(Customizer.withDefaults()).build();
 	// }
-/** 
-	void defaultOAuth2AuthorizationServerConfigurer(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
-		// TODO 你可以根据需求对authorizationServerConfigurer进行一些个性化配置
-		RequestMatcher authorizationServerEndpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
-
-		// 拦截 授权服务器相关的请求端点
-		http.requestMatcher(authorizationServerEndpointsMatcher)
-				.authorizeRequests().anyRequest()
-				.permitAll()
-				//.authenticated()
-				.and()
-				// 忽略掉相关端点的csrf
-				.csrf(csrf -> csrf.ignoringRequestMatchers(authorizationServerEndpointsMatcher))
-				// 开启form登录
-				//.formLogin().and()
-				// 应用 授权服务器的配置
-				.apply(authorizationServerConfigurer);
-	}
-*/
+	/**
+	 * void defaultOAuth2AuthorizationServerConfigurer(HttpSecurity http) throws
+	 * Exception {
+	 * OAuth2AuthorizationServerConfigurer<HttpSecurity>
+	 * authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
+	 * // TODO 你可以根据需求对authorizationServerConfigurer进行一些个性化配置
+	 * RequestMatcher authorizationServerEndpointsMatcher =
+	 * authorizationServerConfigurer.getEndpointsMatcher();
+	 * 
+	 * // 拦截 授权服务器相关的请求端点
+	 * http.requestMatcher(authorizationServerEndpointsMatcher)
+	 * .authorizeRequests().anyRequest()
+	 * .permitAll()
+	 * //.authenticated()
+	 * .and()
+	 * // 忽略掉相关端点的csrf
+	 * .csrf(csrf ->
+	 * csrf.ignoringRequestMatchers(authorizationServerEndpointsMatcher))
+	 * // 开启form登录
+	 * //.formLogin().and()
+	 * // 应用 授权服务器的配置
+	 * .apply(authorizationServerConfigurer);
+	 * }
+	 */
 	/*
 	 * @Autowired private RedisConnectionFactory connectionFactory;
 	 * 
@@ -204,7 +204,8 @@ AuthorizationServerConfigurerAdapter {
 	// 创立默认的bean 登录客户端,基于 受权码、 刷新令牌的能力
 	@Bean
 	public RegisteredClientRepository registeredClientRepository() {
-		RegisteredClient client = RegisteredClient.withId("pig").clientId("pig").clientSecret(passwordEncoder.encode("pig"))
+		RegisteredClient client = RegisteredClient.withId("pig").clientId("pig")
+				.clientSecret(passwordEncoder.encode("pig"))
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantTypes(authorizationGrantTypes -> {
 					authorizationGrantTypes.add(AuthorizationGrantType.AUTHORIZATION_CODE);
@@ -259,7 +260,7 @@ AuthorizationServerConfigurerAdapter {
 	/**
 	 * 配置一些断点的路径，比如：获取token、授权端点 等
 	 */
-	//@Bean
+	// @Bean
 	public Builder providerSettings() {
 		return ProviderSettings.builder()
 				// 配置获取token的端点路径
