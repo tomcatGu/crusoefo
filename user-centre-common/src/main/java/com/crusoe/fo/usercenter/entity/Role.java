@@ -3,7 +3,9 @@ package com.crusoe.fo.usercenter.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.core.serializer.Serializer;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Data
 @Table(name = "t_role")
+@Transactional(readOnly = true)
 public class Role implements Serializable {
     private static final long serialVersionUID = -8478114427891717226L;
     @Id

@@ -5,6 +5,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
@@ -44,7 +46,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenCusto
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings.Builder;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 import org.springframework.security.web.SecurityFilterChain;
@@ -54,9 +58,8 @@ import org.springframework.stereotype.Component;
 //@Configuration(proxyBeanMethods = false)
 @Configuration
 // @EnableAuthorizationServer
-@Import(OAuth2AuthorizationServerConfiguration.class)
-public class AuthorizationServerConfiguration extends
-		AuthorizationServerConfigurerAdapter {
+//@Import(OAuth2AuthorizationServerConfiguration.class)
+public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	// @Autowired
 	// AuthenticationManager authenticationManager;
@@ -74,6 +77,36 @@ public class AuthorizationServerConfiguration extends
 
 	// }
 
+		/**
+	 * 个性化 JWT token
+	 */
+	class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<JwtEncodingContext> {
+
+		@Override
+		public void customize(JwtEncodingContext context) {
+			// 添加一个自定义头
+			UsernamePasswordAuthenticationToken oAuth2Authentication = context.getPrincipal();
+			UserDetails user=(UserDetails)oAuth2Authentication.getPrincipal();
+
+			context.getHeaders().header("username",user.getUsername() );
+			//List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails) context.getAuthorization())
+			//		.getAuthorities();
+			//List<String> authorityList = new ArrayList<String>();
+			//for (GrantedAuthority grantedAuthority : authorities) {
+			//	authorityList.add(grantedAuthority.getAuthority());
+			//}
+
+			//context.getClaims().claim("authorities", authorityList);
+			//context.getClaims().claim("username", user.getUsername());
+
+			//context.getClaims().claim("department", user.getDepartment().getName());
+
+			context.getClaims().claim("code", 20000); //
+
+			context.getHeaders().header("clientid", context.getRegisteredClient().getClientId());
+			context.getHeaders().build();
+		}
+	}
 
 
 	/**
@@ -90,16 +123,10 @@ public class AuthorizationServerConfiguration extends
 		};
 	}
 	/***
-	 * @Override
-	 *           public void configure(
-	 *           ClientDetailsServiceConfigurer clients
-	 *           ) throws Exception {
-	 *           clients.inMemory()
-	 *           .withClient("client")
-	 *           .authorizedGrantTypes("password")
-	 *           .secret("{noop}secret")
-	 *           .scopes("all");
-	 *           }
+	 * @Override public void configure( ClientDetailsServiceConfigurer clients )
+	 *           throws Exception { clients.inMemory() .withClient("client")
+	 *           .authorizedGrantTypes("password") .secret("{noop}secret")
+	 *           .scopes("all"); }
 	 */
 	/**
 	 * Authorization server 集成
@@ -118,27 +145,18 @@ public class AuthorizationServerConfiguration extends
 	// }
 	/**
 	 * void defaultOAuth2AuthorizationServerConfigurer(HttpSecurity http) throws
-	 * Exception {
-	 * OAuth2AuthorizationServerConfigurer<HttpSecurity>
+	 * Exception { OAuth2AuthorizationServerConfigurer<HttpSecurity>
 	 * authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
-	 * // TODO 你可以根据需求对authorizationServerConfigurer进行一些个性化配置
-	 * RequestMatcher authorizationServerEndpointsMatcher =
+	 * // TODO 你可以根据需求对authorizationServerConfigurer进行一些个性化配置 RequestMatcher
+	 * authorizationServerEndpointsMatcher =
 	 * authorizationServerConfigurer.getEndpointsMatcher();
 	 * 
-	 * // 拦截 授权服务器相关的请求端点
-	 * http.requestMatcher(authorizationServerEndpointsMatcher)
-	 * .authorizeRequests().anyRequest()
-	 * .permitAll()
-	 * //.authenticated()
-	 * .and()
-	 * // 忽略掉相关端点的csrf
-	 * .csrf(csrf ->
-	 * csrf.ignoringRequestMatchers(authorizationServerEndpointsMatcher))
-	 * // 开启form登录
-	 * //.formLogin().and()
-	 * // 应用 授权服务器的配置
-	 * .apply(authorizationServerConfigurer);
-	 * }
+	 * // 拦截 授权服务器相关的请求端点 http.requestMatcher(authorizationServerEndpointsMatcher)
+	 * .authorizeRequests().anyRequest() .permitAll() //.authenticated() .and() //
+	 * 忽略掉相关端点的csrf .csrf(csrf ->
+	 * csrf.ignoringRequestMatchers(authorizationServerEndpointsMatcher)) //
+	 * 开启form登录 //.formLogin().and() // 应用 授权服务器的配置
+	 * .apply(authorizationServerConfigurer); }
 	 */
 	/*
 	 * @Autowired private RedisConnectionFactory connectionFactory;
@@ -200,6 +218,30 @@ public class AuthorizationServerConfiguration extends
 	 * registeredClientRepository.save(registeredClient); return
 	 * registeredClientRepository; }
 	 */
+/**
+     * 定义 Spring Security 的拦截器链
+     */
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+        // 设置jwt token个性化
+        http.setSharedObject(OAuth2TokenCustomizer.class, new CustomOAuth2TokenCustomizer());
+        // 授权服务器配置
+        OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer =
+                new OAuth2AuthorizationServerConfigurer<>();
+        RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
+
+        return http
+                .requestMatcher(endpointsMatcher)
+                .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+                .apply(authorizationServerConfigurer)
+                .and()
+                .formLogin()
+                .and()
+                .build();
+    }
+
 
 	// 创立默认的bean 登录客户端,基于 受权码、 刷新令牌的能力
 	@Bean
@@ -211,7 +253,10 @@ public class AuthorizationServerConfiguration extends
 					authorizationGrantTypes.add(AuthorizationGrantType.AUTHORIZATION_CODE);
 					authorizationGrantTypes.add(AuthorizationGrantType.CLIENT_CREDENTIALS);
 					authorizationGrantTypes.add(AuthorizationGrantType.REFRESH_TOKEN);
-				}).redirectUri("https://www.baidu.com").build();
+				}).tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1))
+						.refreshTokenTimeToLive(Duration.ofDays(3)).reuseRefreshTokens(true).build()
+
+				).redirectUri("https://www.baidu.com").build();
 		return new InMemoryRegisteredClientRepository(client);
 	}
 
@@ -260,14 +305,14 @@ public class AuthorizationServerConfiguration extends
 	/**
 	 * 配置一些断点的路径，比如：获取token、授权端点 等
 	 */
-	// @Bean
-	public Builder providerSettings() {
+	@Bean
+	public ProviderSettings providerSettings() {
 		return ProviderSettings.builder()
 				// 配置获取token的端点路径
-				.tokenEndpoint("/oauth2/token")
+				.tokenEndpoint("/oauth2/token").build();
 				// 发布者的url地址,一般是本系统访问的根路径
 				// 此处的 qq.com 需要修改我们系统的 host 文件
-				.issuer("http://qq.com:8080");
+				//.issuer("http://qq.com:8080");
 	}
 
 	/**
