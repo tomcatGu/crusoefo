@@ -7,6 +7,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,23 +89,22 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			UsernamePasswordAuthenticationToken oAuth2Authentication = context.getPrincipal();
 			UserDetails user=(UserDetails)oAuth2Authentication.getPrincipal();
 
-			context.getHeaders().header("username",user.getUsername() );
-			//List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails) context.getAuthorization())
-			//		.getAuthorities();
-			//List<String> authorityList = new ArrayList<String>();
-			//for (GrantedAuthority grantedAuthority : authorities) {
-			//	authorityList.add(grantedAuthority.getAuthority());
-			//}
+			context.getClaims().claim("username",user.getUsername() );
+			
+			Collection<GrantedAuthority> authorities = oAuth2Authentication.getAuthorities();
+			List<String> authorityList = new ArrayList<String>();
+			for (GrantedAuthority grantedAuthority : authorities) {
+				authorityList.add(grantedAuthority.getAuthority());
+			}
 
-			//context.getClaims().claim("authorities", authorityList);
+			context.getClaims().claim("authorities", authorityList);
 			//context.getClaims().claim("username", user.getUsername());
 
-			//context.getClaims().claim("department", user.getDepartment().getName());
+			context.getClaims().claim("department", ((User) user).getDepartment().getName());
 
 			context.getClaims().claim("code", 20000); //
 
-			context.getHeaders().header("clientid", context.getRegisteredClient().getClientId());
-			context.getHeaders().build();
+			context.getClaims().claim("clientid", context.getRegisteredClient().getClientId());
 		}
 	}
 
