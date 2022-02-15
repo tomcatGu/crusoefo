@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import qs from 'qs'
 
 export function login(data) {
   if (process.env.NODE_ENV === 'development') {
@@ -15,11 +16,16 @@ export function login(data) {
     })
   }
 }
-export function login2(data) {
+export function login2(formdata) {
+  const d = qs.stringify(formdata)
+  // console.log(d)
   return request({
-    url: '/user/login',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded;' // 设置完以后 传入的params对象就会时候用formdata传参的方式
+    },
+    url: '/login',
     method: 'post',
-    data
+    data: d
   })
 }
 

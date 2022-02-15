@@ -25,7 +25,7 @@ public class CORSFilter implements WebFilter {
         if (CorsUtils.isCorsRequest(request)) {
             ServerHttpResponse response = swe.getResponse();
             HttpHeaders headers = response.getHeaders();
-            headers.add("Access-Control-Allow-Origin", "*");
+            headers.add("Access-Control-Allow-Origin", "http://localhost:9526");
             headers.add("Access-Control-Allow-Methods", "*");
             headers.add("Access-Control-Max-Age", "3600");
             headers.add("Access-Control-Allow-Headers", "authorization");

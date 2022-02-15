@@ -47,7 +47,7 @@ service.interceptors.response.use(
     // console.log(response)
 
     // if the custom code is not 20000, it is judged as an error.
-    if (response.status !== 200 && response.status !== 204) {
+    if (response.status !== 200 && response.status !== 204 && response.status !== 302) {
       Message({
         message: res.message || 'Request Error',
         type: 'error',
