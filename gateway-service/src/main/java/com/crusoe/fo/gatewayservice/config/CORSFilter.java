@@ -1,5 +1,6 @@
 package com.crusoe.fo.gatewayservice.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +16,7 @@ import org.springframework.web.server.WebFilterChain;
 
 import reactor.core.publisher.Mono;
 
-@Component
+@Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements WebFilter {
 
@@ -25,14 +26,19 @@ public class CORSFilter implements WebFilter {
         if (CorsUtils.isCorsRequest(request)) {
             ServerHttpResponse response = swe.getResponse();
             HttpHeaders headers = response.getHeaders();
-            headers.add("Access-Control-Allow-Origin", "http://localhost:9526");
+            headers.setAccessControlAllowOrigin("*");
+            
+            //headers.add("Access-Control-Allow-Origin", "http://localhost:9526");
+            //headers.setAccessControlAllowCredentials(true);
             headers.add("Access-Control-Allow-Methods", "*");
+            //headers.add("Access-Control-Allow-Methods", "POST");
+            headers.add("Access-Control-Allow-Header","*");
             headers.add("Access-Control-Max-Age", "3600");
             headers.add("Access-Control-Allow-Headers", "authorization");
             headers.add("Access-Control-Allow-Headers", "Content-Type");
             if (request.getMethod() == HttpMethod.OPTIONS) {
-                response.setStatusCode(HttpStatus.OK);
-                return Mono.empty();
+               response.setStatusCode(HttpStatus.OK);
+               return Mono.empty();
             }
         }
         return wfc.filter(swe);

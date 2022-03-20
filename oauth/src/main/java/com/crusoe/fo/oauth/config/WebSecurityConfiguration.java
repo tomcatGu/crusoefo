@@ -36,11 +36,13 @@ public class WebSecurityConfiguration{
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests ->
-                        authorizeRequests.anyRequest().authenticated()
+                        authorizeRequests.antMatchers("/login/**").permitAll().antMatchers("/oauth2/**").permitAll().anyRequest().authenticated()
                 )
-                .formLogin().and().cors().and().csrf().disable();
+                .formLogin().permitAll().and().cors().and().csrf().disable();
         return http.build();
     }
+
+	
 	
 /**
 	@Override

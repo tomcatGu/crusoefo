@@ -256,7 +256,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				}).tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1))
 						.refreshTokenTimeToLive(Duration.ofDays(3)).reuseRefreshTokens(true).build()
 
-				).redirectUri("https://www.baidu.com").build();
+				).redirectUri("http://192.168.4.207:9526").build();
 		return new InMemoryRegisteredClientRepository(client);
 	}
 

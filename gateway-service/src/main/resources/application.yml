@@ -14,6 +14,14 @@ spring:
         prefer-ip-address: true
         service-name: gateway-service
     gateway:
+      #globalcors:
+      #  cors-configurations:
+      #    '[/**]':
+            #allowCredentials: true
+      #      allowedOriginPatterns: "*"
+      #      allowedMethods: "*"
+      #      allowedHeaders: "*"
+      #  add-to-simple-url-handler-mapping: true
       routes:
       - id: baidu
         uri: http://www.baidu.com/
@@ -25,7 +33,9 @@ spring:
       - id: login-service
         uri: lb://oauth2-service/login
         predicates:
-        - Path=/login/**
+        - Path=/auth/**
+        filters:
+        - StripPrefix=1
       - id: auth-service
         uri: lb://oauth2-service/oauth
         predicates:

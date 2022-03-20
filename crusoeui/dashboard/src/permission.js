@@ -59,13 +59,20 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
+    const c = to.query.code
+    console.log(c)
+    if (c !== undefined) {
+      await store.dispatch('user/getToken', { code: c })
+      NProgress.done()
+      // return
+    }
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      // next(`/login?redirect=${to.path}`)
+      window.location.href = 'http://localhost:6601/oauth2/authorize?client_id=pig&client_secret=pig&response_type=code&redirect_uri=http://192.168.4.207:9526'
       NProgress.done()
     }
   }

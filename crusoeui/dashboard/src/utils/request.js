@@ -14,6 +14,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+    // config.headers['Referer'] = 'http://localhost:9526'
 
     if (store.getters.token) {
       // let each request carry token

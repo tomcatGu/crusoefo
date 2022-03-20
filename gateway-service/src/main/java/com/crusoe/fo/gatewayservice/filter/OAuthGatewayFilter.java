@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Resource;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.util.JSONObjectUtils;
 
 import org.reactivestreams.Publisher;
@@ -23,11 +24,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 
-import net.minidev.json.JSONObject;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -68,10 +69,19 @@ public class OAuthGatewayFilter implements GatewayFilter, Ordered {
                         // System.out.println(str);
 
                         try {
-                            JSONObject jsonObject = (JSONObject) JSONObjectUtils.parse(str);
+                            JSONObject jwt = (JSONObject) JSONObjectUtils.parse(str);
+                            String access_token=jwt.getAsString("access_token");
+                            int firstdot=access_token.indexOf('.');
+                            int seconddot=access_token.indexOf(".",firstdot+1);
+                            access_token=access_token.substring(firstdot+1,seconddot);
+                            
+                            byte[] btoken = Base64Utils.decodeFromString(access_token);
+                            JSONObject jsonObject = (JSONObject) JSONObjectUtils.parse(new String(btoken));
                             //System.out.println(stringRedisTemplate.opsForValue().get("admin"));
+
+                            
                             stringRedisTemplate.opsForValue().set(jsonObject.get("username").toString(),
-                            jsonObject.get("access_token").toString());
+                            access_token);
                             //System.out.println(jsonObject.get("access_token"));
                             //System.out.println(jsonObject.get("username"));
                         } catch (java.text.ParseException e) {
