@@ -2,6 +2,8 @@ server:
   port: 7000
  
 spring:
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     config:
       enabled: false
@@ -26,6 +28,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
 
 #https://blog.csdn.net/huweijian5/article/details/83008435
 #keytool -genkeypair -alias test-jwt -validity 3650 -keyalg RSA -dname "CN=jwt,OU=jtw,O=jtw,L=zurich,S=zurich,C=CH" -keypass test123 -keystore test-jwt.jks -storepass test123

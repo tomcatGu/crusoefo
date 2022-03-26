@@ -16,9 +16,9 @@ public class CorsConfig {
     //@Order(Ordered.HIGHEST_PRECEDENCE)
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern("http://192.168.1.102:9526");
         //config.setAllowCredentials(true);
-        config.addAllowedMethod("*");
+        config.addAllowedMethod("GET,POST,PUT,DELETE,OPTIONS");
         config.addAllowedHeader("*");
         config.addExposedHeader("Authorization");
         config.addExposedHeader("Content-Disposition");

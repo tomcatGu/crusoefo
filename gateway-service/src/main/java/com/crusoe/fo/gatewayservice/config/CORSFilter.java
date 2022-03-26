@@ -26,9 +26,9 @@ public class CORSFilter implements WebFilter {
         if (CorsUtils.isCorsRequest(request)) {
             ServerHttpResponse response = swe.getResponse();
             HttpHeaders headers = response.getHeaders();
-            headers.setAccessControlAllowOrigin("*");
+            //headers.setAccessControlAllowOrigin("*");
             
-            //headers.add("Access-Control-Allow-Origin", "http://localhost:9526");
+            headers.add("Access-Control-Allow-Origin", "http://192.168.1.102:9526");
             //headers.setAccessControlAllowCredentials(true);
             headers.add("Access-Control-Allow-Methods", "*");
             //headers.add("Access-Control-Allow-Methods", "POST");

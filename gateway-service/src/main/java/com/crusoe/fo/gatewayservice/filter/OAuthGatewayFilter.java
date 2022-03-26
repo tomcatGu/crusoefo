@@ -48,7 +48,7 @@ public class OAuthGatewayFilter implements GatewayFilter, Ordered {
         ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(originalResponse) {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-                AtomicReference<String> bodyRef = new AtomicReference<>();
+                //AtomicReference<String> bodyRef = new AtomicReference<>();
                 if (body instanceof Flux) {
                     Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
 
@@ -73,9 +73,9 @@ public class OAuthGatewayFilter implements GatewayFilter, Ordered {
                             String access_token=jwt.getAsString("access_token");
                             int firstdot=access_token.indexOf('.');
                             int seconddot=access_token.indexOf(".",firstdot+1);
-                            access_token=access_token.substring(firstdot+1,seconddot);
+                            String payload=access_token.substring(firstdot+1,seconddot);
                             
-                            byte[] btoken = Base64Utils.decodeFromString(access_token);
+                            byte[] btoken = Base64Utils.decodeFromString(payload);
                             JSONObject jsonObject = (JSONObject) JSONObjectUtils.parse(new String(btoken));
                             //System.out.println(stringRedisTemplate.opsForValue().get("admin"));
 

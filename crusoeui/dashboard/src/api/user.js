@@ -32,7 +32,7 @@ export function getTokenByCode(data) {
       headers: {
         'Authorization': 'Basic ' + Base64.encode(str)//
       },
-      url: '/oauth2/token?grant_type=authorization_code&code=' + data.code + '&redirect_uri=http://192.168.4.207:9526',
+      url: '/oauth2/token?grant_type=authorization_code&code=' + data.code + '&redirect_uri=http://192.168.1.102:9526',
       method: 'post',
       data
     })

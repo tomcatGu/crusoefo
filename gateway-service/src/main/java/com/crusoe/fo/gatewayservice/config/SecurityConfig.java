@@ -30,7 +30,8 @@ public class SecurityConfig{
 	@Bean
 	SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 		http.authorizeExchange().pathMatchers("/oauth2/**").permitAll().pathMatchers("/auth/**").permitAll().pathMatchers("/actuator/**").permitAll().anyExchange()
-				.authenticated()
+				.permitAll()
+				//.authenticated()
 				.and().cors().and().csrf().disable().authorizeExchange()
 				//.and().oauth2Login()
 				//.and().oauth2Client()

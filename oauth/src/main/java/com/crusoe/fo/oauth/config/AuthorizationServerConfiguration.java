@@ -234,6 +234,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         return http
                 .requestMatcher(endpointsMatcher)
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+				.cors().and()
                 .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
                 .apply(authorizationServerConfigurer)
                 .and()
@@ -256,7 +257,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				}).tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1))
 						.refreshTokenTimeToLive(Duration.ofDays(3)).reuseRefreshTokens(true).build()
 
-				).redirectUri("http://192.168.4.207:9526").build();
+				).redirectUri("http://192.168.1.102:9526").build();
 		return new InMemoryRegisteredClientRepository(client);
 	}
 

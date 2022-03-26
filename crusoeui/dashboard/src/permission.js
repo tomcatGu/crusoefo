@@ -72,7 +72,9 @@ router.beforeEach(async(to, from, next) => {
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       // next(`/login?redirect=${to.path}`)
-      window.location.href = 'http://localhost:6601/oauth2/authorize?client_id=pig&client_secret=pig&response_type=code&redirect_uri=http://192.168.4.207:9526'
+      window.location.href = 'http://192.168.1.102:6601/oauth2/authorize?client_id=pig&client_secret=pig&response_type=code&redirect_uri=http://192.168.1.102:9526'
+      // test
+      // window.location.href = 'http://192.168.1.102:6601/uri'
       NProgress.done()
     }
   }
