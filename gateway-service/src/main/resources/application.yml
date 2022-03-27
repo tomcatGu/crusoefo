@@ -41,7 +41,7 @@ spring:
         predicates:
         - Path=/uri/**
       - id: auth-service
-        uri: lb://oauth2-service/oauth
+        uri: lb://oauth2-service/oauth2
         predicates:
         - Path=/oauth2/**
         filters:

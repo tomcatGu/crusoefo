@@ -17,7 +17,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -28,9 +30,9 @@ public class CamundaResourceServerConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().mvcMatcher("/**").authorizeRequests().antMatchers("/rest/**").authenticated()
                 //.access("hasAuthority('SCOPE_message.read')")
-                .and().oauth2ResourceServer().jwt()
-                .decoder(jwtDecoder(jwkSource()));
-        ;
+                .and().cors().and().oauth2ResourceServer().jwt()
+                .decoder(jwtDecoder());
+        
         return http.build();
     }
 
@@ -51,10 +53,23 @@ public class CamundaResourceServerConfig {
 
 	/**
 	 * jwt 解码
+	 * @throws NoSuchAlgorithmException
 	 */
 	//@Bean
-	public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+	public JwtDecoder jwtDecoder() throws NoSuchAlgorithmException {
+		//return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+		keyPairGenerator.initialize(2048);
+		// KeyPair keyPair = keyPairGenerator.generateKeyPair();
+		KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("crusoe.jks"), "tomtom1982".toCharArray())
+				.getKeyPair("crusoe");
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+		RSAKey rsaKey = new RSAKey.Builder(publicKey).privateKey(privateKey).keyID(UUID.randomUUID().toString())
+				.build();
+		return NimbusJwtDecoder.withPublicKey(publicKey)
+                .signatureAlgorithm(SignatureAlgorithm.RS256)
+                .build();
 	}
 
     /**
