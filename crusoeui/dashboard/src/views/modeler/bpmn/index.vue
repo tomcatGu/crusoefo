@@ -35,6 +35,9 @@
               >SVG image</a>
             </li>
             <li>
+              <a href="javascript:" class="active" @click="handleOpenFile">载入</a>
+            </li>
+            <li>
               <a href="javascript:" class="active" @click="deploy">部署</a>
             </li>
             <li>
@@ -252,22 +255,39 @@ export default {
       const vm = this
       const input = document.createElement('input')
       input.type = 'file'
+      input.multiple = 'multiple'
       input.click() // 打开文件选择框
       input.onchange = function() {
-        const file = input.files[0]
-        if (window.FileReader) {
-          try {
-            var fr = new FileReader()
-            fr.readAsText(file) // 将文件读取为文本
-            fr.onload = function(e) {
-              vm.bpmnInfo.xmlStr = fr.result
-              vm.createNewDiagram()
+        for (var i = 0; i < input.files.length; i++) {
+          console.log(input.files[i])
+          const file = input.files[i]
+          if (window.FileReader) {
+            try {
+              var fr = new FileReader()
+              fr.readAsText(file) // 将文件读取为文本
+              fr.onload = function(e) {
+                if (file.name.endsWith('.bpmn')) {
+                  vm.bpmnInfo.xmlStr = fr.result
+                  vm.createNewDiagram()
+                }
+                if (file.name.endsWith('.form')) {
+                  const newTabName = ++vm.tabIndex + ''
+                  vm.editableTabs.push({
+                    title: file.name,
+                    name: newTabName,
+                    content: embbedFormCreate
+                  })
+                  vm.editableTabsValue = newTabName
+                  console.log(vm.$refs)
+                  vm.eform[vm.tabIndex - 2].value = fr.result
+                }
+              }
+            } catch (e) {
+              console.error(e.toString())
             }
-          } catch (e) {
-            errorInfo(e.toString())
+          } else {
+            console.error('您的浏览器可能不支持此操作')
           }
-        } else {
-          errorInfo('您的浏览器可能不支持此操作')
         }
       }
       document.body.removeChild(input)
