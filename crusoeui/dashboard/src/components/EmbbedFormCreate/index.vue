@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <split-pane split="vertical" v-on:resize="resize">
+    <split-pane split="vertical" @resize="resize">
       <template slot="paneL">
         <div class="editor">
           <MonacoEditor
@@ -118,7 +118,14 @@ export default {
     resize() {
       console.log(this.$refs.editor)
       this.$refs.editor.layout()
+    },
+    loadForm(str) {
+      this.value = str
+      this.rule = evil(this.value)
+      console.log(this.$refs.editor)
+      this.$refs.editor.setValue(this.value)
     }
+
   }
 }
 </script>

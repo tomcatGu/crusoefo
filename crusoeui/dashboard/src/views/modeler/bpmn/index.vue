@@ -101,7 +101,8 @@ export default {
       editableTabs: [
       ],
       tabIndex: 1,
-      bpmnName: null
+      bpmnName: null,
+      files: []
     }
   },
   mounted() {
@@ -259,27 +260,39 @@ export default {
       input.click() // 打开文件选择框
       input.onchange = function() {
         for (var i = 0; i < input.files.length; i++) {
-          console.log(input.files[i])
+          // console.log(input.files[i])
           const file = input.files[i]
           if (window.FileReader) {
             try {
               var fr = new FileReader()
               fr.readAsText(file) // 将文件读取为文本
-              fr.onload = function(e) {
+              fr.onloadend = function(e) {
                 if (file.name.endsWith('.bpmn')) {
-                  vm.bpmnInfo.xmlStr = fr.result
+                  vm.bpmnInfo.xmlStr = this.result
                   vm.createNewDiagram()
                 }
                 if (file.name.endsWith('.form')) {
                   const newTabName = ++vm.tabIndex + ''
+                  console.log('new a tab...')
                   vm.editableTabs.push({
                     title: file.name,
                     name: newTabName,
                     content: embbedFormCreate
                   })
                   vm.editableTabsValue = newTabName
-                  console.log(vm.$refs)
-                  vm.eform[vm.tabIndex - 2].value = fr.result
+
+                  // vm.files[vm.tabIndex - 2] = this.result
+                  // console.log(this.result)
+                  const that = this
+                  vm.$nextTick(() => {
+                    // console.log(vm.$refs)
+                    // console.log(vm.$refs.eform)
+                    console.log(vm.tabIndex)
+                    // console.log(vm.files)
+                    console.log(vm.$refs.eform[vm.tabIndex - 2])
+                    // vm.$refs.eform[vm.tabIndex - 2].value = that.result
+                    vm.$refs.eform[vm.tabIndex - 2].loadForm(that.result)
+                  })
                 }
               }
             } catch (e) {
