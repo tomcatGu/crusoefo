@@ -5,6 +5,7 @@
         <div class="editor">
           <MonacoEditor
             ref="editor"
+            :key="randomKey"
             :code="value"
             language="typescript"
             @codeChange="onChange"
@@ -59,6 +60,7 @@ export default {
          ' }\n' +
         '}\n' +
       ']',
+      randomKey: 123,
       // 表单生成规则
       rule: [
       ],
@@ -119,11 +121,15 @@ export default {
       console.log(this.$refs.editor)
       this.$refs.editor.layout()
     },
+    createRandomKey() {
+      this.randomKey = Math.floor(Math.random() * (10.10000000000012313))
+    },
     loadForm(str) {
+      // this.$nextTick(() => {
       this.value = str
       this.rule = evil(this.value)
-      console.log(this.$refs.editor)
-      this.$refs.editor.setValue(this.value)
+      // createRandomKey()
+      // })
     }
 
   }

@@ -273,7 +273,7 @@ export default {
                 }
                 if (file.name.endsWith('.form')) {
                   const newTabName = ++vm.tabIndex + ''
-                  console.log('new a tab...')
+                  // console.log('new a tab...')
                   vm.editableTabs.push({
                     title: file.name,
                     name: newTabName,
@@ -287,11 +287,12 @@ export default {
                   vm.$nextTick(() => {
                     // console.log(vm.$refs)
                     // console.log(vm.$refs.eform)
-                    console.log(vm.tabIndex)
+                    // console.log(vm.tabIndex)
                     // console.log(vm.files)
-                    console.log(vm.$refs.eform[vm.tabIndex - 2])
+                    // console.log(vm.$refs.eform[vm.tabIndex - 2])
                     // vm.$refs.eform[vm.tabIndex - 2].value = that.result
                     vm.$refs.eform[vm.tabIndex - 2].loadForm(that.result)
+                    vm.$refs.eform[vm.tabIndex - 2].createRandomKey()
                   })
                 }
               }
