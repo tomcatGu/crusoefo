@@ -21,5 +21,6 @@ public class App {
                 // .credentialsProvider(credentialsProvider)
                 .usePlaintext()
                 .build();
+        System.out.println(client.getConfiguration().toString());
     }
 }
