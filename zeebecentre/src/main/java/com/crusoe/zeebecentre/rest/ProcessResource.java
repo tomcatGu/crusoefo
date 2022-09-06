@@ -52,6 +52,7 @@ public class ProcessResource {
   public void uploadModel(@RequestBody final DeploymentDto deployment)
       throws UnsupportedEncodingException {
 
+    System.out.println(deployment.getFiles().get(0).getFilename());
     final List<FileDto> files = deployment.getFiles();
     if (files.isEmpty()) {
       throw new RuntimeException("no resources to deploy");
@@ -59,9 +60,11 @@ public class ProcessResource {
 
     final FileDto firstFile = files.get(0);
 
+    
+
     final var cmd =
         zeebeClient
-            .newDeployCommand()
+            .newDeployResourceCommand()
             .addResourceBytes(firstFile.getContent(), firstFile.getFilename());
 
     for (final FileDto file : files.subList(1, files.size())) {

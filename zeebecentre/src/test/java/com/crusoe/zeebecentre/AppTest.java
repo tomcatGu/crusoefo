@@ -50,18 +50,18 @@ public class AppTest
 
         String bpmn =
         Files.readString(
-            Paths.get(this.getClass().getClassLoader().getResource("payment.bpmn").getPath().substring(1)));
+            Paths.get(this.getClass().getClassLoader().getResource("orderProcess.bpmn").getPath().substring(1)));
 
         DeploymentDto deploymentDto=new DeploymentDto();
         FileDto fileDto=new FileDto();
-        fileDto.setFilename("test.bpmn");
+        fileDto.setFilename("orderProcess.bpmn");
         fileDto.setMimeType("bpmn");
         fileDto.setContent(bpmn.getBytes());
         List<FileDto> files=new ArrayList<FileDto>();
         files.add(fileDto);
         deploymentDto.setFiles(files);
         String requestJson = JSON.toJSONString(deploymentDto);
-        MvcResult mvcResult=mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8089/api/processes/").content(requestJson).accept(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult=mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8089/api/processes/").content(requestJson).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
     }
     @Autowired
