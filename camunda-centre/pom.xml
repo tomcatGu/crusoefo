@@ -15,7 +15,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <camunda.spring.boot.starter.version>7.15.0</camunda.spring.boot.starter.version>
+    <camunda.spring.boot.starter.version>7.16.0</camunda.spring.boot.starter.version>
   </properties>
 
   <dependencyManagement>
@@ -24,8 +24,9 @@
         <!-- Import dependency management from camunda -->
         <groupId>org.camunda.bpm</groupId>
         <artifactId>camunda-bom</artifactId>
-        <version>7.15.0</version>
+        <version>7.16.0</version>
         <scope>import</scope>
+        
         <type>pom</type>
       </dependency>
     </dependencies>

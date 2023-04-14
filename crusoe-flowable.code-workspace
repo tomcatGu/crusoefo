@@ -13,6 +13,14 @@
 		},
 		{
 			"path": "../python-projects"
+		},
+		{
+			"name": "zeebe-simple-monitor",
+			"path": "../zeebe-simple-monitor"
+		},
+		{
+			"name": "zeebe-hazelcast-exporter",
+			"path": "../zeebe-hazelcast-exporter"
 		}
 	],
 	"settings": {

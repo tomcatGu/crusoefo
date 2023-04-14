@@ -257,7 +257,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 				}).tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(1))
 						.refreshTokenTimeToLive(Duration.ofDays(3)).reuseRefreshTokens(true).build()
 
-				).redirectUri("http://192.168.1.102:9526").build();
+				).redirectUri("http://192.168.1.104:9526").build();
 		return new InMemoryRegisteredClientRepository(client);
 	}
 
