@@ -19,11 +19,12 @@ package com.crusoe.zeebecentre.repository;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.crusoe.zeebecentre.entity.TimerEntity;
 
-public interface TimerRepository extends PagingAndSortingRepository<TimerEntity, Long> {
+public interface TimerRepository extends JpaRepository<TimerEntity, Long> {
 
   Page<TimerEntity> findByProcessInstanceKey(Long processInstanceKey, Pageable pageable);
 

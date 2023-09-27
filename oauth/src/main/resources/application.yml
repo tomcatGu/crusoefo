@@ -15,9 +15,10 @@ spring:
         service-name: oauth2-service
   application:
     name: oauth2-service
-  redis:
-    host: 127.0.0.1
-    database: 0
+  data:
+    redis:
+      host: 127.0.0.1
+      database: 0
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.postgresql.Driver

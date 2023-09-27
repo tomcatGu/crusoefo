@@ -18,6 +18,8 @@ package com.crusoe.zeebecentre.repository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +27,7 @@ import org.springframework.data.repository.query.Param;
 import com.crusoe.zeebecentre.entity.ElementInstanceStatistics;
 import com.crusoe.zeebecentre.entity.ProcessEntity;
 
-public interface ProcessRepository extends PagingAndSortingRepository<ProcessEntity, Long> {
+public interface ProcessRepository extends JpaRepository<ProcessEntity, Long> {
 
   Optional<ProcessEntity> findByKey(long key);
 

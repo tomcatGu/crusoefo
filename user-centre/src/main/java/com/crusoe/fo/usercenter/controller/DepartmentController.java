@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
+//import javax.websocket.server.PathParam;
 
 import com.crusoe.fo.usercenter.dto.DepartmentDTO;
 import com.crusoe.fo.usercenter.entity.Department;

@@ -1,100 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-    
+
   <groupId>com.crusoe.fo</groupId>
-    
+
   <artifactId>crusoe-flowable</artifactId>
-    
+
   <version>0.0.1</version>
-    
+
   <packaging>pom</packaging>
-    
+
   <name>com.crusoe.fo</name>
-    
+
   <url>http://maven.apache.org</url>
-    
-  <parent>
-        
-    <groupId>org.springframework.boot</groupId>
-        
-    <artifactId>spring-boot-starter-parent</artifactId>
-        
-    <version>2.5.3</version>
-      
-  </parent>
-    
+
   <properties>
-        
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-    <java.version>1.8</java.version>
-        
-    <spring-cloud.version>2020.0.3</spring-cloud.version>
-        
+
+    <java.version>18</java.version>
+    <spring-boot.version>3.1.3</spring-boot.version>
+    <spring-cloud.version>2022.0.3</spring-cloud.version>
+
     <dockerfile.maven.version>1.4.13</dockerfile.maven.version>
-        
+
     <docker.registry.name.prefix>localhost:5000</docker.registry.name.prefix>
-      
+
   </properties>
-    
+
   <dependencyManagement>
-        
+
     <dependencies>
-            
+
+      <!-- spring cloud 及 spring boot-->
       <dependency>
-                
-        <groupId>org.springframework.cloud</groupId>
-                
-        <artifactId>spring-cloud-dependencies</artifactId>
-                
-        <version>${spring-cloud.version}</version>
-                
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
         <type>pom</type>
-                
         <scope>import</scope>
-              
       </dependency>
-          
+       <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
     </dependencies>
-      
+
   </dependencyManagement>
-    
+
   <dependencies>
-        
+
     <dependency>
-            
+
       <groupId>org.springframework.boot</groupId>
-            
+
       <artifactId>spring-boot-starter-aop</artifactId>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bootstrap</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
-            
       <artifactId>spring-boot-starter-actuator</artifactId>
-          
     </dependency>
-        
     <dependency>
-            
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+
       <groupId>org.springframework.cloud</groupId>
-            
+
       <artifactId>spring-cloud-starter-config</artifactId>
-          
+
     </dependency>
-        
     <dependency>
-            
+
       <groupId>org.springframework.cloud</groupId>
-            
+
       <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-          
+
     </dependency>
-        
+<!--
+    
     <dependency>
             
       <groupId>mysql</groupId>
@@ -104,205 +107,231 @@
       <scope>runtime</scope>
           
     </dependency>
-        
+   -->
     <dependency>
-            
+
       <groupId>org.projectlombok</groupId>
-            
+
       <artifactId>lombok</artifactId>
-            
+
       <optional>true</optional>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+
       <groupId>org.springframework.boot</groupId>
-            
+
       <artifactId>spring-boot-starter-test</artifactId>
-            
+
       <scope>test</scope>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+
       <groupId>org.springframework.cloud</groupId>
-            
+
       <artifactId>spring-cloud-stream-test-support</artifactId>
-            
+
       <scope>test</scope>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+
       <groupId>org.springframework.cloud</groupId>
-            
+
       <artifactId>spring-cloud-starter-contract-verifier</artifactId>
-            
+
       <scope>test</scope>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+
       <groupId>org.springframework.cloud</groupId>
-            
+
       <artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
-            
+
       <scope>test</scope>
-          
+
     </dependency>
-        
+
     <dependency>
-            
+
       <groupId>org.junit.jupiter</groupId>
-            
+
       <artifactId>junit-jupiter</artifactId>
-            
+
       <scope>test</scope>
-          
+
     </dependency>
-      
+
   </dependencies>
-    
+
   <build>
-        
+
     <plugins>
-            
       <plugin>
-                
-        <groupId>org.springframework.boot</groupId>
-                
-        <artifactId>spring-boot-maven-plugin</artifactId>
-              
-      </plugin>
-            
-      <plugin>
-                
-        <groupId>com.spotify</groupId>
-                
-        <artifactId>dockerfile-maven-plugin</artifactId>
-                
-        <version>${dockerfile.maven.version}</version>
-                
-        <dependencies>
-                    
-          <dependency>
-                        
-            <groupId>javax.activation</groupId>
-                        
-            <artifactId>activation</artifactId>
-                        
-            <version>1.1.1</version>
-                      
-          </dependency>
-                  
-        </dependencies>
-                
-        <executions>
-                    
-          <execution>
-                        
-            <id>default</id>
-                        
-            <goals>
-                            
-              <goal>build</goal>
-                            
-              <goal>push</goal>
-                          
-            </goals>
-                      
-          </execution>
-                  
-        </executions>
-                
+
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
         <configuration>
-                    
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+      
+
+      <plugin>
+
+        <groupId>org.springframework.boot</groupId>
+
+        <artifactId>spring-boot-maven-plugin</artifactId>
+
+      </plugin>
+
+      <plugin>
+
+        <groupId>com.spotify</groupId>
+
+        <artifactId>dockerfile-maven-plugin</artifactId>
+
+        <version>${dockerfile.maven.version}</version>
+
+        <dependencies>
+
+          <dependency>
+
+            <groupId>javax.activation</groupId>
+
+            <artifactId>activation</artifactId>
+
+            <version>1.1.1</version>
+
+          </dependency>
+
+        </dependencies>
+
+        <executions>
+
+          <execution>
+
+            <id>default</id>
+
+            <goals>
+
+              <goal>build</goal>
+
+              <goal>push</goal>
+
+            </goals>
+
+          </execution>
+
+        </executions>
+
+        <configuration>
+
           <repository>${docker.registry.name.prefix}/${project.artifactId}</repository>
-                    
+
           <tag>${project.version}</tag>
-                    
+
           <username>duser</username>
-                    
+
           <password>123456</password>
-                    
+
           <!-- 					<pushImage>true</pushImage>
 					<dockerDirectory>src/main/docker</dockerDirectory>
  -->
-                    
+
           <buildArgs>
-                        
+
             <finalName>${project.build.finalName}</finalName>
-                        
+
             <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                      
+
           </buildArgs>
-                  
+
         </configuration>
-              
+
       </plugin>
-          
+
     </plugins>
-      
+
+
   </build>
-    
+
   <repositories>
-        
+  <!--
     <repository>
-            
+      <id>sonatype</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <snapshots />
+    </repository>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    -->
+    <repository>
       <id>spring-milestones</id>
-            
       <name>Spring Milestones</name>
-            
       <url>https://repo.spring.io/milestone</url>
-          
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
-        
     <repository>
-            
-      <id>maven2-milestones</id>
-            
-      <name>Maven2 Milestones</name>
-            
-      <url>https://repo.maven.apache.org/maven2</url>
-          
+      <id>spring-releases</id>
+      <name>Spring Releases</name>
+      <url>https://repo.spring.io/release</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
-      
   </repositories>
-    
+
+
   <modules>
-        
+    <!--   -->
     <module>starter</module>
-        
-    <module>rabbitcenter</module>
-        
+
+<module>rabbitcenter</module>
+
     <module>gateway-service</module>
-        
+
     <module>oauth</module>
-        
+
     <module>oauth2resourceserver-webflux</module>
-        
+
     <module>crusoeui</module>
-        
+<!--
     <module>flowable-modeler</module>
-        
+
     <module>flowable-centre</module>
-        
+    
+    -->
+
     <module>camunda-centre</module>
-        
+
     <module>user-centre</module>
-        
+
     <module>user-centre-common</module>
-        
+
     <module>camunda-external-task-client-feign</module>
-        
+
     <module>zeebeclient</module>
-        
+
     <module>zeebecentre</module>
-      
+
+
   </modules>
-  
+
 </project>

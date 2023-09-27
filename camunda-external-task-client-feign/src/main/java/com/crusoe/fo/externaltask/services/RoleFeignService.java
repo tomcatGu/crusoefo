@@ -3,7 +3,7 @@ package com.crusoe.fo.externaltask.services;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.crusoe.fo.externaltask.config.FeignTokenInterceptor;
 import com.crusoe.fo.usercenter.dto.RoleDTO;

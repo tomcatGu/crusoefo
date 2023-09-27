@@ -15,7 +15,7 @@
  */
 package com.crusoe.zeebecentre.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity(name = "VARIABLE")
 @Table(indexes = {

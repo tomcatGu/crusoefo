@@ -30,8 +30,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+//import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,15 +43,23 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.authorization.JwtEncodingContext;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenCustomizer;
+//import org.springframework.security.oauth2.jwt.Jwt;
+//import org.springframework.security.oauth2.server.authorization.JwtEncodingContext;
+//import org.springframework.security.oauth2.server.authorization.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
-import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
-import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
-import org.springframework.security.oauth2.server.authorization.config.ProviderSettings.Builder;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+//import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+//import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
+//import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+//import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
+//import org.springframework.security.oauth2.server.authorization.config.ProviderSettings.Builder;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -60,6 +69,7 @@ import org.springframework.stereotype.Component;
 @Configuration
 // @EnableAuthorizationServer
 //@Import(OAuth2AuthorizationServerConfiguration.class)
+@EnableWebSecurity
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	// @Autowired
@@ -119,7 +129,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		return jwtEncodingContext -> {
 			JwtClaimsSet.Builder claims = jwtEncodingContext.getClaims();
 			claims.claim("xxxx", "xxxxx");
-			JwtEncodingContext.with(jwtEncodingContext.getHeaders(), claims);
+			JwtEncodingContext.with(jwtEncodingContext.getJwsHeader(), claims);
 		};
 	}
 	/***
@@ -227,12 +237,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         // 设置jwt token个性化
         http.setSharedObject(OAuth2TokenCustomizer.class, new CustomOAuth2TokenCustomizer());
         // 授权服务器配置
-        OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer =
-                new OAuth2AuthorizationServerConfigurer<>();
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
+                new OAuth2AuthorizationServerConfigurer();
         RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
         return http
-                .requestMatcher(endpointsMatcher)
+		        .securityMatcher(endpointsMatcher)
                 .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
 				.cors().and()
                 .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
@@ -307,8 +317,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	 * 配置一些断点的路径，比如：获取token、授权端点 等
 	 */
 	@Bean
-	public ProviderSettings providerSettings() {
-		return ProviderSettings.builder()
+	public AuthorizationServerSettings  providerSettings() {
+		return AuthorizationServerSettings .builder()
 				// 配置获取token的端点路径
 				.tokenEndpoint("/oauth2/token").build();
 				// 发布者的url地址,一般是本系统访问的根路径

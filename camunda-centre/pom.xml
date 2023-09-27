@@ -24,7 +24,7 @@
         <!-- Import dependency management from camunda -->
         <groupId>org.camunda.bpm</groupId>
         <artifactId>camunda-bom</artifactId>
-        <version>7.16.0</version>
+        <version>7.19.0</version>
         <scope>import</scope>
         
         <type>pom</type>
@@ -87,6 +87,7 @@
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
     </dependency>
     <dependency>
       <groupId>org.camunda.bpm.springboot</groupId>

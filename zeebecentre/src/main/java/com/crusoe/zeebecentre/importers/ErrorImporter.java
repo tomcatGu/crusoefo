@@ -1,6 +1,7 @@
 package com.crusoe.zeebecentre.importers;
 
 import io.zeebe.exporter.proto.Schema;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

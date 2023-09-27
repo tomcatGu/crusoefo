@@ -39,7 +39,7 @@ import com.ibm.icu.impl.Assert;
 @SpringBootTest
 @AutoConfigureMockMvc
 // @DataJpaTest
-@Transactional
+//@Transactional
 public class AppTest {
         /**
          * Rigorous Test :-)
@@ -69,8 +69,8 @@ public class AppTest {
                                                 .contentType(MediaType.APPLICATION_JSON)
                                                 .accept(MediaType.APPLICATION_JSON))
                                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-
-                Assert.assrt(processRepository.count() == 1);
+                Assertions.assertEquals(1,processRepository.count());
+                //Assert.assrt(processRepository.count() == 1);
         }
         @Test
         public void testProcessCount () throws Exception {

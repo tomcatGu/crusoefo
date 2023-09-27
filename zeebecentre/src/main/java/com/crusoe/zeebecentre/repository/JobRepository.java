@@ -20,11 +20,12 @@ import java.util.Collection;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.crusoe.zeebecentre.entity.JobEntity;
 
-public interface JobRepository extends PagingAndSortingRepository<JobEntity, Long> {
+public interface JobRepository extends JpaRepository<JobEntity, Long> {
 
   Page<JobEntity> findByProcessInstanceKey(long processInstanceKey, Pageable pageable);
 

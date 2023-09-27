@@ -1,6 +1,5 @@
 package com.crusoe.fo.filter;
-
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import org.camunda.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -24,7 +23,7 @@ public class CamundaSecurityFilter {
 
 	//@Bean
 	public Filter getProcessEngineAuthenticationFilter() {
-		return new ProcessEngineAuthenticationFilter();
+		return (Filter) new ProcessEngineAuthenticationFilter();
 	}
 
 	

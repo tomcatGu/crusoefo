@@ -25,7 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     //@Override
     public void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/message").access("#oauth2.hasScope('web')").and().csrf().disable()
+        http.authorizeRequests().requestMatchers("/message").access("#oauth2.hasScope('web')").and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

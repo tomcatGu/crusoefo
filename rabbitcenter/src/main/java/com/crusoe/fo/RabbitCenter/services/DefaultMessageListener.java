@@ -1,6 +1,7 @@
 package com.crusoe.fo.RabbitCenter.services;
 
-import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+//import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
 
@@ -11,7 +12,7 @@ import com.crusoe.fo.RabbitCenter.channel.OrderChannel;
 @Slf4j
 public class DefaultMessageListener {
 
-    @StreamListener(OrderChannel.saveOrder)
+    @RabbitListener(OrderChannel.saveOrder)
     public void processMyMessage(String message) {
         log.info("接收到消息：" + message);
     }

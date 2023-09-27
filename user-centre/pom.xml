@@ -17,23 +17,25 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <oauth2.version>2.1.2.RELEASE</oauth2.version>
   </properties>
-
 
 
   <dependencies>
 		<dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-			<version>2.5.2.RELEASE</version>
+			<version>${oauth2.version}</version>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
+    
 		<dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>${oauth2.version}</version>
          </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -121,7 +121,7 @@ public class ExtNettyRoutingFilter extends NettyRoutingFilter {
                         response.setStatusCode(status);
                     } else if (response instanceof AbstractServerHttpResponse) {
                         // https://jira.spring.io/browse/SPR-16748
-                        ((AbstractServerHttpResponse) response).setStatusCodeValue(res.status().code());
+                        ((AbstractServerHttpResponse) response).setRawStatusCode(res.status().code());
                     } else {
                         throw new IllegalStateException("Unable to set status code on response: " + res.status().code() + ", " + response.getClass());
                     }

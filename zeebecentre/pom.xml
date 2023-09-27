@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>crusoe-flowable</artifactId>
     <groupId>com.crusoe.fo</groupId>
+    <artifactId>crusoe-flowable</artifactId>
     <version>0.0.1</version>
   </parent>
+
 
   <groupId>com.crusoe.zeebecentre</groupId>
   <artifactId>zeebecentre</artifactId>
@@ -16,21 +19,16 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <zeebe.version>8.0.2</zeebe.version>
-    <version.zeebe.spring>8.0.4</version.zeebe.spring>
-    <hazelcast.exporter.version>1.1.0</hazelcast.exporter.version>
-
-    <spring.boot.version>2.6.7</spring.boot.version>
+    <zeebe.version>8.2.4</zeebe.version>
+    <version.zeebe.spring>8.1.17</version.zeebe.spring>
+    <hazelcast.exporter.version>1.2.1</hazelcast.exporter.version>
+    <spring.boot.version>3.1.1</spring.boot.version>
     <!-- pin Hazelcast version because of spring-boot-dependencies -->
-    <version.hazelcast>5.1.1</version.hazelcast>
-
-    <!-- release parent settings -->
-    <version.java>13</version.java>
-    <java.version>${version.java}</java.version>
+    <version.hazelcast>5.2.3</version.hazelcast>
 
     <!-- <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target> -->
-
+    <!---->
     <nexus.snapshot.repository>https://artifacts.camunda.com/artifactory/zeebe-io-snapshots/
     </nexus.snapshot.repository>
     <nexus.release.repository>https://artifacts.camunda.com/artifactory/zeebe-io/
@@ -40,26 +38,8 @@
     <plugin.version.javadoc>3.1.1</plugin.version.javadoc>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
-
-
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-oauth2-authorization-server</artifactId>
-        <version>0.2.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-        <scope>compile</scope>
-      </dependency>
-
       <dependency>
         <groupId>io.camunda</groupId>
         <artifactId>zeebe-bom</artifactId>
@@ -69,24 +49,31 @@
       </dependency>
 
 
-      <dependency>
-        <groupId>io.zeebe.hazelcast</groupId>
-        <artifactId>zeebe-hazelcast-connector</artifactId>
-        <version>${hazelcast.exporter.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>2.1.212</version>
-      </dependency>
-
-
 
     </dependencies>
   </dependencyManagement>
   <dependencies>
 
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-authorization-server</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.zeebe.hazelcast</groupId>
+      <artifactId>zeebe-hazelcast-connector</artifactId>
+      <version>${hazelcast.exporter.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.212</version>
+    </dependency>
     <!-- spring deps-->
     <dependency>
       <groupId>io.camunda</groupId>
@@ -115,88 +102,123 @@
     </dependency>
 
     <dependency>
-      <groupId>io.zeebe.hazelcast</groupId>
-      <artifactId>zeebe-hazelcast-connector</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>com.hazelcast</groupId>
       <artifactId>hazelcast</artifactId>
       <version>${version.hazelcast}</version>
     </dependency>
 
+
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>compile</scope>
-    </dependency>
-     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>2.0.14</version>
       <scope>test</scope>
     </dependency>
-      		<!-- DATABASE -->
-		<!-- alibaba的druid 数据库连接池 -->
+    <!-- DATABASE -->
+    <!-- alibaba的druid 数据库连接池 -->
 
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-		<!--数据库相关-->
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.3.2</version>
-		</dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+      <version>1.2.16</version>
+    </dependency>
+    <!--数据库相关-->
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.3.2</version>
+    </dependency>
+    <!--
+     <dependency>
+     <groupId>io.camunda</groupId>
+     <artifactId>zeebe-client-java</artifactId>
+     <version>8.2.2</version>
+     
+ </dependency>
+ -->
+
+    <!-- hot swapping, live reload -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+      <version>${spring.boot.version}</version>
+    </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>zeebe</id>
+      <name>Zeebe Repository</name>
+      <url>https://artifacts.camunda.com/artifactory/zeebe-io/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>zeebe-snapshots</id>
+      <name>Zeebe Snapshot Repository</name>
+      <url>https://artifacts.camunda.com/artifactory/zeebe-io-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>sonatype</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <snapshots />
+    </repository>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>spring-releases</id>
+      <name>Spring Releases</name>
+      <url>https://repo.spring.io/release</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <build>
-    <pluginManagement>
-      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <layout>ZIP</layout>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 </project>

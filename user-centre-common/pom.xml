@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -16,8 +17,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <oauth2.version>2.1.2.RELEASE</oauth2.version>
   </properties>
-
 
   <dependencies>
     <dependency>
@@ -32,6 +33,7 @@
     <dependency>
       <groupId>org.springframework.security.oauth.boot</groupId>
       <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      <version>${oauth2.version}</version>
     </dependency>
     <!-- DATABASE -->
     <!-- alibaba的druid 数据库连接池 -->
@@ -52,7 +54,6 @@
       <artifactId>postgresql</artifactId>
       <version>42.3.2</version>
     </dependency>
-
 
   </dependencies>
 

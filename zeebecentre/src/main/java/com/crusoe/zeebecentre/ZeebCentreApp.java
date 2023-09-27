@@ -4,6 +4,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -15,6 +17,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import io.camunda.zeebe.spring.client.EnableZeebeClient;
 
+
+
 @SpringBootApplication
 @EnableZeebeClient
 @EnableScheduling
@@ -22,7 +26,8 @@ import io.camunda.zeebe.spring.client.EnableZeebeClient;
 @EnableSpringDataWebSupport
 @EnableDiscoveryClient
 public class ZeebCentreApp 
-{
+{ 
+  private static final Logger LOG = LoggerFactory.getLogger(ZeebCentreApp.class);
     public static void main( String[] args )
     {
         //System.out.println( "Hello World!" );

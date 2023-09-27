@@ -1,6 +1,6 @@
 package com.crusoe.fo.RabbitCenter.channel;
 
-import org.springframework.cloud.stream.annotation.Input;
+//import org.springframework.cloud.stream.binder.Input;
 import org.springframework.messaging.SubscribableChannel;
 
 /**
@@ -12,7 +12,7 @@ public interface OrderChannel {
     //定义通道的名称
     String saveOrder = "saveOrder";
     //定义为输入通道
-    @Input(saveOrder)
+    @Input (saveOrder)
     SubscribableChannel saveOrder();
 
 }

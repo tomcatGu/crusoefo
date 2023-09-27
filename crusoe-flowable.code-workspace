@@ -28,6 +28,6 @@
 		"java.dependency.syncWithFolderExplorer": true,
 		"java.dependency.packagePresentation": "hierarchical",
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"java.home": "/media/user/_dde_data/jdk-13.0.2"
+		"java.jdt.ls.java.home": "D://openjdk-19.0.2"
 	}
 }

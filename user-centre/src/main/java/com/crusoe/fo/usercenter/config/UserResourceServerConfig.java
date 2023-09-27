@@ -31,9 +31,9 @@ public class UserResourceServerConfig extends ResourceServerConfigurerAdapter{
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
         .authorizeRequests()
-        .antMatchers("/actuator/**").permitAll()
+        .requestMatchers("/actuator/**").permitAll()
         //.antMatchers("/rest/**").authenticated()
-        .antMatchers("/**").authenticated();
+        .requestMatchers("/**").authenticated();
     }
     
     @Override

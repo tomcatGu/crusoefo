@@ -3,7 +3,7 @@ package com.crusoe.fo.gatewayservice.filter;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jose.util.JSONObjectUtils;

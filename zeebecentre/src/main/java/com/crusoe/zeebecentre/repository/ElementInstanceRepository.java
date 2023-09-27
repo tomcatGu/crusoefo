@@ -15,11 +15,12 @@
  */
 package com.crusoe.zeebecentre.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import com.crusoe.zeebecentre.entity.ElementInstanceEntity;
 
-public interface ElementInstanceRepository extends CrudRepository<ElementInstanceEntity, String> {
+public interface ElementInstanceRepository extends JpaRepository<ElementInstanceEntity, String> {
 
   Iterable<ElementInstanceEntity> findByProcessInstanceKey(long processInstanceKey);
 }
