@@ -75,6 +75,7 @@
 		</dependency>
 
 	</dependencies>
+<!---->
 <build>
     <resources>
 
@@ -83,6 +84,7 @@
             <filtering>false</filtering>
             <includes>
                 <include>**/*.jks</include>
+				<include>**/*.yml</include>
             </includes>
         </resource>
     </resources>
@@ -93,10 +95,12 @@
 			<configuration>
 				<nonFilteredFileExtensions>
 				<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+				<nonFilteredFileExtension>yml</nonFilteredFileExtension>
 				</nonFilteredFileExtensions>
 			</configuration>
 		</plugin>
 	</plugins>
 </build>
+
 
 </project>

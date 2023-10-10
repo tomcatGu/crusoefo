@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
-
 import com.crusoe.fo.usercenter.entity.Department;
 import com.crusoe.fo.usercenter.entity.Role;
 import com.crusoe.fo.usercenter.entity.User;
@@ -14,13 +13,11 @@ import com.crusoe.fo.usercenter.repository.DepartmentRepository;
 import com.crusoe.fo.usercenter.repository.UserRepository;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 /**
@@ -28,6 +25,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+
+//@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 //@ActiveProfiles("application")
 //@ExtendWith(SpringExtension.class)
 public class AppTest {
@@ -38,7 +38,7 @@ public class AppTest {
     DepartmentRepository departmentRepository;
 
     @Test
-    @Transactional
+    //@Transactional
     public void testUserRepository() {
         List<User> users=userRepository.findAll();
         assertEquals(0, users.size());
