@@ -6,3 +6,4 @@
 classes/
 target/
 crusoeui/dashboard/yarn.lock
+crusoeui/dashboard-vue3/vue3.0-template-admin/node_modules/
