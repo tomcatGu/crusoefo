@@ -145,8 +145,8 @@ export default defineComponent({
   },
   mounted() {
     // this.model = this.$f.model();
-    //FormCreate.fApi = this.fApi
-    //FormCreate.businessApi = businessApi
+    FormCreate.fApi = this.fApi
+    FormCreate.businessApi = businessApi
     window['requestData'] = businessApi.requestData
 
     // console.log(formCreate.businessApi)
