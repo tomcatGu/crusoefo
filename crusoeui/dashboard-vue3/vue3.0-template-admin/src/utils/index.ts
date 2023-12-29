@@ -59,7 +59,7 @@ export function parseTime(time: string | number | Date, cFormat: string) {
     const d = new Date(time)
     const now = Date.now()
   
-    const diff = (now - d) / 1000
+    const diff = (now - d.getTime()) / 1000
   
     if (diff < 30) {
       return '刚刚'

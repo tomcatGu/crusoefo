@@ -64,16 +64,22 @@
 <script>
 // 引入相关的依赖
 import BpmnModeler from 'bpmn-js/lib/Modeler'
-import propertiesPanelModule from 'bpmn-js-properties-panel'
-import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda'
-import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
-import AlignToOrigin from '@bpmn-io/align-to-origin'
+//import propertiesPanelModule from 'bpmn-js-properties-panel'
+//import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda'
 
-import customTranslate from '../customTanslate'
+import {
+  BpmnPropertiesPanelModule,
+  BpmnPropertiesProviderModule,
+} from 'bpmn-js-properties-panel';
+
+import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
+//import AlignToOrigin from '@bpmn-io/align-to-origin'
+
+//import customTranslate from '../customTanslate'
 import EmbbedFormCreate from '@/components/EmbbedFormCreate'
 
 import { createDeployment, redeploy } from '@/api/repository'
-import { MessageBox, Message } from 'element-ui'
+import { MessageBox, Message } from 'element-plus'
 import { getProcessXML } from '@/api/processes'
 import { getResources, getResourceData } from '@/api/repository'
 
@@ -82,7 +88,7 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 /* 右边工具栏样式*/
-import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
+//import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 export default {
   components: {
@@ -124,14 +130,9 @@ export default {
         tolerance: 50
       },
       additionalModules: [
-        // 左边工具栏以及节点
-        propertiesProviderModule,
-        // 右边的工具栏
-        propertiesPanelModule,
-        {
-          translate: ['value', customTranslate]
-        },
-        AlignToOrigin
+
+       BpmnPropertiesPanelModule,
+        BpmnPropertiesProviderModule
       ],
       moddleExtensions: {
         camunda: camundaModdleDescriptor

@@ -1,5 +1,17 @@
 # vue3.0-template-admin
 
+## 安装必要的库
+yarn add vite
+yarn add element-plus@2.3.4
+yarn add bpmn-io
+yarn add bpmn-moddle
+yarn add bpmn-js
+yarn add @bpmn-io/properties-panel
+yarn add @guolao/vue-monaco-editor
+yarn add monaco-editor
+yarn add @form-create/element-ui@next
+yarn add splitpanes
+
 <p align="center">
 Vue3.0:
 <a href="https://www.npmjs.com/package/vue/v/next">
@@ -18,6 +30,7 @@ Element-plus:
 - 💪 Vue 3.0 Composition API
 - 🔥 Written in TypeScript
 - 🏠 预览 [vue3.0-template-admin](https://geekqiaqia.github.io/vue3.0-template-admin/#/login?redirect=/home)
+
 
 ## ⭐️ Show your support
 
